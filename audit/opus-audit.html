@@ -1,0 +1,636 @@
+<title>OPUS Pre-Production Audit</title>
+<style>
+:root{
+  color-scheme: dark;
+  --bg:#05070f;
+  --card:#0a0e18;
+  --card-2:#10141f;
+  --line:rgba(150,180,255,.10);
+  --line-2:rgba(160,190,255,.18);
+  --text:#f0f1f4;
+  --muted:#9a9aa8;
+  --dim:#7b7b88;
+  --accent:#3f8cf5;
+  --accent-2:#7db4ff;
+  --accent-rgb:63,140,245;
+  --crit:#ff6b57;
+  --crit-rgb:255,107,87;
+  --high:#f0b84e;
+  --high-rgb:240,184,78;
+  --med:#5b9df9;
+  --med-rgb:91,157,249;
+  --ok:#3ddc97;
+  --ok-rgb:61,220,151;
+  --font:'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono:'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --r:10px;
+  --maxw: 900px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--text);font-family:var(--font);
+  font-weight:400;line-height:1.65;letter-spacing:-.006em;-webkit-font-smoothing:antialiased;
+}
+::selection{background:rgba(var(--accent-rgb),.35)}
+a{color:var(--accent-2)}
+h1,h2,h3,h4{font-weight:600;letter-spacing:-.02em;line-height:1.2;text-wrap:balance;color:var(--text)}
+p{margin:0 0 14px;color:var(--muted);max-width:66ch}
+code{font-family:var(--font-mono);font-size:.92em;background:rgba(255,255,255,.06);border:1px solid var(--line-2);border-radius:5px;padding:1px 6px;color:var(--accent-2)}
+
+/* ── masthead ─────────────────────────────────────────────── */
+.masthead{
+  border-bottom:1px solid var(--line);
+  background:
+    radial-gradient(680px 320px at 84% -10%, rgba(var(--accent-rgb),.16), transparent 70%),
+    var(--bg);
+  padding:56px var(--gut,28px) 40px;
+}
+.masthead-in{max-width:var(--maxw);margin:0 auto}
+.doc-tag{
+  font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--dim);display:flex;gap:10px;align-items:center;margin-bottom:18px;flex-wrap:wrap;
+}
+.doc-tag .dot{width:6px;height:6px;border-radius:50%;background:var(--high);box-shadow:0 0 8px var(--high)}
+.masthead h1{font-size:clamp(1.9rem,4.6vw,2.7rem);margin:0 0 12px}
+.masthead .sub{font-size:15px;max-width:64ch;color:var(--muted);margin:0}
+.scope-note{
+  margin-top:22px;display:flex;gap:12px;align-items:flex-start;
+  border:1px dashed var(--line-2);border-radius:var(--r);padding:13px 16px;background:rgba(255,255,255,.02);
+  font-size:12.5px;color:var(--dim);max-width:70ch;
+}
+.scope-note svg{flex:0 0 auto;width:16px;height:16px;margin-top:1px;color:var(--high)}
+
+/* ── layout ───────────────────────────────────────────────── */
+.wrap{max-width:calc(var(--maxw) + 220px);margin:0 auto;padding:0 var(--gut,28px) 100px;display:grid;grid-template-columns:190px 1fr;gap:44px}
+@media(max-width:920px){.wrap{grid-template-columns:1fr}}
+.toc{position:sticky;top:24px;align-self:start;padding-top:44px}
+@media(max-width:920px){.toc{display:none}}
+.toc-label{font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:12px}
+.toc a{
+  display:block;font-size:12.5px;color:var(--muted);text-decoration:none;padding:6px 0;
+  border-left:2px solid transparent;padding-left:12px;margin-left:-1px;transition:color .15s,border-color .15s;
+}
+.toc a:hover{color:var(--text)}
+.toc a b{font-family:var(--font-mono);font-weight:500;color:var(--dim);margin-right:7px}
+
+.content{max-width:var(--maxw);padding-top:44px}
+section.block{padding:38px 0;border-top:1px solid var(--line)}
+section.block:first-child{border-top:0;padding-top:0}
+.eyebrow{
+  font-family:var(--font-mono);font-size:11px;letter-spacing:.04em;color:var(--accent-2);
+  display:flex;align-items:center;gap:9px;margin:0 0 10px;
+}
+.eyebrow::before{content:'';width:15px;height:1px;background:currentColor;opacity:.6}
+section.block h2{font-size:clamp(1.25rem,2.6vw,1.55rem);margin:0 0 8px}
+.block-intro{font-size:13.5px;margin-bottom:22px}
+
+/* ── summary dashboard ───────────────────────────────────── */
+.dash{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line-2);border:1px solid var(--line-2);border-radius:var(--r);overflow:hidden;margin-top:28px}
+@media(max-width:640px){.dash{grid-template-columns:repeat(2,1fr)}}
+.dash .cell{background:var(--card);padding:18px 16px}
+.dash .cell b{display:block;font-family:var(--font-mono);font-size:26px;font-weight:600;font-variant-numeric:tabular-nums;line-height:1;margin-bottom:6px}
+.dash .cell span{font-size:11.5px;color:var(--dim)}
+.dash .cell.crit b{color:var(--crit)} .dash .cell.high b{color:var(--high)} .dash .cell.med b{color:var(--med)} .dash .cell.info b{color:var(--ok)}
+
+/* ── findings ─────────────────────────────────────────────── */
+.finding{border:1px solid var(--line);border-left:3px solid var(--line-2);border-radius:0 var(--r) var(--r) 0;background:var(--card);padding:16px 18px 17px;margin-bottom:14px}
+.finding.crit{border-left-color:var(--crit)}
+.finding.high{border-left-color:var(--high)}
+.finding.med{border-left-color:var(--med)}
+.finding.info{border-left-color:var(--ok)}
+.finding-hd{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.tag{
+  font-family:var(--font-mono);font-size:9.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
+  border-radius:5px;padding:3px 8px;white-space:nowrap;
+}
+.tag.crit{color:var(--crit);background:rgba(var(--crit-rgb),.12);border:1px solid rgba(var(--crit-rgb),.3)}
+.tag.high{color:var(--high);background:rgba(var(--high-rgb),.12);border:1px solid rgba(var(--high-rgb),.3)}
+.tag.med{color:var(--med);background:rgba(var(--med-rgb),.12);border:1px solid rgba(var(--med-rgb),.3)}
+.tag.info{color:var(--ok);background:rgba(var(--ok-rgb),.12);border:1px solid rgba(var(--ok-rgb),.3)}
+.tag.needs{color:#c9c9d4;background:rgba(255,255,255,.06);border:1px solid var(--line-2)}
+.finding h3{font-size:14.5px;margin:0}
+.finding .loc{font-family:var(--font-mono);font-size:10.5px;color:var(--dim)}
+.finding p{font-size:13px;margin:0}
+.finding p+p{margin-top:8px}
+.finding .fix{margin-top:10px;padding-top:10px;border-top:1px dashed var(--line-2);font-size:12.5px;color:var(--muted)}
+.finding .fix b{color:var(--text);font-weight:600}
+
+/* ── claims table ─────────────────────────────────────────── */
+.claims{display:flex;flex-direction:column;gap:10px}
+.claim{display:grid;grid-template-columns:1fr 1.3fr;gap:16px;border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;background:var(--card)}
+@media(max-width:680px){.claim{grid-template-columns:1fr}}
+.claim .txt{font-size:13px;color:var(--text)}
+.claim .txt .where{display:block;font-family:var(--font-mono);font-size:10px;color:var(--dim);margin-top:4px}
+.claim .why{font-size:12.5px;color:var(--muted)}
+.claim .why b{color:var(--text)}
+
+/* ── plan ─────────────────────────────────────────────────── */
+.phase{margin-bottom:22px}
+.phase-hd{display:flex;align-items:baseline;gap:10px;margin-bottom:10px}
+.phase-hd .n{font-family:var(--font-mono);font-size:12px;color:var(--dim)}
+.phase-hd h4{font-size:14.5px;margin:0}
+.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px}
+.steps li{
+  display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);
+  border:1px solid var(--line);border-radius:8px;padding:9px 12px;background:var(--card);
+}
+.steps li .chk{flex:0 0 auto;width:14px;height:14px;margin-top:2px;border-radius:4px;border:1px solid var(--line-2)}
+.steps li b{color:var(--text);font-weight:500}
+.steps li .needs-mark{margin-left:auto;flex:0 0 auto}
+
+/* ── inputs needed ────────────────────────────────────────── */
+.inputs{display:flex;flex-direction:column;gap:10px}
+.inputs li{
+  list-style:none;display:flex;gap:12px;border:1px solid rgba(var(--high-rgb),.28);
+  background:rgba(var(--high-rgb),.06);border-radius:var(--r);padding:12px 15px;font-size:13px;color:var(--text);
+}
+.inputs li .num{font-family:var(--font-mono);color:var(--high);font-weight:600;flex:0 0 auto}
+
+.closing{
+  margin-top:10px;border-top:1px solid var(--line);padding-top:30px;
+}
+.closing p{font-size:13.5px}
+footer.doc-footer{
+  max-width:var(--maxw);margin:0 auto;padding:24px var(--gut,28px) 60px;
+  font-family:var(--font-mono);font-size:10.5px;color:var(--dim);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+}
+
+@media print{ .toc{display:none} .wrap{grid-template-columns:1fr} }
+</style>
+
+<header class="masthead">
+  <div class="masthead-in">
+    <div class="doc-tag"><span class="dot"></span> Auditoria de pré-produção · OPUS Corp. — Repertório de Soluções</div>
+    <h1>Auditoria completa antes da implementação final</h1>
+    <p class="sub">Revisão do <code>index.html</code> atual (redesign já aprovado e implementado) contra os dez eixos pedidos: bloqueadores críticos, prioridade alta, melhorias médias, afirmações a verificar, acessibilidade, SEO, performance, qualidade de código, conversão e o plano de implementação exato.</p>
+    <div class="scope-note">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M12 9v4M12 17h.01M10.3 3.9L2.5 17a2 2 0 001.7 3h15.6a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/></svg>
+      <span><b style="color:var(--text)">Nenhum ficheiro foi alterado.</b> Esta é apenas a auditoria — identidade visual, arquitetura e o mark OPUS aprovados permanecem como estão. A implementação só começa depois da tua aprovação secção a secção ou no todo.</span>
+    </div>
+    <div class="dash">
+      <div class="cell crit"><b>8</b><span>bloqueadores críticos</span></div>
+      <div class="cell high"><b>14</b><span>prioridade alta</span></div>
+      <div class="cell med"><b>9</b><span>melhorias médias</span></div>
+      <div class="cell info"><b>7</b><span>precisam da tua confirmação</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <nav class="toc">
+    <div class="toc-label">Índice</div>
+    <a href="#critical"><b>01</b>Críticos</a>
+    <a href="#high"><b>02</b>Prioridade alta</a>
+    <a href="#medium"><b>03</b>Melhorias médias</a>
+    <a href="#claims"><b>04</b>Afirmações a verificar</a>
+    <a href="#a11y"><b>05</b>Acessibilidade</a>
+    <a href="#seo"><b>06</b>SEO</a>
+    <a href="#perf"><b>07</b>Performance</a>
+    <a href="#code"><b>08</b>Código</a>
+    <a href="#ux"><b>09</b>UX / conversão</a>
+    <a href="#plan"><b>10</b>Plano de implementação</a>
+    <a href="#inputs">— O que preciso de ti</a>
+  </nav>
+
+  <main class="content">
+
+    <section class="block" id="critical">
+      <p class="eyebrow">01 — Bloqueiam a produção</p>
+      <h2>Críticos</h2>
+      <p class="block-intro">Impedem o lançamento tal como está — expõem dados falsos a visitantes reais, quebram a hierarquia do documento, ou escondem conteúdo por completo em cenários plausíveis (JS falha, utilizador com movimento reduzido).</p>
+
+      <div class="finding crit">
+        <div class="finding-hd"><span class="tag crit">Crítico</span><h3>Contactos placeholder estão a ser mostrados como reais</h3></div>
+        <p class="loc">Secção "Iniciar Avaliação Técnica" — <code>+351 000 000 000</code> e "(email provisório — a atualizar)"</p>
+        <p>Um visitante que tente ligar para <code>000 000 000</code> tem uma falha imediata e visível. Isto está pior do que não ter telefone nenhum.</p>
+        <div class="fix"><b>Correção:</b> ou recebo o número e morada reais antes de publicar, ou removo a linha do telefone e deixo só o email + formulário até haver um número.</div>
+      </div>
+
+      <div class="finding crit">
+        <div class="finding-hd"><span class="tag crit">Crítico</span><h3>Formspree por ligar</h3></div>
+        <p class="loc"><code>action="https://formspree.io/f/YOUR_FORM_ID"</code></p>
+        <p>Correto por agora — não inventei nenhum endpoint. O formulário deteta o placeholder e avisa o visitante em vez de fingir que enviou. Mas fica bloqueador até teres o ID real.</p>
+        <div class="fix"><b>Correção:</b> substituo <code>YOUR_FORM_ID</code> assim que mo deres.</div>
+      </div>
+
+      <div class="finding crit">
+        <div class="finding-hd"><span class="tag crit">Crítico</span><h3>Formulário de contacto sem fluxo de privacidade/RGPD</h3></div>
+        <p class="loc">Formulário "Iniciar Avaliação Técnica"</p>
+        <p>O formulário recolhe nome, email, organização e uma descrição livre — dados pessoais — sem checkbox de consentimento nem link para uma política de privacidade. Sob o RGPD isto é obrigatório antes de recolher e reter estes dados.</p>
+        <div class="fix"><b>Correção:</b> checkbox de consentimento obrigatório + uma linha "Como tratamos os teus dados" com link para uma política de privacidade (preciso que me digas se já existe uma ou se a devo redigir como placeholder legal a rever por um jurista).</div>
+      </div>
+
+      <div class="finding crit">
+        <div class="finding-hd"><span class="tag crit">Crítico</span><h3>Não existe elemento <code>&lt;footer&gt;</code></h3></div>
+        <p class="loc">Fim do documento, depois de <code>&lt;/main&gt;</code></p>
+        <p>Contacto, disclaimer e "Obrigado" vivem todos dentro de <code>&lt;main&gt;</code>, na secção "avaliacao". Um utilizador de leitor de ecrã que navegue por landmarks não encontra nenhum rodapé — semanticamente, é tudo "conteúdo principal".</p>
+        <div class="fix"><b>Correção:</b> mover disclaimer + info de contacto + copyright para um <code>&lt;footer&gt;</code> real fora ou a fechar o fluxo principal.</div>
+      </div>
+
+      <div class="finding crit">
+        <div class="finding-hd"><span class="tag crit">Crítico</span><h3>Dois elementos <code>&lt;h1&gt;</code></h3></div>
+        <p class="loc">Linha 755 (Capa, "OPUS") e linha 959 (OFS, "Detetar. Agir. Salvar vidas.")</p>
+        <p>Um documento deve ter um único H1. O segundo quebra a hierarquia para leitores de ecrã e para SEO.</p>
+        <div class="fix"><b>Correção:</b> o H1 da Capa fica como está (é o título do site); o título do OFS desce para H2 — a secção já usa H2 nas restantes verticais, por isso fica consistente.</div>
+      </div>
+
+      <div class="finding crit">
+        <div class="finding-hd"><span class="tag crit">Crítico</span><h3>Contadores animados ficam presos em zero com movimento reduzido</h3></div>
+        <p class="loc"><code>if (counters.length &amp;&amp; 'IntersectionObserver' in window &amp;&amp; !reduce)</code></p>
+        <p>Com <code>prefers-reduced-motion: reduce</code> ativo, este bloco de JS nunca corre — os cartões de estatística (92%, 222, 128, 94 veíc/h) ficam a mostrar "0%" / "0" para sempre, ou seja, dados errados apresentados como reais a uma pessoa com preferência de acessibilidade ativa.</p>
+        <div class="fix"><b>Correção:</b> quando <code>reduce</code> é verdadeiro, escrever o valor final imediatamente em vez de saltar o bloco inteiro.</div>
+      </div>
+
+      <div class="finding crit">
+        <div class="finding-hd"><span class="tag crit">Crítico</span><h3>O site fica invisível se o JavaScript falhar</h3></div>
+        <p class="loc"><code>.rv{opacity:0;transform:translateY(14px)}</code> — sem <code>&lt;noscript&gt;</code> em lado nenhum do documento</p>
+        <p>Quase todo o conteúdo do corpo está envolvido em <code>.rv</code>, que só fica visível quando o <code>IntersectionObserver</code> lhe adiciona a classe <code>.in</code>. Se o JS for bloqueado, falhar a carregar, ou o browser não o suportar, o site inteiro fica em branco — não é um detalhe cosmético, é o site a não existir para esse visitante.</p>
+        <div class="fix"><b>Correção:</b> bloco <code>&lt;noscript&gt;</code> global a forçar <code>.rv{opacity:1;transform:none}</code>.</div>
+      </div>
+
+      <div class="finding crit">
+        <div class="finding-hd"><span class="tag crit">Crítico</span><h3>Afirmação de campo do AcquaSense sem fonte, com números que não batem certo</h3></div>
+        <p class="loc">Secção Agro &amp; Ambiental — cartão "AcquaSense"</p>
+        <p>"Testada 30 dias sem interrupções numa laguna costeira de água hipersalina, com dados validados contra análises laboratoriais oficiais da região" é uma afirmação forte e específica sem qualquer referência. Além disso, o destaque diz <b>13 parâmetros</b>, mas as duas listas do cartão só nomeiam 11 (8 de água + 3 de meteorologia).</p>
+        <div class="fix"><b>Correção:</b> preciso que confirmes se este teste aconteceu mesmo e me dês local/data/relatório para citar — ou, se não houver documentação para mostrar, atenuo para algo como "em validação de campo" e corrijo a contagem de parâmetros para bater com a lista real.</div>
+      </div>
+    </section>
+
+    <section class="block" id="high">
+      <p class="eyebrow">02 — Antes do lançamento, não bloqueiam o preview</p>
+      <h2>Prioridade alta</h2>
+      <p class="block-intro">Credibilidade, acessibilidade e performance reais — não impedem publicar um preview privado, mas devem ser resolvidos antes de tráfego real.</p>
+
+      <div class="finding high">
+        <div class="finding-hd"><span class="tag high">Alta</span><h3>OFS promete "5G" exatamente onde a própria Conectividade diz que não há 5G</h3></div>
+        <p class="loc">OFS: "comunicação 5G" (3 menções) · Conectividade: LoRaWAN é "a escolha natural" para zonas remotas e dispersas</p>
+        <p>O OFS opera precisamente no terreno remoto, montanhoso e florestal onde a cobertura 5G real em Portugal é mais fraca ou inexistente — e a própria secção de Conectividade do site já reconhece isso ao recomendar LoRaWAN/4G para este tipo de zona. Afirmar "5G" sem reserva nas torres de vigilância é uma contradição interna que um leitor técnico vai notar.</p>
+        <div class="fix"><b>Correção:</b> reformular para algo como "conectividade celular (4G/5G onde disponível) com redundância LoRaWAN", alinhado com a tabela de Conectividade.</div>
+      </div>
+
+      <div class="finding high">
+        <div class="finding-hd"><span class="tag high">Alta</span><h3>"Drones autónomos" e "drones de intervenção" sem alcance definido</h3></div>
+        <p class="loc">OFS — chips, lead, Fase 02</p>
+        <p>Operação de drones verdadeiramente autónoma além da linha de vista (BVLOS) tem enquadramento regulatório específico em Portugal/UE (ANAC/EASA). "Drones de intervenção" também pode ler-se como "apagam o fogo", quando o texto na verdade descreve chegada às coordenadas, não supressão do incêndio.</p>
+        <div class="fix"><b>Correção:</b> uma frase a clarificar o que "autónomo" cobre (deteção/patrulha vs. voo de intervenção supervisionado) e o que "intervenção" entrega de facto (confirmação visual e relay, ou ação direta sobre o fogo) — preciso da tua confirmação técnica para não sobre nem sub-declarar a capacidade real.</div>
+      </div>
+
+      <div class="finding high">
+        <div class="finding-hd"><span class="tag high">Alta</span><h3>Estatísticas de incêndios sem fonte</h3></div>
+        <p class="loc">OFS — "~150k ha", "92%", "Norte do Tejo"</p>
+        <p>Três estatísticas específicas e verificáveis sobre incêndios em Portugal, sem qualquer citação. Não têm de ser inventadas — parecem genuínas — mas precisam de uma fonte nomeada (ICNF, DGT/Copernicus EFFIS, etc.) para resistir a escrutínio.</p>
+        <div class="fix"><b>Correção:</b> preciso que me digas a fonte original destes números para adicionar uma legenda "Fonte: …" junto ao gráfico.</div>
+      </div>
+
+      <div class="finding high">
+        <div class="finding-hd"><span class="tag high">Alta</span><h3>Rail de navegação <code>aria-hidden</code> contém âncoras reais</h3></div>
+        <p class="loc"><code>#rail</code> — cada <code>&lt;a href="#..."&gt;</code> tem <code>tabindex="-1"</code>, mas mantém <code>href</code></p>
+        <p><code>tabindex="-1"</code> tira o elemento da ordem de tabulação, mas manter um <code>href</code> funcional dentro de um contentor <code>aria-hidden</code> é o padrão exato que ferramentas de auditoria automática (axe, Lighthouse) costumam assinalar, porque o elemento continua operável por rato/toque enquanto é invisível para tecnologia de apoio.</p>
+        <div class="fix"><b>Correção:</b> remover o <code>href</code> das âncoras do rail e disparar a navegação só por <code>onclick</code>/JS — torna o contentor inequivocamente não-interativo em vez de depender de uma exceção da spec.</div>
+      </div>
+
+      <div class="finding high">
+        <div class="finding-hd"><span class="tag high">Alta</span><h3>Sem <code>aria-current</code> no item de navegação ativo</h3></div>
+        <p class="loc"><code>#nav</code> / <code>#rail</code> — o JS só alterna a classe CSS <code>.on</code></p>
+        <p>Utilizadores com visão têm uma pista visual da secção atual; utilizadores de leitor de ecrã não recebem nenhuma.</p>
+        <div class="fix"><b>Correção:</b> <code>a.setAttribute('aria-current', i === active ? 'true' : 'false')</code> junto com o toggle de classe existente.</div>
+      </div>
+
+      <div class="finding high">
+        <div class="finding-hd"><span class="tag high">Alta</span><h3>Sem <code>aria-invalid</code> dinâmico nos campos do formulário</h3></div>
+        <p class="loc">Validação de <code>#assessForm</code></p>
+        <p>A validação atual só alterna uma classe CSS <code>.invalid</code> no wrapper — o próprio campo nunca recebe <code>aria-invalid="true"</code>, por isso um leitor de ecrã não anuncia o erro no campo em si.</p>
+        <div class="fix"><b>Correção:</b> definir <code>aria-invalid</code> no <code>input</code>/<code>select</code>/<code>textarea</code> a par do toggle de classe, e limpar quando o campo fica válido.</div>
+      </div>
+
+      <div class="finding high">
+        <div class="finding-hd"><span class="tag high">Alta</span><h3>Foco visível insuficiente nos controlos de formulário</h3></div>
+        <p class="loc">Regra global <code>:where(a,button,[tabindex]):focus-visible</code> não inclui <code>input/select/textarea</code>; <code>.field input:focus{outline:none}</code> remove o anel nativo</p>
+        <p>Os campos do formulário perdem o contorno nativo do browser e ficam só com uma mudança subtil de cor da borda — mais fraco do que o resto do site, que usa um anel de foco consistente.</p>
+        <div class="fix"><b>Correção:</b> estender a regra <code>focus-visible</code> a <code>input, select, textarea</code> com o mesmo anel usado no resto do site.</div>
+      </div>
+
+      <div class="finding high">
+        <div class="finding-hd"><span class="tag high">Alta</span><h3>Menu mobile sem Escape e sem devolver o foco</h3></div>
+        <p class="loc"><code>navToggle</code> / <code>nav.open</code></p>
+        <p>Não há handler de teclado para fechar o menu com Escape, e ao fechar (por clique num link) o foco não é devolvido de forma explícita ao botão que o abriu.</p>
+        <div class="fix"><b>Correção:</b> listener de <code>keydown</code> para Escape a fechar o menu e a chamar <code>navToggle.focus()</code>.</div>
+      </div>
+
+      <div class="finding high">
+        <div class="finding-hd"><span class="tag high">Alta</span><h3>Canvas da hero nunca pára</h3></div>
+        <p class="loc"><code>#netfx</code> — <code>requestAnimationFrame(frame)</code> sem verificação de visibilidade</p>
+        <p>A animação de partículas da Capa corre indefinidamente mesmo depois de o visitante ter percorrido o resto do site — CPU e bateria gastas num canvas fora do ecrã.</p>
+        <div class="fix"><b>Correção:</b> <code>IntersectionObserver</code> no wrapper da hero a pausar/retomar o <code>rAF</code> conforme entra/sai da viewport.</div>
+      </div>
+
+      <div class="finding high">
+        <div class="finding-hd"><span class="tag high">Alta</span><h3>Logo em Base64 embutido no CSS crítico</h3></div>
+        <p class="loc"><code>--logo-img</code>, <code>:root</code> — 141.400 caracteres (~106 KB decodificado)</p>
+        <p>Mais de metade do peso do documento é esta imagem, embutida diretamente dentro do <code>&lt;style&gt;</code> principal — atrasa a renderização inicial de todo o site e não pode ser cacheada à parte do HTML.</p>
+        <div class="fix"><b>Correção:</b> extrair para um ficheiro externo (<code>logo.webp</code> + versão SVG leve para instâncias pequenas), referenciado por URL normal com <code>&lt;link rel="preload"&gt;</code> na versão grande da capa.</div>
+      </div>
+
+      <div class="finding high">
+        <div class="finding-hd"><span class="tag high">Alta</span><h3>Nenhum favicon, canonical, Open Graph, Twitter Card ou dados estruturados</h3></div>
+        <p class="loc"><code>&lt;head&gt;</code></p>
+        <p>O site não tem ícone de separador, não declara URL canónica, e uma partilha em WhatsApp/LinkedIn/X mostra uma pré-visualização em branco — sem imagem, título ou descrição próprios do link.</p>
+        <div class="fix"><b>Correção:</b> favicon (uso o mark OPUS), <code>&lt;link rel="canonical"&gt;</code> com placeholder de domínio, meta OG + Twitter, JSON-LD <code>Organization</code> + <code>WebSite</code>.</div>
+      </div>
+
+      <div class="finding high">
+        <div class="finding-hd"><span class="tag high">Alta</span><h3>Sem proteção anti-spam no formulário</h3></div>
+        <p class="loc"><code>#assessForm</code></p>
+        <p>Nenhum honeypot nem verificação de tempo de preenchimento — um formulário público de captação de leads sem isto vai atrair spam de bots assim que estiver indexado.</p>
+        <div class="fix"><b>Correção:</b> campo honeypot invisível + verificação de tempo mínimo entre carregamento e submissão, no JS já existente; o Formspree também tem reCAPTCHA opcional do lado deles.</div>
+      </div>
+
+      <div class="finding high">
+        <div class="finding-hd"><span class="tag high">Alta</span><h3>Português inconsistente entre secções</h3></div>
+        <p class="loc">"umidade" ×7 (Agro e Defesa Civil) vs. "humidade"; "monitoramento" ×1 (Agro) vs. "monitorização" ×2; "Nitrogênio" (Agro)</p>
+        <p>O documento declara <code>lang="pt-PT"</code>, mas partes inteiras da secção Agro (e duas linhas da Defesa Civil) estão em variante brasileira. Não é um erro de digitação isolado — é uma inconsistência de bloco inteiro.</p>
+        <div class="fix"><b>Correção:</b> "umidade" → "humidade", "monitoramento" → "monitorização", "Nitrogênio" → "Azoto" (termo técnico pt-PT) em todas as ocorrências.</div>
+      </div>
+    </section>
+
+    <section class="block" id="medium">
+      <p class="eyebrow">03 — Vale a pena, não bloqueia nada</p>
+      <h2>Melhorias médias</h2>
+      <p class="block-intro">Qualidade de código, consistência de marca e o pedido de aproximar as cinco verticais restantes de "dossiês de capacidade" em vez de grelhas de produto.</p>
+
+      <div class="finding med">
+        <div class="finding-hd"><span class="tag med">Média</span><h3>104 atributos <code>style="…"</code> inline</h3></div>
+        <p>Sobretudo cores e espaçamentos pontuais repetidos (ex.: <code>style="color:#f2664a"</code> aparece várias vezes em vez de uma classe utilitária).</p>
+        <div class="fix"><b>Correção:</b> um pequeno conjunto de classes/tokens reutilizáveis para os padrões mais repetidos, sem tocar nos que são genuinamente pontuais.</div>
+      </div>
+
+      <div class="finding med">
+        <div class="finding-hd"><span class="tag med">Média</span><h3>Duas declarações <code>will-change</code> órfãs</h3></div>
+        <p class="loc"><code>.hero .art .panel</code> e <code>nav a, .totop, .eco .go</code></p>
+        <p>Ficaram do tilt 3D e dos links magnéticos removidos numa ronda anterior — já não têm efeito nenhum a suportar, só custam uma camada de composição ao browser sem motivo.</p>
+        <div class="fix"><b>Correção:</b> remover as duas regras.</div>
+      </div>
+
+      <div class="finding med">
+        <div class="finding-hd"><span class="tag med">Média</span><h3>Um único ficheiro de 275 KB</h3></div>
+        <p>HTML, ~1.600 linhas de CSS e ~500 linhas de JS no mesmo documento. Fazia sentido durante o redesign; agora que a estrutura estabilizou, separar em <code>styles.css</code> + <code>main.js</code> não complica o deploy (continua HTML/CSS/JS puro, servido como ficheiros estáticos).</p>
+        <div class="fix"><b>Correção:</b> extrair para três ficheiros só depois do resto da auditoria fechar, para não misturar mudanças estruturais com correções de conteúdo.</div>
+      </div>
+
+      <div class="finding med">
+        <div class="finding-hd"><span class="tag med">Média</span><h3>61 SVGs inline, um ícone repetido 13 vezes ao carácter</h3></div>
+        <p class="loc">Caminho <code>M5 12h14M13 6l6 6-6 6</code> (seta "Ver capacidade" / "Ver soluções")</p>
+        <div class="fix"><b>Correção:</b> um sprite <code>&lt;symbol&gt;</code>/<code>&lt;use&gt;</code> para os ícones repetidos — corta uma fatia real de markup e centraliza qualquer edição futura ao ícone.</div>
+      </div>
+
+      <div class="finding med">
+        <div class="finding-hd"><span class="tag med">Média</span><h3>4 variáveis CSS mortas</h3></div>
+        <p class="loc"><code>--edge-1</code> a <code>--edge-4</code>, declaradas em <code>:root</code>, nunca usadas</p>
+        <div class="fix"><b>Correção:</b> remover as quatro linhas.</div>
+      </div>
+
+      <div class="finding med">
+        <div class="finding-hd"><span class="tag med">Média</span><h3>"OUS (OPUS Urban Systems)" introduzido uma vez e nunca mais referido</h3></div>
+        <p class="loc">Smart City, parágrafo de abertura</p>
+        <p>Aparece só entre parêntesis dentro de uma frase — não está na pill, no nav, nem no Índice de Capacidades.</p>
+        <div class="fix"><b>Correção:</b> ou o estabelecemos como sub-marca real e usamo-lo de forma consistente (pill, cartão, índice), ou tiramos o acrónimo e ficamos só com "Smart City".</div>
+      </div>
+
+      <div class="finding med">
+        <div class="finding-hd"><span class="tag med">Média</span><h3>"Portugal · Global · Futuro" repetido 3×</h3></div>
+        <p class="loc">Meta description, rodapé da Capa, fecho da Avaliação</p>
+        <p>Na meta description em particular, desperdiça espaço que devia descrever a página — a descrição já tem 174 caracteres, acima do limite prático de ~155–160 antes de ser cortada nos resultados de pesquisa.</p>
+        <div class="fix"><b>Correção:</b> manter o refrão na Capa e no fecho (assinatura de marca), tirá-lo da meta description e encurtar esta para caber no limite.</div>
+      </div>
+
+      <div class="finding med">
+        <div class="finding-hd"><span class="tag med">Média</span><h3>As cinco verticais fora do OFS ainda leem como grelhas de produto</h3></div>
+        <p>O tratamento de dossiê (moldura tipo plate, coordenadas, telemetria ilustrativa) só foi construído para o OFS. Smart City, Agro, Defesa Civil, Segurança e Conectividade continuam com cards de especificação + chips — funcional, mas ainda perto do "grid genérico" que o pedido de design quer evitar.</p>
+        <div class="fix"><b>Correção:</b> estender uma versão mais leve do dossiê (cabeçalho tipo ficha técnica + um diagrama de sistema por vertical) sem replicar o peso visual do OFS — o OFS continua a ser claramente o mais rico, como pedido.</div>
+      </div>
+
+      <div class="finding med">
+        <div class="finding-hd"><span class="tag med">Média</span><h3>Falta um espaço reservado para prova/credibilidade futura</h3></div>
+        <p>Não há, em lado nenhum do site, um lugar para certificações, parceiros, projetos ou evidência de campo à medida que existirem — hoje o disclaimer genérico é o único texto sobre o estado de maturidade das soluções.</p>
+        <div class="fix"><b>Correção:</b> uma secção/bloco "Certificações &amp; Parceiros" claramente vazio/placeholder junto à Metodologia, pronto a preencher sem outra ronda de redesign.</div>
+      </div>
+    </section>
+
+    <section class="block" id="claims">
+      <p class="eyebrow">04 — Não inventar, não esconder o que já é real</p>
+      <h2>Afirmações a verificar</h2>
+      <p class="block-intro">Nada aqui foi identificado como falso — são afirmações fortes, específicas ou tecnicamente delicadas que precisam de uma fonte, um esclarecimento de alcance, ou a tua confirmação directa antes de continuarem a ser apresentadas como facto estabelecido. Nenhuma será enfraquecida ou removida sem essa conversa primeiro.</p>
+
+      <div class="claims">
+        <div class="claim">
+          <div class="txt">"Salvar vidas" / "o tempo perdido custa vidas — e é exatamente esse tempo que eliminamos"<span class="where">OFS — título e lead</span></div>
+          <div class="why"><b>Porquê:</b> é a proposta de valor, não um resultado medido. Mantenho como objetivo declarado; evito que fique ao lado de números que pareçam resultados reais sem serem.</div>
+        </div>
+        <div class="claim">
+          <div class="txt">"Drones autónomos" / "drones de intervenção"<span class="where">OFS — chips, lead, Fase 02</span></div>
+          <div class="why"><b>Porquê:</b> autonomia BVLOS tem enquadramento regulatório próprio; "intervenção" pode ler-se como supressão direta do fogo. Preciso de saber o alcance real.</div>
+        </div>
+        <div class="claim">
+          <div class="txt">"Comunicação 5G" (torres, drones, postes)<span class="where">OFS ×2, Smart City ×2</span></div>
+          <div class="why"><b>Porquê:</b> contradiz a própria secção de Conectividade sobre cobertura em zona remota. Ver prioridade alta.</div>
+        </div>
+        <div class="claim">
+          <div class="txt">"13 parâmetros" do AcquaSense, "30 dias… comprovada", "validados contra análises laboratoriais oficiais"<span class="where">Agro — cartão AcquaSense</span></div>
+          <div class="why"><b>Porquê:</b> números não batem certo (11 nomeados) e não há relatório/fonte citável. Ver crítico.</div>
+        </div>
+        <div class="claim">
+          <div class="txt">DBO (CBO) medido em tempo real, in-situ<span class="where">Agro — especificação "Água" do AcquaSense</span></div>
+          <div class="why"><b>Porquê:</b> DBO clássico é um teste laboratorial de incubação de 5 dias (DBO₅). Preciso de saber se a boia usa um proxy/estimativa e, se sim, nomeá-lo com precisão em vez de "DBO" nu.</div>
+        </div>
+        <div class="claim">
+          <div class="txt">Deteção de cianobactérias por sensor<span class="where">Agro — especificação "Água" do AcquaSense</span></div>
+          <div class="why"><b>Porquê:</b> tecnicamente plausível (fluorescência de ficocianina), mas com limites de precisão conhecidos — vale a pena confirmar o método exato antes de o apresentar como uma medição direta sem reservas.</div>
+        </div>
+        <div class="claim">
+          <div class="txt">NPK do solo "na hora, sem laboratório"<span class="where">Agro — Sensor de Solo</span></div>
+          <div class="why"><b>Porquê:</b> sensores de NPK in-situ são uma área tecnicamente contestada no agro — muitos produtos no mercado têm precisão limitada. Vale confirmar contra a ficha técnica real do sensor usado antes de garantir "sem laboratório" sem reserva.</div>
+        </div>
+        <div class="claim">
+          <div class="txt">"~150k ha", "92%", "Norte do Tejo"<span class="where">OFS — cartões de estatística</span></div>
+          <div class="why"><b>Porquê:</b> sem fonte nomeada. Ver prioridade alta.</div>
+        </div>
+        <div class="claim">
+          <div class="txt">"Foco controlado" como último passo do fluxo OFS<span class="where">OFS — diagrama "Como funciona"</span></div>
+          <div class="why"><b>Porquê:</b> implica que o sistema apaga o fogo. Preciso de confirmar se é deteção + relay (e o combate é feito por outros meios) ou se há supressão direta.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="a11y">
+      <p class="eyebrow">05 — Resumo</p>
+      <h2>Acessibilidade</h2>
+      <p class="block-intro">Os itens específicos já estão detalhados em Críticos e Prioridade Alta (contadores presos, conteúdo invisível sem JS, rail <code>aria-hidden</code>, <code>aria-current</code>, <code>aria-invalid</code>, foco visível em formulário, Escape + devolução de foco no menu). Verificados nesta ronda e confirmados OK:</p>
+      <ul class="steps">
+        <li><span class="chk"></span> Skip link (<code>Saltar para o conteúdo</code>) presente, funcional, primeiro elemento focável — mantém-se sem alterações.</li>
+        <li><span class="chk"></span> Landmarks semânticos <code>&lt;header&gt;</code>/<code>&lt;nav&gt;</code>/<code>&lt;main&gt;</code> existem — falta apenas o <code>&lt;footer&gt;</code> (crítico, acima).</li>
+        <li><span class="chk"></span> Ordem de tabulação percorrida manualmente: skip link → header → nav → conteúdo, sem saltos nem armadilhas de foco.</li>
+        <li><span class="chk"></span> Contraste de <code>--dim</code> já corrigido numa ronda anterior para ≈4.7–4.9:1 sobre os dois fundos principais (AA).</li>
+      </ul>
+    </section>
+
+    <section class="block" id="seo">
+      <p class="eyebrow">06 — Resumo</p>
+      <h2>SEO</h2>
+      <p class="block-intro">Detalhados em Prioridade Alta e Melhorias Médias: falta favicon, canonical, Open Graph, Twitter Card, JSON-LD (<code>Organization</code> + <code>WebSite</code>); meta description com 174 caracteres (acima do limite prático); nomes inconsistentes entre secções ("Segurança Elétrica" na meta description vs. "Segurança &amp; Alarmes" na pill/nav). Em falta por completo:</p>
+      <ul class="steps">
+        <li><span class="chk"></span> <code>robots.txt</code> — não existe no projeto.</li>
+        <li><span class="chk"></span> <code>sitemap.xml</code> — não existe no projeto.</li>
+      </ul>
+    </section>
+
+    <section class="block" id="perf">
+      <p class="eyebrow">07 — Resumo</p>
+      <h2>Performance</h2>
+      <p class="block-intro">Os dois itens de maior impacto (logo em Base64 no CSS crítico, canvas da hero sem pausa) estão em Prioridade Alta; <code>will-change</code> órfão e variáveis mortas em Melhorias Médias. Adicionalmente:</p>
+      <ul class="steps">
+        <li><span class="chk"></span> 3 famílias tipográficas carregadas via Google Fonts (Inter, JetBrains Mono, Michroma) — todas em uso real, nenhuma para remover.</li>
+        <li><span class="chk"></span> <code>&lt;link rel="preconnect"&gt;</code> já presente para os dois domínios de fontes — correto, mantém-se.</li>
+        <li><span class="chk"></span> Consolidação de scroll/rAF já feita numa ronda anterior (um único ticker) — sem trabalho adicional aqui além da pausa do canvas.</li>
+      </ul>
+    </section>
+
+    <section class="block" id="code">
+      <p class="eyebrow">08 — Resumo</p>
+      <h2>Qualidade de código</h2>
+      <p class="block-intro">Detalhado em Melhorias Médias: 104 <code>style=""</code> inline, ficheiro único de 275 KB, 61 SVGs inline com repetição literal. O sistema de tokens CSS (<code>--accent</code>, <code>--card</code>, <code>--line</code>…) em si está bem estruturado e é reaproveitado corretamente por secção — a base fica, só a disciplina de aplicação precisa de ajuste.</p>
+    </section>
+
+    <section class="block" id="ux">
+      <p class="eyebrow">09 — Resumo</p>
+      <h2>UX / conversão</h2>
+      <ul class="steps">
+        <li><span class="chk"></span> "Iniciar avaliação técnica" mantém-se como CTA principal — usado na hero e no rodapé; nenhuma alteração de posicionamento necessária.</li>
+        <li><span class="chk"></span> CTAs contextuais a meio do site — hoje só existem no início (Capa) e no fim (Avaliação); depois do OFS e depois do Índice de Capacidades ficariam dois pontos naturais de conversão a meio do percurso de leitura.</li>
+        <li><span class="chk"></span> Estados de carregamento/sucesso/erro do formulário já existem no JS (<code>assess-status</code>, desativação do botão durante o envio) — confirmados a funcionar, sem trabalho adicional além de ligar o Formspree real.</li>
+        <li><span class="chk"></span> Anti-spam em falta — ver prioridade alta.</li>
+        <li><span class="chk"></span> Consentimento RGPD em falta — ver crítico.</li>
+      </ul>
+    </section>
+
+    <section class="block" id="plan">
+      <p class="eyebrow">10 — Ordem exata de execução</p>
+      <h2>Plano de implementação</h2>
+      <p class="block-intro">Nove fases, na ordem em que as executaria depois de aprovado. Cada item marcado <span class="tag needs" style="vertical-align:1px">precisa de ti</span> não avança sem uma resposta tua primeiro — o resto posso implementar diretamente.</p>
+
+      <div class="phase">
+        <div class="phase-hd"><span class="n">Fase 1</span><h4>Bloqueadores de conteúdo e legais</h4></div>
+        <ul class="steps">
+          <li><b>Contacto real</b> — substituir/remover o telefone e o email provisórios <span class="tag needs needs-mark">precisa de ti</span></li>
+          <li><b>Formspree</b> — ligar o endpoint real <span class="tag needs needs-mark">precisa de ti</span></li>
+          <li><b>Consentimento RGPD</b> — checkbox + linha de política de privacidade no formulário <span class="tag needs needs-mark">precisa de ti</span></li>
+        </ul>
+      </div>
+
+      <div class="phase">
+        <div class="phase-hd"><span class="n">Fase 2</span><h4>Estrutura e semântica</h4></div>
+        <ul class="steps">
+          <li><span class="chk"></span> Criar <code>&lt;footer&gt;</code> real com contacto, disclaimer e copyright</li>
+          <li><span class="chk"></span> Descer o H1 do OFS para H2</li>
+          <li><span class="chk"></span> <code>&lt;noscript&gt;</code> global para garantir conteúdo visível sem JS</li>
+          <li><span class="chk"></span> Corrigir contadores animados para mostrarem o valor final sob movimento reduzido</li>
+        </ul>
+      </div>
+
+      <div class="phase">
+        <div class="phase-hd"><span class="n">Fase 3</span><h4>Acessibilidade</h4></div>
+        <ul class="steps">
+          <li><span class="chk"></span> <code>aria-current</code> no item de navegação ativo (nav + rail)</li>
+          <li><span class="chk"></span> <code>aria-invalid</code> dinâmico nos campos do formulário</li>
+          <li><span class="chk"></span> Foco visível em <code>input/select/textarea</code></li>
+          <li><span class="chk"></span> Escape a fechar o menu mobile + foco devolvido ao botão</li>
+          <li><span class="chk"></span> Rail de navegação sem <code>href</code> (clique só via JS)</li>
+        </ul>
+      </div>
+
+      <div class="phase">
+        <div class="phase-hd"><span class="n">Fase 4</span><h4>Conteúdo e afirmações</h4></div>
+        <ul class="steps">
+          <li><b>Fonte das estatísticas de incêndio</b> <span class="tag needs needs-mark">precisa de ti</span></li>
+          <li><b>Confirmação do alcance de "drones autónomos"/"intervenção"</b> <span class="tag needs needs-mark">precisa de ti</span></li>
+          <li><b>AcquaSense — relatório real ou linguagem atenuada</b> <span class="tag needs needs-mark">precisa de ti</span></li>
+          <li><span class="chk"></span> Corrigir contagem de parâmetros do AcquaSense (13 vs. 11 nomeados)</li>
+          <li><span class="chk"></span> Resolver contradição 5G/LoRaWAN entre OFS e Conectividade</li>
+          <li><span class="chk"></span> Uniformizar pt-PT: humidade, monitorização, Azoto</li>
+        </ul>
+      </div>
+
+      <div class="phase">
+        <div class="phase-hd"><span class="n">Fase 5</span><h4>Performance</h4></div>
+        <ul class="steps">
+          <li><span class="chk"></span> Extrair o logo Base64 para ficheiro externo (+ preload da versão grande)</li>
+          <li><span class="chk"></span> Pausar o canvas da hero fora da viewport</li>
+          <li><span class="chk"></span> Remover <code>will-change</code> órfãos e variáveis CSS mortas</li>
+        </ul>
+      </div>
+
+      <div class="phase">
+        <div class="phase-hd"><span class="n">Fase 6</span><h4>Qualidade de código</h4></div>
+        <ul class="steps">
+          <li><span class="chk"></span> Substituir os padrões inline mais repetidos por classes utilitárias</li>
+          <li><span class="chk"></span> Sprite <code>&lt;symbol&gt;</code>/<code>&lt;use&gt;</code> para ícones repetidos</li>
+          <li><b>Separar em <code>styles.css</code> + <code>main.js</code>?</b> <span class="tag needs needs-mark">precisa de ti</span></li>
+        </ul>
+      </div>
+
+      <div class="phase">
+        <div class="phase-hd"><span class="n">Fase 7</span><h4>SEO</h4></div>
+        <ul class="steps">
+          <li><span class="chk"></span> Favicon a partir do mark OPUS</li>
+          <li><b>URL de produção para o canonical/OG</b> <span class="tag needs needs-mark">precisa de ti</span></li>
+          <li><span class="chk"></span> Meta OG + Twitter Card, JSON-LD Organization + WebSite</li>
+          <li><span class="chk"></span> Encurtar meta description para ~155 caracteres</li>
+          <li><span class="chk"></span> Rascunho de <code>robots.txt</code> e <code>sitemap.xml</code></li>
+        </ul>
+      </div>
+
+      <div class="phase">
+        <div class="phase-hd"><span class="n">Fase 8</span><h4>Conversão e design</h4></div>
+        <ul class="steps">
+          <li><span class="chk"></span> Honeypot + verificação de tempo no formulário</li>
+          <li><span class="chk"></span> Dois CTAs contextuais a meio do percurso (após OFS, após o Índice de Capacidades)</li>
+          <li><span class="chk"></span> Legenda reutilizável "verificado / teste de campo / protótipo / ilustrativo" nos painéis de demonstração</li>
+          <li><span class="chk"></span> Espaço reservado para certificações/parceiros/projetos</li>
+          <li><span class="chk"></span> Versão leve do tratamento "dossiê" nas cinco verticais restantes</li>
+        </ul>
+      </div>
+
+      <div class="phase">
+        <div class="phase-hd"><span class="n">Fase 9</span><h4>QA final</h4></div>
+        <ul class="steps">
+          <li><span class="chk"></span> Desktop + mobile, consola sem erros, sem overflow horizontal</li>
+          <li><span class="chk"></span> Movimento reduzido (com os contadores corrigidos)</li>
+          <li><span class="chk"></span> Navegação por teclado ponta a ponta, incluindo o novo Escape do menu</li>
+          <li><span class="chk"></span> Verificação de todas as âncoras internas após qualquer renumeração</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="block closing" id="inputs">
+      <p class="eyebrow">Antes de avançar</p>
+      <h2>O que só tu podes dar-me</h2>
+      <p>Consigo implementar tudo o resto sozinho. Estes sete pontos bloqueiam fases específicas do plano acima até teres uma resposta:</p>
+      <ul class="inputs">
+        <li><span class="num">1</span> Telefone e morada reais para o formulário/contacto (ou confirmação para remover o telefone até existir um).</li>
+        <li><span class="num">2</span> ID real do formulário Formspree.</li>
+        <li><span class="num">3</span> Se já existe uma política de privacidade para ligar ao consentimento RGPD, ou se redijo um placeholder legal para revisão.</li>
+        <li><span class="num">4</span> Fonte oficial das estatísticas de incêndios (~150k ha / 92% / Norte do Tejo).</li>
+        <li><span class="num">5</span> Alcance real da autonomia dos drones e do que "intervenção" cobre tecnicamente.</li>
+        <li><span class="num">6</span> Documentação do teste de 30 dias do AcquaSense (local, data, relatório) — ou luz verde para atenuar a frase.</li>
+        <li><span class="num">7</span> URL de produção definitivo, para o canonical e o Open Graph.</li>
+      </ul>
+      <p style="margin-top:22px">À espera da tua aprovação — total, por fase, ou com ajustes — antes de tocar em qualquer ficheiro.</p>
+    </section>
+
+  </main>
+</div>
+
+<footer class="doc-footer">
+  <span>OPUS Corp. · Auditoria de pré-produção</span>
+  <span>Nenhuma alteração aplicada</span>
+</footer>
