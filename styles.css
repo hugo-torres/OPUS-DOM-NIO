@@ -529,7 +529,7 @@ ul.ck.d li::before{background:var(--dim)}
 }
 .rail-nav a{
   position:relative;display:block;width:7px;height:7px;padding:0;margin:0;font-size:0;line-height:0;
-  border-radius:50%;
+  border-radius:50%;cursor:pointer;
   background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.24);
   transition:background .2s var(--ease-out),border-color .2s var(--ease-out),transform .2s var(--ease-out);
 }
@@ -600,6 +600,7 @@ ul.ck.d li::before{background:var(--dim)}
 .field select{-webkit-appearance:none;appearance:none}
 .field textarea{resize:vertical;min-height:104px;font-family:var(--font)}
 .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--accent);background:rgba(255,255,255,.045)}
+.field input:focus-visible,.field select:focus-visible,.field textarea:focus-visible{outline:2px solid var(--accent-2);outline-offset:2px}
 .field .err{font-size:11px;color:#ff8259;display:none;font-family:var(--font-mono)}
 .field.invalid input,.field.invalid select,.field.invalid textarea{border-color:rgba(224,69,44,.6)}
 .field.invalid .err{display:block}

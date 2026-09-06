@@ -21,8 +21,13 @@
 
   /* ── progress bar + scroll-spy + parallax (um único ticker) ──── */
   var prog = document.getElementById('prog');
-  var links = Array.prototype.slice.call(document.querySelectorAll('#nav a, #rail a'));
-  var secs = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
+  // #nav e #rail apontam para os mesmos 12 destinos, pela mesma ordem — o
+  // índice "ativo" é calculado uma única vez a partir de #nav (a lista
+  // canónica) e depois aplicado às duas listas, para não haver dois
+  // conjuntos de secções a competerem pelo mesmo índice.
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll('#nav a'));
+  var railLinks = Array.prototype.slice.call(document.querySelectorAll('#rail a'));
+  var secs = navLinks.map(function(a){ return document.querySelector(a.getAttribute('href')); });
   var parallaxEls = reduce ? [] : Array.prototype.slice.call(document.querySelectorAll('.hero .art'));
   var ticking = false;
   function update(){
@@ -33,9 +38,19 @@
     var probe = h.scrollTop + h.clientHeight * 0.28;
     var active = -1;
     for (var i = 0; i < secs.length; i++){ if (secs[i] && secs[i].offsetTop <= probe) active = i; }
-    links.forEach(function(a, i){ a.classList.toggle('on', i === active); });
+    navLinks.forEach(function(a, i){
+      var isActive = i === active;
+      a.classList.toggle('on', isActive);
+      if (isActive) a.setAttribute('aria-current', 'location');
+      else a.removeAttribute('aria-current');
+    });
+    railLinks.forEach(function(a, i){ a.classList.toggle('on', i === active); });
     var totop = document.getElementById('totop');
-    if (totop) totop.classList.toggle('show', h.scrollTop > h.clientHeight * 0.6);
+    if (totop){
+      var showTop = h.scrollTop > h.clientHeight * 0.6;
+      totop.classList.toggle('show', showTop);
+      totop.tabIndex = showTop ? 0 : -1;
+    }
     if (parallaxEls.length){
       parallaxEls.forEach(function(el){
         var r = el.getBoundingClientRect();
@@ -51,10 +66,25 @@
   window.addEventListener('load', update);
   update();
 
+  /* ── rail nav: indicador decorativo — clique ainda funciona para rato,
+     mas já não é um link (sem href), por isso o "salto" é feito aqui ──── */
+  document.querySelectorAll('#rail a[data-target]').forEach(function(a){
+    a.addEventListener('click', function(){
+      var target = document.querySelector(a.getAttribute('data-target'));
+      if (target) target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    });
+  });
+
   /* ── nav mobile toggle ─────────────────────────────────────── */
   var navToggle = document.getElementById('navToggle');
   var navEl = document.getElementById('nav');
   if (navToggle && navEl){
+    function closeMobileNav(returnFocus){
+      navEl.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      navToggle.setAttribute('aria-label', 'Abrir menu');
+      if (returnFocus) navToggle.focus();
+    }
     navToggle.addEventListener('click', function(){
       var open = navEl.classList.toggle('open');
       navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
@@ -62,9 +92,12 @@
     });
     navEl.addEventListener('click', function(e){
       if (e.target.tagName === 'A'){
-        navEl.classList.remove('open');
-        navToggle.setAttribute('aria-expanded', 'false');
-        navToggle.setAttribute('aria-label', 'Abrir menu');
+        closeMobileNav(false);
+      }
+    });
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape' && navEl.classList.contains('open')){
+        closeMobileNav(true);
       }
     });
   }
@@ -79,26 +112,35 @@
 
   /* ── contadores animados (stat b com data-count) ─────────────── */
   var counters = document.querySelectorAll('[data-count]');
-  if (counters.length && 'IntersectionObserver' in window && !reduce){
-    var cio = new IntersectionObserver(function(entries){
-      entries.forEach(function(en){
-        if (!en.isIntersecting) return;
-        var el = en.target;
+  if (counters.length){
+    if (reduce || !('IntersectionObserver' in window)){
+      // sem animação: mostra já o valor final, nunca fica preso em "0"
+      counters.forEach(function(el){
         var target = parseFloat(el.getAttribute('data-count'));
         var suffix = el.getAttribute('data-suffix') || '';
-        var dur = 1100, start = null;
-        function step(ts){
-          if (!start) start = ts;
-          var p = Math.min(1, (ts - start) / dur);
-          var eased = 1 - Math.pow(1 - p, 3);
-          el.textContent = (Math.round(target * eased * 10) / 10) + suffix;
-          if (p < 1) requestAnimationFrame(step);
-        }
-        requestAnimationFrame(step);
-        cio.unobserve(el);
+        el.textContent = target + suffix;
       });
-    }, { threshold: 0.5 });
-    counters.forEach(function(c){ cio.observe(c); });
+    } else {
+      var cio = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          if (!en.isIntersecting) return;
+          var el = en.target;
+          var target = parseFloat(el.getAttribute('data-count'));
+          var suffix = el.getAttribute('data-suffix') || '';
+          var dur = 1100, start = null;
+          function step(ts){
+            if (!start) start = ts;
+            var p = Math.min(1, (ts - start) / dur);
+            var eased = 1 - Math.pow(1 - p, 3);
+            el.textContent = (Math.round(target * eased * 10) / 10) + suffix;
+            if (p < 1) requestAnimationFrame(step);
+          }
+          requestAnimationFrame(step);
+          cio.unobserve(el);
+        });
+      }, { threshold: 0.5 });
+      counters.forEach(function(c){ cio.observe(c); });
+    }
   }
 
   /* ── hero: rede de sensores animada em canvas ─────────────────── */
@@ -203,6 +245,7 @@
         var field = input.closest('.field');
         var valid = input.checkValidity();
         if (field) field.classList.toggle('invalid', !valid);
+        input.setAttribute('aria-invalid', valid ? 'false' : 'true');
         if (!valid){ ok = false; if (!firstInvalid) firstInvalid = input; }
       }
       if (firstInvalid) firstInvalid.focus();
@@ -214,6 +257,7 @@
         var field = input.closest('.field');
         if (field && field.classList.contains('invalid') && input.checkValidity()){
           field.classList.remove('invalid');
+          input.setAttribute('aria-invalid', 'false');
         }
       });
     });
