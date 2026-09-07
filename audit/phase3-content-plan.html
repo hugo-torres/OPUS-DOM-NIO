@@ -1,0 +1,364 @@
+<title>Fase 3 — Conteúdo e Credibilidade</title>
+<style>
+:root{
+  --bg:#05070f; --card:#0a0e18; --card-2:#10141f;
+  --line:rgba(150,180,255,.10); --line-2:rgba(160,190,255,.18);
+  --text:#f0f1f4; --muted:#9a9aa8; --dim:#7b7b88;
+  --accent:#3f8cf5; --accent-2:#7db4ff;
+  --keep:#3ddc97; --evolve:#5b9df9; --rebuild:#ecb54a; --remove:#f2664a; --input:#a78bfa;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;font-size:15px;line-height:1.6}
+code,.mono{font-family:'JetBrains Mono',ui-monospace,monospace}
+h1,h2,h3,h4{font-weight:500;letter-spacing:-.02em;text-wrap:balance;margin:0}
+a{color:var(--accent-2)}
+.masthead{padding:44px clamp(20px,5vw,64px) 30px;border-bottom:1px solid var(--line-2);background:radial-gradient(1200px 400px at 20% -10%,rgba(63,140,245,.10),transparent)}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;color:var(--accent-2);text-transform:uppercase;display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.eyebrow::before{content:'';width:16px;height:1px;background:currentColor;opacity:.6}
+h1.title{font-size:clamp(1.7rem,3.6vw,2.5rem);max-width:16ch}
+.scope{max-width:70ch;color:var(--muted);margin-top:14px;font-size:14.5px}
+.scope b{color:var(--text)}
+.notice{margin-top:18px;display:flex;gap:10px;padding:13px 16px;border:1px solid rgba(167,139,250,.3);background:rgba(167,139,250,.07);border-radius:10px;max-width:70ch;font-size:13.5px;color:#d8cdfb}
+.dash{display:flex;gap:1px;background:var(--line-2);border:1px solid var(--line-2);border-radius:12px;overflow:hidden;margin-top:26px;flex-wrap:wrap}
+.tile{flex:1 1 140px;background:var(--card);padding:16px 18px}
+.tile b{display:block;font-size:26px;font-variant-numeric:tabular-nums}
+.tile span{font-size:11.5px;color:var(--dim);font-family:'JetBrains Mono',monospace}
+.tile.keep b{color:var(--keep)} .tile.evolve b{color:var(--evolve)} .tile.input b{color:var(--input)} .tile.remove b{color:var(--remove)}
+.wrap{display:grid;grid-template-columns:230px 1fr;gap:0;max-width:1240px;margin:0 auto}
+.toc{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:30px 18px;border-right:1px solid var(--line);font-family:'JetBrains Mono',monospace;font-size:12.5px}
+.toc a{display:block;color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:6px;margin-bottom:1px}
+.toc a:hover{color:var(--text);background:rgba(255,255,255,.04)}
+.toc .n{color:var(--dim);margin-right:6px}
+.content{padding:36px clamp(20px,4vw,56px) 90px;min-width:0}
+.block{padding-bottom:50px;margin-bottom:44px;border-bottom:1px solid var(--line)}
+.block:last-child{border-bottom:0}
+.block-head{margin-bottom:22px}
+.block-num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent-2);letter-spacing:.06em;margin-bottom:6px}
+.block h2{font-size:1.5rem}
+.block-intro{color:var(--muted);max-width:72ch;margin-top:8px;font-size:14px}
+.item{border:1px solid var(--line-2);background:var(--card);border-radius:12px;padding:20px 22px;margin-bottom:16px}
+.item-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.item-head h3{font-size:15.5px;flex:1 1 auto}
+.badge{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.04em;padding:3px 8px;border-radius:5px;white-space:nowrap}
+.badge.keep{color:#04140d;background:var(--keep)}
+.badge.evolve{color:#04101f;background:var(--evolve)}
+.badge.rebuild{color:#221703;background:var(--rebuild)}
+.badge.remove{color:#210806;background:var(--remove)}
+.badge.input{color:#fff;background:var(--input)}
+.loc{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--dim);margin-bottom:10px}
+.wt{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+@media(max-width:720px){.wt{grid-template-columns:1fr}}
+.wt .col{background:var(--card-2);border:1px solid var(--line);border-radius:8px;padding:12px 14px}
+.wt .col .k{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.06em;margin-bottom:7px}
+.wt .col.was{border-left:2px solid var(--remove)}
+.wt .col.now{border-left:2px solid var(--keep)}
+.wt p{margin:0;font-size:13.5px}
+.why{font-size:13.5px;color:var(--muted);margin:10px 0 0}
+.why b{color:var(--text)}
+.needinput{margin-top:12px;padding:10px 13px;border:1px dashed rgba(167,139,250,.45);background:rgba(167,139,250,.06);border-radius:8px;font-size:13px;color:#d8cdfb}
+.needinput b{color:#fff}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:12px 0}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+th{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--dim);text-transform:uppercase;letter-spacing:.05em;font-weight:500}
+td code{background:var(--card-2);padding:1px 6px;border-radius:4px;font-size:12.5px}
+.sources li{margin-bottom:8px;font-size:13.5px}
+.closing ol{padding-left:20px}
+.closing li{margin-bottom:14px;font-size:14px}
+.closing li b{display:block;color:var(--text);margin-bottom:3px}
+footer.doc-footer{padding:30px clamp(20px,4vw,56px);border-top:1px solid var(--line);color:var(--dim);font-family:'JetBrains Mono',monospace;font-size:11px;display:flex;justify-content:space-between}
+::selection{background:rgba(63,140,245,.35)}
+</style>
+
+<header class="masthead">
+  <p class="eyebrow">Fase 3 · OPUS Corp. — Repertório de Soluções</p>
+  <h1 class="title">Conteúdo, credibilidade e precisão técnica</h1>
+  <p class="scope">Revisão completa do texto atual do site — <b>nenhum ficheiro foi alterado</b>. Cada item mostra a frase exata como está hoje, a proposta de substituição, porque melhora o posicionamento da OPUS, e a classificação KEEP / EVOLVE / REBUILD / REMOVE que pediste. Onde não posso decidir sozinho sem inventar um facto, está marcado a roxo.</p>
+  <div class="notice">⚠ Este documento só contém <b>edições de texto e classificação de afirmações</b> — nenhuma mudança visual, de layout ou de identidade está proposta aqui. Isso preserva exatamente o princípio que definiste: evolutivo, não destrutivo.</div>
+  <div class="dash">
+    <div class="tile evolve"><b>11</b><span>EVOLVE — pronto a aplicar</span></div>
+    <div class="tile input"><b>8</b><span>precisam da tua confirmação</span></div>
+    <div class="tile keep"><b>1</b><span>REMOVE / simplificar (opcional)</span></div>
+    <div class="tile"><b>0</b><span>REBUILD — nenhum necessário</span></div>
+  </div>
+</header>
+
+<div class="wrap">
+  <nav class="toc">
+    <a href="#ofs"><span class="n">01</span>OFS — flagship</a>
+    <a href="#agro"><span class="n">02</span>Agro &amp; AcquaSense</a>
+    <a href="#conectividade"><span class="n">03</span>5G vs. LoRaWAN</a>
+    <a href="#outras"><span class="n">04</span>Outras verticais</a>
+    <a href="#terminologia"><span class="n">05</span>Terminologia pt-PT</a>
+    <a href="#nomenclatura"><span class="n">06</span>Nomes de produto</a>
+    <a href="#hierarquia"><span class="n">07</span>Hierarquia e repetição</a>
+    <a href="#fontes"><span class="n">08</span>Fontes verificadas</a>
+    <a href="#inputs"><span class="n">—</span>O que preciso de ti</a>
+    <a href="#plano"><span class="n">09</span>Plano de implementação</a>
+  </nav>
+
+  <main class="content">
+
+    <section class="block" id="ofs">
+      <div class="block-head">
+        <div class="block-num">01 — OFS, o produto emblemático</div>
+        <h2>A secção mais forte do site — e a que carrega mais afirmações por confirmar</h2>
+        <p class="block-intro">Nada aqui precisa de ser reescrito de raiz. O texto é bom; o problema é que várias frases fazem afirmações específicas e verificáveis (tempo de resposta, autonomia, evidência de campo) sem que eu saiba se correspondem a factos reais da OPUS.</p>
+      </div>
+
+      <div class="item">
+        <div class="item-head"><h3>Título principal do OFS</h3><span class="badge evolve">EVOLVE</span></div>
+        <div class="loc">H2 da secção OFS (já aprovado por ti anteriormente)</div>
+        <div class="wt">
+          <div class="col was"><div class="k">Atual</div><p>"Detetar. Agir. <b>Salvar vidas.</b>"</p></div>
+          <div class="col now"><div class="k">Proposto</div><p>"Detetar. Agir. <b>Proteger.</b>"</p></div>
+        </div>
+        <p class="why"><b>Porquê:</b> já aprovaste esta mudança numa mensagem anterior — incluída aqui apenas para ficar registada no plano de conteúdo e ser aplicada nesta fase, já que é precisamente uma alteração de texto.</p>
+      </div>
+
+      <div class="item">
+        <div class="item-head"><h3>"Prevenção" vs. deteção e resposta</h3><span class="badge evolve">EVOLVE</span></div>
+        <div class="loc">Cartão do OFS na secção Ecossistema</div>
+        <div class="wt">
+          <div class="col was"><div class="k">Atual</div><p>"Torres autónomas com drones de deteção térmica e intervenção — o nosso produto emblemático na <b>prevenção de incêndios florestais</b>."</p></div>
+          <div class="col now"><div class="k">Proposto</div><p>"Torres autónomas com drones de deteção térmica e intervenção — o nosso produto emblemático na <b>deteção precoce e resposta a incêndios florestais</b>."</p></div>
+        </div>
+        <p class="why"><b>Porquê:</b> o OFS deteta e responde — não impede o fogo de começar. "Prevenção" é uma categoria diferente (gestão de combustível, queimas controladas). Para uma empresa de engenharia, chamar ao sistema o nome tecnicamente certo é mais credível do que usar a palavra que soa melhor. O resto do texto do OFS já usa "deteção precoce" corretamente — este cartão é a única inconsistência.</p>
+      </div>
+
+      <div class="item">
+        <div class="item-head"><h3>Tempo de resposta</h3><span class="badge input">PRECISA DA TUA CONFIRMAÇÃO</span></div>
+        <div class="loc">Parágrafo principal do OFS + especificação "Fase 02 · Intervenção"</div>
+        <div class="wt">
+          <div class="col was"><div class="k">Atual</div><p>"...detetam e respondem a um foco de incêndio <b>a partir dos primeiros minutos</b>." / especificação: "Resposta — <b>A partir dos primeiros minutos</b>"</p></div>
+          <div class="col now"><div class="k">Proposto (se não for medido)</div><p>"...são <b>concebidas para detetar e responder</b> a um foco de incêndio em poucos minutos." / "Resposta — <b>tempo-alvo de poucos minutos</b> (arquitetura de deteção + descolagem automática)"</p></div>
+        </div>
+        <div class="needinput"><b>Preciso que me digas:</b> este "a partir dos primeiros minutos" é um tempo medido em campo (real), ou é o tempo de resposta que a arquitetura foi desenhada para alcançar (teórico/objetivo de engenharia)? Se for medido, digo-me o número real e mantenho a afirmação forte com a fonte certa. Se for um objetivo de desenho, mudo para a versão "concebido para", que é igualmente forte mas não finge ser um resultado medido.</div>
+      </div>
+
+      <div class="item">
+        <div class="item-head"><h3>Drones autónomos de intervenção</h3><span class="badge input">PRECISA DA TUA CONFIRMAÇÃO</span></div>
+        <div class="loc">"Fase 02 · Intervenção" + cartão "Recarga automática"</div>
+        <div class="wt">
+          <div class="col was"><div class="k">Atual</div><p>"...os drones de intervenção descolam em direção às coordenadas do foco, chegando a encostas e zonas de difícil acesso sem colocar pessoas em risco." / "Cada drone pousa e recarrega sozinho, pronto para a próxima ronda."</p></div>
+          <div class="col now"><div class="k">Proposto (depende da tua resposta)</div><p>Mantém-se tal como está <i>apenas se</i> for uma capacidade já construída/testada; caso contrário, marca-se como capacidade em desenvolvimento — ex.: "…capacidade desenhada para chegar a encostas e zonas de difícil acesso" — sem perder força de discurso.</p></div>
+        </div>
+        <div class="needinput"><b>Preciso que me digas:</b> a intervenção autónoma (descolagem automática, atuação sobre o foco, pouso e recarga sozinha) é uma capacidade <b>já construída e testada</b> pela OPUS, um <b>protótipo em desenvolvimento</b>, ou uma <b>capacidade proposta</b> a validar num próximo projeto? Drones de deteção autónomos são hoje comuns no mercado; drones de <i>intervenção</i> autónoma sobre um foco de incêndio são muito mais raros e é exatamente o tipo de afirmação que um cliente técnico vai querer testar. Preciso da classificação certa para não a apresentar como estabelecida se ainda não o é.</div>
+      </div>
+
+      <div class="item">
+        <div class="item-head"><h3>"Certificação" no modelo de venda</h3><span class="badge input">PRECISA DA TUA CONFIRMAÇÃO</span></div>
+        <div class="loc">Passo "3 · Configuração" do modelo de venda OFS</div>
+        <div class="wt">
+          <div class="col was"><div class="k">Atual</div><p>"3 · Configuração — Câmara térmica e <b>certificação</b>"</p></div>
+          <div class="col now"><div class="k">Proposto</div><p>"3 · Configuração — Câmara térmica e <b>conformidade regulatória de voo</b>" <i>(ou outra redação, consoante o que isto realmente cobre)</i></p></div>
+        </div>
+        <div class="needinput"><b>Preciso que me digas:</b> a que se refere exatamente "certificação" aqui — licenciamento de voo de drones junto da ANAC/autoridade aeronáutica, certificação de um equipamento específico, ou outra coisa? Como está, a palavra sozinha sugere uma credencial formal sem dizer qual, o que é vago para uma empresa que se quer apresentar como precisa e técnica.</div>
+      </div>
+
+      <div class="item">
+        <div class="item-head"><h3>Estatísticas de incêndios — números e fonte</h3><span class="badge evolve">EVOLVE · verificado externamente</span></div>
+        <div class="loc">Três cartões de estatística no topo da secção OFS</div>
+        <div class="wt">
+          <div class="col was"><div class="k">Atual</div><p>"<b>~150k ha</b> arderam em Portugal em 2024 — o terceiro pior ano da década." / "<b>92%</b> da área ardida em 2024 concentrou-se num único mês (setembro)." / "<b>Norte do Tejo</b> concentra a maioria dos concelhos com mais ocorrências do país."</p></div>
+          <div class="col now"><div class="k">Proposto</div><p>"<b>~136 mil ha</b> arderam em Portugal em 2024 — o terceiro pior ano da década." Os outros dois números batem certo com a fonte oficial e mantêm-se tal como estão. Junto aos três, uma linha discreta: "Fonte: ICNF — relatórios de incêndios rurais, 2024."</p></div>
+        </div>
+        <p class="why"><b>Porquê:</b> pesquisei os dados oficiais para confirmar estes três números antes de te propor qualquer coisa (ver secção 08, Fontes). O "92%" e o "Norte do Tejo" estão corretos, confirmados pelo ICNF e citados pela CNN Portugal e RTP. Mas o "~150k ha" corresponde a uma estimativa de meio de época (23 de setembro); o número final e mais citado pela imprensa a partir de dados do ICNF é <b>136.424 ha</b> (medido até 15 de outubro, já depois do pico de setembro). É a única das três afirmações que estava desatualizada, e agora tenho o número certo com fonte citável — o que, já agora, é exatamente o que "adicionar fontes a estatísticas externas" te pedia.</p>
+      </div>
+
+      <div class="item">
+        <div class="item-head"><h3>Comunicação 5G no OFS</h3><span class="badge input">PRECISA DA TUA CONFIRMAÇÃO</span></div>
+        <div class="loc">Ver secção dedicada 03 abaixo — a contradição com a página de Conectividade</div>
+        <p class="why">Tratado em detalhe na secção seguinte, porque a mesma afirmação aparece em quatro sítios do OFS e entra em contradição direta com a arquitetura descrita na página de Conectividade.</p>
+      </div>
+    </section>
+
+    <section class="block" id="agro">
+      <div class="block-head">
+        <div class="block-num">02 — Agro &amp; Ambiental / AcquaSense</div>
+        <h2>A secção com mais inconsistências internas de números</h2>
+        <p class="block-intro">O texto é tecnicamente sólido (DBO, cianobactérias, ORP e NPK são parâmetros reais e credíveis para este tipo de sensor). O que precisa de atenção é um número que não bate certo com a sua própria lista, e duas afirmações de validação de campo que preciso que confirmes antes de as manter como estão.</p>
+      </div>
+
+      <div class="item">
+        <div class="item-head"><h3>"13 parâmetros" vs. os parâmetros realmente listados</h3><span class="badge input">PRECISA DA TUA CONFIRMAÇÃO</span></div>
+        <div class="loc">Repetido 3×: estatística de destaque, fluxo "Boia de medição", cartão "AcquaSense"</div>
+        <table>
+          <thead><tr><th>Grupo</th><th>Parâmetros listados no texto</th><th>Contagem</th></tr></thead>
+          <tbody>
+            <tr><td>Água</td><td><code>O.D., pH, ORP, turbidez, TDS, amónia, DBO, cianobactérias</code></td><td>8</td></tr>
+            <tr><td>Meteo</td><td><code>Temp. do ar, luminosidade, pressão atmosférica</code></td><td>3</td></tr>
+            <tr><td><b>Total listado</b></td><td>—</td><td><b>11</b></td></tr>
+          </tbody>
+        </table>
+        <div class="needinput"><b>Preciso que me digas:</b> o AcquaSense mede mesmo 13 parâmetros e a lista no site está incompleta (faltam 2), ou o número certo é 11 e a estatística "13" está desatualizada? Isto aparece três vezes no texto, por isso vale a pena resolver-se de uma vez. Se me disseres quais são os 2 parâmetros em falta, atualizo a lista para bater certo com "13"; caso contrário, mudo as três ocorrências de "13" para "11".</div>
+      </div>
+
+      <div class="item">
+        <div class="item-head"><h3>Teste de 30 dias em água hipersalina</h3><span class="badge input">PRECISA DA TUA CONFIRMAÇÃO</span></div>
+        <div class="loc">Estatística de destaque + parágrafo da solução AcquaSense</div>
+        <div class="wt">
+          <div class="col was"><div class="k">Atual</div><p>"<b>30 dias</b> — operação contínua comprovada em água hipersalina." / "Testada 30 dias sem interrupções numa laguna costeira de água hipersalina, com dados validados contra análises laboratoriais oficiais da região."</p></div>
+          <div class="col now"><div class="k">Proposto (consoante a tua resposta)</div><p>Se confirmado: mantém-se, e classifica-se como <b>testado em campo</b> num rodapé/legenda. Se não puder ser confirmado com um relatório real: "conceção validada para operação contínua em ambientes hipersalinos" (capacidade de engenharia, não um resultado de teste específico).</p></div>
+        </div>
+        <div class="needinput"><b>Preciso que me digas:</b> este teste de 30 dias numa laguna costeira aconteceu mesmo, com um relatório ou registo que o comprove? E a validação contra "análises laboratoriais oficiais da região" — existe essa comparação documentada nalgum lado? São das afirmações mais fortes e mais específicas de todo o site (data, duração, tipo de água, validação laboratorial) — exatamente o tipo de coisa que, se for real, deve ficar com essa força toda; e se não for, é a que mais risco traz se um cliente técnico pedir para ver o relatório.</div>
+      </div>
+
+      <div class="item">
+        <div class="item-head"><h3>"Índice ICQMA"</h3><span class="badge input">PRECISA DA TUA CONFIRMAÇÃO</span></div>
+        <div class="loc">Especificação "Plataforma" do AcquaSense</div>
+        <div class="wt">
+          <div class="col was"><div class="k">Atual</div><p>"Dashboard · mapa · alertas · índice <b>ICQMA</b>"</p></div>
+          <div class="col now"><div class="k">Proposto</div><p>Se for um índice próprio da OPUS: "…índice <b>ICQMA</b> (índice próprio da plataforma)". Se pretendia referir o índice oficial: "…índice <b>IQA</b> (Índice de Qualidade da Água)".</p></div>
+        </div>
+        <div class="needinput"><b>Preciso que me digas:</b> pesquisei e não encontrei "ICQMA" como índice oficial reconhecido em Portugal — o índice-padrão citado na literatura é o IQA (Índice de Qualidade da Água). "ICQMA" pode ser um nome próprio da vossa plataforma (nesse caso só precisa de ficar claramente identificado como tal, o que é perfeitamente legítimo), ou pode ter sido pensado como o IQA oficial. Preciso de saber qual dos dois para não deixar ambíguo se é um índice interno ou uma referência a um standard externo.</div>
+      </div>
+    </section>
+
+    <section class="block" id="conectividade">
+      <div class="block-head">
+        <div class="block-num">03 — A contradição 5G / LoRaWAN</div>
+        <h2>A arquitetura de conectividade do OFS contradiz a página de Conectividade</h2>
+      </div>
+
+      <div class="item">
+        <div class="item-head"><h3>OFS afirma 5G em contexto florestal remoto</h3><span class="badge input">PRECISA DA TUA CONFIRMAÇÃO — recomendação incluída</span></div>
+        <div class="loc">4 ocorrências no OFS: parágrafo principal, chip "Comunicação 5G", "comunica de imediato à central via 5G", cartão "Comunicação 5G — …mesmo em zonas remotas"</div>
+        <p class="why">A página de <b>Conectividade</b> (secção 10) descreve a arquitetura de transmissão de todo o portefólio numa única frase: <i>"A única escolha que muda de projeto para projeto é como os dados chegam ao servidor: Ethernet, 4G ou LoRaWAN."</i> — 5G não é sequer uma das três opções. A mesma página diz explicitamente que <b>LoRaWAN é "a escolha natural para Defesa Civil e Agro"</b> — precisamente o perfil de instalação do OFS (remoto, disperso, longe da rede elétrica, à base de bateria/solar). E a cobertura 5G em zona florestal/rural em Portugal é, na prática, muito mais limitada do que em áreas urbanas — exatamente o oposto do que o texto do OFS descreve ("mesmo em zonas remotas").</p>
+        <div class="wt">
+          <div class="col was"><div class="k">Atual (4 ocorrências)</div><p>"…drones autónomos, inteligência artificial e <b>comunicação 5G</b>…" / "Comunicação 5G" (chip) / "…comunica de imediato à central <b>via 5G</b>." / "Comunicação 5G — Imagem, alertas e telemetria em tempo real, <b>mesmo em zonas remotas</b>."</p></div>
+          <div class="col now"><div class="k">Proposto</div><p>"…drones autónomos, inteligência artificial e <b>comunicação celular e LoRaWAN</b>…" / "Conectividade 4G / LoRaWAN" (chip) / "…comunica de imediato à central <b>via rede celular ou LoRaWAN, consoante a cobertura do terreno</b>." / "…mesmo em zonas remotas, com <b>LoRaWAN como reforço</b> onde a cobertura celular é fraca."</p></div>
+        </div>
+        <div class="needinput"><b>Preciso que me digas:</b> isto tem uma explicação técnica real que eu desconheço — por exemplo, uma antena 5G privada instalada na própria torre, cobrindo só aquele perímetro — ou é mesmo uma inconsistência de texto entre duas secções escritas em alturas diferentes? A minha recomendação, alinhada com a arquitetura que o resto do site descreve, é mudar o OFS para 4G/LoRaWAN — mas prefiro confirmar contigo do que corrigir uma coisa que pode estar tecnicamente certa por uma razão que não me contaste.</div>
+      </div>
+    </section>
+
+    <section class="block" id="outras">
+      <div class="block-head">
+        <div class="block-num">04 — As restantes verticais</div>
+        <h2>Smart City, Defesa Civil, Segurança, Metodologia — pouco a corrigir</h2>
+        <p class="block-intro">Estas quatro secções já cumprem bem os critérios de credibilidade: os dashboards estão corretamente marcados como "Exemplo ilustrativo", as afirmações técnicas são plausíveis e proporcionais (não há alegações de resultados, clientes ou certificações inventadas), e a linguagem já é maioritariamente pt-PT. Não há aqui nenhum item REBUILD.</p>
+      </div>
+      <div class="item">
+        <div class="item-head"><h3>"Cada área nasceu de um cliente real"</h3><span class="badge input">PRECISA DA TUA CONFIRMAÇÃO</span></div>
+        <div class="loc">Introdução da secção Ecossistema</div>
+        <div class="wt">
+          <div class="col was"><div class="k">Atual</div><p>"Cada área do nosso portefólio nasceu de <b>um problema concreto de um cliente real</b>."</p></div>
+          <div class="col now"><div class="k">Proposto (se não for literalmente verdade para as 6)</div><p>"Cada área do nosso portefólio nasceu de <b>um problema real de engenharia</b> — o mesmo tipo de problema que os nossos clientes enfrentam no terreno."</p></div>
+        </div>
+        <div class="needinput"><b>Preciso que me digas:</b> isto é literalmente verdade para as seis áreas — cada uma nasceu mesmo de um cliente/projeto real identificável — ou é uma forma de dizer que os problemas são genuinamente do mundo real (sem um cliente específico por trás de cada uma)? É uma frase pequena mas é uma afirmação factual específica sobre a origem da empresa; vale a pena ficar exata.</div>
+      </div>
+      <div class="item">
+        <div class="item-head"><h3>Todo o resto desta zona</h3><span class="badge keep">KEEP</span></div>
+        <div class="loc">Smart City, Defesa Civil, Segurança &amp; Alarmes, Metodologia</div>
+        <p class="why">Revi frase a frase. Traffic Vision, Phase Alarm, os sensores de Defesa Civil e a metodologia de 4 passos já descrevem capacidades de engenharia plausíveis, com o nível de detalhe técnico certo, sem estatísticas fabricadas nem alegações de clientes/certificações inventadas. Não proponho nenhuma mudança de conteúdo aqui — só as correções de terminologia da secção 05.</p>
+      </div>
+    </section>
+
+    <section class="block" id="terminologia">
+      <div class="block-head">
+        <div class="block-num">05 — Terminologia: padronizar para pt-PT</div>
+        <h2>Correções mecânicas — sem ambiguidade, sem precisar da tua confirmação</h2>
+        <p class="block-intro">Encontrei vocabulário brasileiro espalhado por três secções, provavelmente de uma fase de escrita anterior. "Contacto", "telemóvel" e "morada" já estão corretos e consistentes em todo o site — não há nada a mudar aí.</p>
+      </div>
+      <div class="item">
+        <div class="item-head"><h3>Substituições de vocabulário</h3><span class="badge evolve">EVOLVE — mecânico</span></div>
+        <table>
+          <thead><tr><th>Termo (BR)</th><th>Termo (PT)</th><th>Ocorrências</th><th>Onde</th></tr></thead>
+          <tbody>
+            <tr><td><code>umidade</code></td><td><code>humidade</code></td><td>7×</td><td>Agro (estação meteo, sensor de solo ×2, irrigação ×2, estufa), Defesa Civil (encostas)</td></tr>
+            <tr><td><code>monitoramento</code></td><td><code>monitorização</code></td><td>2×</td><td>Intro da secção Agro; cabeçalho do painel Phase Alarm</td></tr>
+            <tr><td><code>Nitrogênio</code></td><td><code>Azoto</code></td><td>1×</td><td>Sensor de Solo (Agro) — termo técnico de química em pt-PT</td></tr>
+            <tr><td><code>autônoma</code></td><td><code>autónoma</code></td><td>1×</td><td>Bóia de Ondas (Defesa Civil)</td></tr>
+            <tr><td><code>Continua vigiando e avisando</code></td><td><code>Continua a vigiar e a avisar</code></td><td>1×</td><td>Cartão "Backup de bateria" (Segurança)</td></tr>
+          </tbody>
+        </table>
+        <p class="why"><b>Porquê:</b> gerúndio contínuo ("vigiando") é a construção brasileira; o pt-PT usa "a + infinitivo" ("a vigiar"). O resto são só variações lexicais/ortográficas BR vs. PT já bem documentadas. Nenhuma destas muda o significado — é puramente consistência de idioma, por isso não preciso da tua confirmação para as aplicar.</p>
+      </div>
+    </section>
+
+    <section class="block" id="nomenclatura">
+      <div class="block-head">
+        <div class="block-num">06 — Nomes de produto: "OUS"</div>
+        <h2>Uma sub-marca usada uma única vez, nunca reforçada</h2>
+      </div>
+      <div class="item">
+        <div class="item-head"><h3>"OUS (OPUS Urban Systems)"</h3><span class="badge input">PRECISA DA TUA CONFIRMAÇÃO</span></div>
+        <div class="loc">Única ocorrência, introdução da secção Smart City</div>
+        <div class="wt">
+          <div class="col was"><div class="k">Atual</div><p>"O nosso sistema <b>OUS (OPUS Urban Systems)</b> parte daí: ilumina, liga, vê e fala com quem está na rua…"</p></div>
+          <div class="col now"><div class="k">Opção A — remover</div><p>"O nosso <b>sistema de infraestrutura urbana inteligente</b> parte daí: ilumina, liga, vê e fala com quem está na rua…"</p></div>
+        </div>
+        <p class="why"><b>Porquê:</b> ao contrário do OFS (usado dezenas de vezes, com identidade visual própria — selo, plate, cores), "OUS" aparece uma única vez em todo o site e nunca mais volta a ser referenciado nos três produtos que descreve a seguir (Poste Inteligente, Totem/Painel, Traffic Vision não voltam a chamar-se "OUS X"). Uma sub-marca introduzida e nunca reforçada lê-se como uma ideia a meio caminho, não como uma linha de produto real — o oposto do rigor que queres transmitir.</p>
+        <div class="needinput"><b>Preciso que me digas:</b> "OUS" já existe como nome interno/comercial real que queres reforçar (nesse caso proponho aplicá-lo de forma consistente nos três produtos, não só na introdução), ou foi só uma tentativa de nomenclatura que preferes simplificar removendo? Qualquer uma das duas é uma escolha de marca legítima — só preciso de saber qual.</div>
+      </div>
+    </section>
+
+    <section class="block" id="hierarquia">
+      <div class="block-head">
+        <div class="block-num">07 — Hierarquia de mensagem e repetição</div>
+        <h2>A estrutura já está bem pensada — apenas um ponto pequeno</h2>
+      </div>
+      <div class="item">
+        <div class="item-head"><h3>Estrutura geral: Capa → Empresa → Ecossistema → OFS → Capacidades → Metodologia → Avaliação</h3><span class="badge keep">KEEP</span></div>
+        <p class="why">Este é exatamente o tipo de coisa que não deve mudar só para mudar. A hero é minimalista e não promete demais; a Empresa explica o "porquê" antes do "o quê"; o OFS ganha destaque total como flagship sem enterrar as outras cinco áreas; a Metodologia fecha o argumento antes do formulário. É uma hierarquia de informação sólida e já ao nível do que se espera de uma empresa de engenharia internacional.</p>
+      </div>
+      <div class="item">
+        <div class="item-head"><h3>"Portugal · Global · Futuro"</h3><span class="badge keep">KEEP — repetição intencional, não excessiva</span></div>
+        <div class="loc">Aparece 2×: rodapé da Capa (abertura) e rodapé final (fecho)</div>
+        <p class="why">Verifiquei todas as ocorrências no corpo do site — são exatamente duas, uma a abrir e outra a fechar o repertório. Isto lê-se como um "bookend" deliberado, não como repetição por preguiça de copy. Não vejo motivo para remover; se preferires cortar uma das duas por gosto pessoal, a mais dispensável é a do rodapé da Capa, já que a mensagem de fecho tem mais peso simbólico no final.</p>
+      </div>
+    </section>
+
+    <section class="block" id="fontes">
+      <div class="block-head">
+        <div class="block-num">08 — Fontes verificadas nesta fase</div>
+        <h2>Pesquisa feita antes de propor qualquer correção às estatísticas de incêndios</h2>
+      </div>
+      <ul class="sources">
+        <li><a href="https://cnnportugal.iol.pt/incendios/fogos/area-ardida-em-2024-foi-a-terceira-maior-desta-decada/20241115/6737acafd34e94b829077e26" target="_blank" rel="noopener">CNN Portugal — "Área ardida em 2024 foi a terceira maior desta década"</a> (15 nov. 2024) — confirma 136.424 ha ardidos até 15/out, 92% em setembro (126.076 ha), e que os concelhos com mais ocorrências estão a norte do Tejo.</li>
+        <li><a href="https://www.rtp.pt/noticias/economia/area-ardida-de-mais-de-136-mil-ha-foi-a-terceira-maior-na-decada-icnf_n1615174" target="_blank" rel="noopener">RTP Notícias — "Área ardida de mais de 136 mil ha foi a terceira maior na década" (fonte: ICNF)</a> — segunda fonte independente para o mesmo número, citando diretamente o ICNF.</li>
+        <li><a href="https://www.icnf.pt/api/file/doc/0ed9a2f3e7b93cbc" target="_blank" rel="noopener">ICNF — 4.º Relatório Provisório de Incêndios Rurais 2024</a> — relatório oficial (cobre até 15 de agosto, antes do pico de setembro; usado para confirmar a fonte primária, não o total anual).</li>
+      </ul>
+      <p class="why">Não encontrei uma fonte que confirme "ICQMA" como índice de qualidade da água reconhecido — ver item na secção 02. Não pesquisei os números do AcquaSense ou os tempos de resposta do OFS, porque são dados internos da OPUS que só tu podes confirmar — nenhuma fonte pública os teria.</p>
+    </section>
+
+    <section class="block closing" id="inputs">
+      <div class="block-head">
+        <div class="block-num">O que só tu podes dar-me</div>
+        <h2>8 perguntas, todas já com a recomendação que aplicaria por defeito</h2>
+      </div>
+      <ol>
+        <li><b>1. Tempo de resposta do OFS ("primeiros minutos")</b> — medido em campo ou objetivo de conceção? Por defeito: mudo para "concebido para responder em poucos minutos".</li>
+        <li><b>2. Drones de intervenção autónoma</b> — capacidade construída/testada, protótipo, ou proposta? Por defeito: marco como "capacidade em desenvolvimento" até indicares o contrário.</li>
+        <li><b>3. "Certificação" no passo 3 do modelo de venda do OFS</b> — certificação de quê, exatamente? Por defeito: mudo para "conformidade regulatória de voo".</li>
+        <li><b>4. AcquaSense — "13 parâmetros"</b> — são 13 (faltam 2 na lista) ou são 11 (a estatística está desatualizada)? Por defeito: mudo as três ocorrências de "13" para "11", a bater com a lista visível.</li>
+        <li><b>5. AcquaSense — teste de 30 dias em água hipersalina, validado contra laboratório oficial</b> — aconteceu mesmo, com registo? Por defeito: suavizo para "conceção validada para" em vez de "testada" e "validados contra".</li>
+        <li><b>6. "Índice ICQMA"</b> — nome próprio da OPUS ou referência pretendida ao índice oficial (IQA)? Por defeito: mantenho "ICQMA" mas acrescento "(índice próprio da plataforma)".</li>
+        <li><b>7. OFS — 5G vs. 4G/LoRaWAN</b> — há uma razão técnica real (ex.: antena privada na torre) ou é inconsistência de texto? Por defeito: mudo as 4 ocorrências de "5G" no OFS para "4G / LoRaWAN", alinhando com a arquitetura descrita na página de Conectividade.</li>
+        <li><b>8. "OUS (OPUS Urban Systems)"</b> — nome real a reforçar, ou simplificar removendo? Por defeito: removo, e descrevo o sistema sem sub-marca.</li>
+      </ol>
+    </section>
+
+    <section class="block" id="plano">
+      <div class="block-head">
+        <div class="block-num">09 — Plano de implementação exato</div>
+        <h2>Assim que aprovares (no todo ou com ajustes), aplico por esta ordem</h2>
+      </div>
+      <ol>
+        <li><b>1.</b> Título OFS → "Detetar. Agir. Proteger." (já aprovado).</li>
+        <li><b>2.</b> Corrigir "prevenção" → "deteção precoce e resposta" no cartão OFS do Ecossistema.</li>
+        <li><b>3.</b> Corrigir a estatística de área ardida (~150k → ~136 mil ha) e acrescentar linha de fonte (ICNF) junto aos três cartões de estatística do OFS.</li>
+        <li><b>4.</b> Aplicar as 5 correções de terminologia pt-PT (secção 05) — mecânico, sem esperar por input.</li>
+        <li><b>5.</b> Resolver os 8 pontos da secção "O que só tu podes dar-me" — usando a tua resposta onde a deres, ou a opção por defeito onde não responderes a tempo (dizes-me qual preferes).</li>
+        <li><b>6.</b> QA final: reler o site inteiro uma vez depois de todas as edições aplicadas, à procura de qualquer nova inconsistência criada pelas próprias correções (ex.: se "OUS" for removido, confirmar que nenhuma outra frase o pressupõe).</li>
+        <li><b>7.</b> Commit git da Fase 3, com o mesmo nível de detalhe das mensagens de commit das Fases 1 e 2.</li>
+      </ol>
+    </section>
+
+  </main>
+</div>
+
+<footer class="doc-footer">
+  <span>OPUS Corp. · Fase 3 — Conteúdo e Credibilidade</span>
+  <span>Nenhuma alteração aplicada</span>
+</footer>
