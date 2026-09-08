@@ -623,12 +623,6 @@ ul.ck.d li::before{background:var(--dim)}
 .assess-side .item .v{font-size:13px;color:var(--muted);line-height:1.75}
 .assess-side .item .v a{color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line-2)}
 .assess-side .item .v a:hover{color:var(--accent-2)}
-.config-note{
-  margin-top:6px;border:1px dashed rgba(255,255,255,.16);border-radius:var(--r);padding:13px 15px;
-  font-family:var(--font-mono);font-size:10.5px;line-height:1.6;color:var(--dim);
-}
-.config-note code{color:var(--muted);background:rgba(255,255,255,.06);padding:1px 5px;border-radius:4px}
-
 /* ── canvas hero (rede de sensores) ──────────────────────────── */
 .netfx{position:absolute;inset:0;z-index:0;opacity:.5;pointer-events:none}
 .hero-wrap{position:relative}
