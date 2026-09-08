@@ -1,0 +1,391 @@
+<title>Fase 4 — SEO, Estrutura e Credibilidade Corporativa</title>
+<style>
+:root{
+  --bg:#05070f; --card:#0a0e18; --card-2:#10141f;
+  --line:rgba(150,180,255,.12); --line-2:rgba(160,190,255,.22);
+  --text:#f2f2f4; --muted:#a8a8b4; --dim:#7d7d88;
+  --accent:#5b9df9; --accent-2:#8ab8ff;
+  --keep:#3ddc97; --evolve:#5b9df9; --rebuild:#ecb54a; --remove:#f2664a; --input:#a78bfa;
+  --mono:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace;
+  --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-weight:600;letter-spacing:-.015em;margin:0 0 10px;text-wrap:balance}
+p{margin:0 0 12px;color:var(--muted)}
+a{color:var(--accent-2)}
+code{font-family:var(--mono);background:rgba(255,255,255,.06);padding:1px 6px;border-radius:4px;font-size:.9em;color:var(--text)}
+
+.masthead{padding:56px 28px 40px;max-width:1180px;margin:0 auto}
+.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;color:var(--accent-2);text-transform:uppercase;display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.eyebrow::before{content:'';width:20px;height:1px;background:currentColor;opacity:.6}
+.masthead h1{font-size:clamp(1.7rem,3.6vw,2.5rem)}
+.scope{color:var(--dim);font-size:13.5px;max-width:70ch;margin-bottom:22px}
+.notice{border:1px dashed rgba(255,255,255,.18);border-radius:10px;padding:14px 18px;font-size:13px;color:var(--dim);max-width:70ch;margin-bottom:28px}
+.notice b{color:var(--text)}
+
+.dash{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--line-2);border:1px solid var(--line-2);border-radius:12px;overflow:hidden}
+.dash .t{background:var(--card);padding:18px 16px}
+.dash .t b{display:block;font-family:var(--mono);font-size:26px;font-weight:600;margin-bottom:4px}
+.dash .t span{font-size:11px;color:var(--dim);line-height:1.4;display:block}
+.dash .t.keep b{color:var(--keep)} .dash .t.evolve b{color:var(--evolve)}
+.dash .t.rebuild b{color:var(--rebuild)} .dash .t.input b{color:var(--input)} .dash .t.remove b{color:var(--remove)}
+@media(max-width:760px){ .dash{grid-template-columns:repeat(2,1fr)} }
+
+.wrap{display:flex;max-width:1180px;margin:0 auto;gap:40px;padding:0 28px 100px;align-items:flex-start}
+.toc{position:sticky;top:24px;flex:0 0 230px;font-family:var(--mono);font-size:12px}
+.toc a{display:block;color:var(--dim);text-decoration:none;padding:6px 0;border-left:2px solid transparent;padding-left:12px;transition:color .15s,border-color .15s}
+.toc a:hover{color:var(--text);border-color:var(--line-2)}
+.content{flex:1;min-width:0}
+
+.block{margin-bottom:56px;scroll-margin-top:24px}
+.block > .sec-num{font-family:var(--mono);font-size:11px;color:var(--dim);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+.block > h2{font-size:1.4rem;margin-bottom:8px}
+.block > .lede{color:var(--muted);max-width:75ch;margin-bottom:24px;font-size:14px}
+
+.item{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin-bottom:16px}
+.item-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:10px}
+.item-head h3{font-size:15.5px;margin:0}
+.badge{font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 9px;border-radius:5px;white-space:nowrap;flex:0 0 auto}
+.badge.keep{color:#04150d;background:var(--keep)} .badge.evolve{color:#03101f;background:var(--evolve)}
+.badge.rebuild{color:#1f1300;background:var(--rebuild)} .badge.remove{color:#1a0400;background:var(--remove)}
+.badge.input{color:#0c0620;background:var(--input)}
+.loc{font-family:var(--mono);font-size:11px;color:var(--dim);margin-bottom:10px}
+.why{font-size:13.5px;color:var(--muted);margin:0}
+.why b{color:var(--text);font-weight:600}
+.needinput{border:1px dashed rgba(167,139,250,.5);background:rgba(167,139,250,.06);border-radius:9px;padding:13px 15px;margin-top:12px;font-size:13px}
+.needinput b{color:var(--input);display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}
+.needinput .default{margin-top:8px;padding-top:8px;border-top:1px solid rgba(167,139,250,.2);color:var(--dim);font-size:12.5px}
+.needinput .default b{display:inline;font-size:inherit;letter-spacing:0;text-transform:none;color:var(--muted);font-family:var(--sans)}
+
+.imgproof{display:flex;gap:16px;align-items:center;background:var(--card-2);border:1px solid var(--line);border-radius:10px;padding:14px;margin:12px 0}
+.imgproof img{width:84px;height:auto;border-radius:6px;background:#fff;flex:0 0 auto}
+.imgproof p{margin:0;font-size:12.5px}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:640px){ .grid2{grid-template-columns:1fr} }
+
+table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0}
+th{text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);padding:8px 10px;border-bottom:1px solid var(--line-2)}
+td{padding:9px 10px;border-bottom:1px solid var(--line);color:var(--muted);vertical-align:top}
+td:first-child,td b{color:var(--text)}
+
+ol.plan{list-style:none;margin:0;padding:0;counter-reset:step}
+ol.plan li{counter-increment:step;position:relative;padding:14px 0 14px 44px;border-bottom:1px solid var(--line)}
+ol.plan li:last-child{border-bottom:0}
+ol.plan li::before{content:counter(step);position:absolute;left:0;top:14px;width:28px;height:28px;border-radius:50%;background:var(--card-2);border:1px solid var(--line-2);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;color:var(--accent-2)}
+ol.plan b{display:block;color:var(--text);margin-bottom:3px}
+ol.plan span{font-size:13px;color:var(--dim)}
+ol.plan .gate{display:inline-block;margin-top:6px;font-family:var(--mono);font-size:10px;color:var(--input);background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.3);padding:2px 8px;border-radius:5px}
+
+.doc-footer{max-width:1180px;margin:0 auto;padding:30px 28px 60px;color:var(--dim);font-size:12px;font-family:var(--mono);border-top:1px solid var(--line);text-align:center}
+</style>
+
+<div class="masthead">
+  <p class="eyebrow">Fase 4 · OPUS Corp. — Auditoria técnica</p>
+  <h1>SEO, estrutura de informação e credibilidade de nível internacional</h1>
+  <p class="scope">Auditoria completa do estado atual do site (pós-Fase 3) contra o padrão de uma empresa multinacional de engenharia/tecnologia. Cobre SEO técnico, arquitetura de descoberta, sinais de credibilidade corporativa, performance e requisitos para publicação em domínio próprio.</p>
+  <div class="notice"><b>Nenhum ficheiro foi alterado.</b> Este documento é apenas para revisão. A identidade OPUS, o sistema tipográfico, a linguagem visual escura, os seis universos cromáticos e o conteúdo aprovado na Fase 3 não são questionados — exceto onde explicitamente assinalado abaixo, com justificação.</div>
+
+  <div class="dash">
+    <div class="t keep"><b>7</b><span>já em nível profissional — preservar</span></div>
+    <div class="t evolve"><b>9</b><span>pode ser elevado (evolutivo, mecânico)</span></div>
+    <div class="t rebuild"><b>3</b><span>abaixo do padrão — precisa de intervenção real</span></div>
+    <div class="t input"><b>6</b><span>decisões que só tu podes tomar</span></div>
+    <div class="t remove"><b>0</b><span>a remover</span></div>
+  </div>
+</div>
+
+<div class="wrap">
+  <nav class="toc">
+    <a href="#abaixo">1 · Abaixo do padrão</a>
+    <a href="#preservar">2 · Preservar</a>
+    <a href="#elevar">3 · Pode ser elevado</a>
+    <a href="#seo">4 · SEO técnico</a>
+    <a href="#credibilidade">5 · Credibilidade corporativa</a>
+    <a href="#performance">6 · Performance</a>
+    <a href="#dominio">7 · Domínio próprio</a>
+    <a href="#necessario-vs-cosmetico">8 · Necessário vs. cosmético</a>
+    <a href="#plano">9 · Plano priorizado</a>
+  </nav>
+
+  <div class="content">
+
+    <section class="block" id="abaixo">
+      <p class="sec-num">01</p>
+      <h2>O que está abaixo do padrão profissional que queremos atingir</h2>
+      <p class="lede">Estes são os itens que, isoladamente, mais denunciam "projeto experimental" em vez de "produto de uma multinacional de engenharia". Não são detalhes cosméticos — são os primeiros pontos que um visitante técnico ou um decisor internacional nota.</p>
+
+      <div class="item">
+        <div class="item-head"><h3>A marca (logótipo) é uma composição fotorealista, não uma marca desenhada</h3><span class="badge rebuild">REBUILD</span></div>
+        <div class="loc">assets/logo.webp — usado em <code>--logo-img</code>, aplicado como máscara/fundo em todo o cabeçalho, capa e rodapé</div>
+        <div class="imgproof">
+          <img src="data:image/jpeg;base64,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" alt="Composição atual do logótipo OPUS: colunas clássicas fotorealistas com um microchip sobreposto" style="width:84px;height:auto;border-radius:6px;display:block">
+          <p>A imagem é um render fotográfico em preto e branco — colunas clássicas em metal com vinheta e um microchip sobreposto no topo — com aspeto de imagem gerada/stock, não de um símbolo vetorial desenhado. É o único elemento verdadeiramente inconsistente com o resto da identidade OPUS (que é, de resto, disciplinada, geométrica e técnica).</p>
+        </div>
+        <p class="why">Nenhuma empresa de engenharia internacional (Siemens, ABB, Honeywell, Bosch, Schneider) usa uma composição fotográfica como marca. Marcas de engenharia são quase sempre geométricas, vetoriais, nítidas em qualquer escala. Esta imagem, a 620×451px e 104 KB para um elemento usado sobretudo a 20–32px de altura, é também o oposto do padrão técnico "preciso, restrito" que definimos como objetivo.</p>
+        <div class="needinput">
+          <b>Precisa da tua confirmação</b>
+          Mantemos esta marca (e eu apenas otimizo o ficheiro), ou desenhamos um símbolo vetorial novo — coerente com a linguagem geométrica já usada nas ilustrações SVG do site (torres, arcos de rede, ícones de vertical)? Esta é uma decisão de identidade, não uma correção técnica — não a vou alterar sem a tua palavra.
+          <div class="default">Por defeito, se não houver resposta: fica como está nesta fase (só otimizo a compressão do ficheiro atual), e a questão do símbolo fica registada como item aberto para uma fase de identidade visual dedicada.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="item-head"><h3>O bloco de contacto expõe placeholders diretamente ao visitante</h3><span class="badge rebuild">REBUILD</span></div>
+        <div class="loc">index.html — secção "Iniciar Avaliação Técnica", bloco <code>.assess-side</code></div>
+        <table>
+          <thead><tr><th>Campo</th><th>Estado atual</th></tr></thead>
+          <tbody>
+            <tr><td>Email</td><td><code>opus.engenharia@gmail.com</code> com a nota visível "(email provisório — a atualizar)"</td></tr>
+            <tr><td>Telefone</td><td><code>+351 000 000 000</code></td></tr>
+            <tr><td>Formulário</td><td>ação aponta para <code>formspree.io/f/YOUR_FORM_ID</code>, com uma nota de configuração pendente visível por baixo do botão de envio</td></tr>
+          </tbody>
+        </table>
+        <p class="why">Um endereço Gmail, um número de telefone com zeros e uma nota de "configuração pendente" publicada em produção são exatamente o tipo de detalhe que um decisor internacional lê como "isto não está pronto". É o ponto de maior risco de credibilidade de todo o site, porque fica na secção que converte uma visita em contacto real.</p>
+        <div class="needinput">
+          <b>Precisa da tua confirmação</b>
+          Já existe (ou vai existir em breve) um email/domínio próprio e um número de telefone reais para publicar? E que serviço de receção de formulários vamos usar — Formspree com um ID real, outro serviço, ou um endpoint próprio?
+          <div class="default">Por defeito, se não houver resposta: deixo o texto como está nesta fase, mas na Fase 9 (produção) isto tem de estar resolvido antes de qualquer publicação pública — não é opcional.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="item-head"><h3>Zero metadados de SEO/partilha social — nenhuma pré-visualização ao partilhar o link</h3><span class="badge rebuild">REBUILD</span></div>
+        <div class="loc">index.html — <code>&lt;head&gt;</code></div>
+        <p class="why">Não existe <code>og:title</code>, <code>og:image</code>, <code>og:description</code>, Twitter Card, <code>&lt;link rel="canonical"&gt;</code>, meta <code>robots</code>, dados estruturados (JSON-LD) nem favicon. Hoje, partilhar o link do site no LinkedIn, WhatsApp ou email não gera nenhuma pré-visualização — aparece como texto simples. Para uma empresa cujo processo de vendas passa por partilhar o site com decisores, isto é uma perda direta de credibilidade em cada partilha.</p>
+        <p class="why" style="margin-top:8px">Classifico isto como REBUILD (e não EVOLVE) apenas por não existir nada a evoluir — é preciso construir de raiz. A implementação em si é mecânica e não depende de nenhuma decisão tua, exceto a imagem de partilha (<code>og:image</code>), que depende da resposta ao item da marca acima.</p>
+      </div>
+    </section>
+
+    <section class="block" id="preservar">
+      <p class="sec-num">02</p>
+      <h2>O que já está em nível profissional e deve ser preservado</h2>
+      <p class="lede">Estes elementos já estão ao nível que procuramos. Não serão tocados nesta fase — listados aqui para que fique claro que a Fase 4 não é um pretexto para os "melhorar" sem motivo.</p>
+
+      <div class="item">
+        <div class="item-head"><h3>Trabalho de acessibilidade da Fase 2</h3><span class="badge keep">KEEP</span></div>
+        <p class="why">Landmarks semânticos, <code>aria-current</code> na navegação, estados de foco visíveis, gestão de <code>prefers-reduced-motion</code>, skip-link — tudo implementado corretamente e testado. É, de resto, um nível de cuidado acima da média mesmo entre sites corporativos internacionais reais.</p>
+      </div>
+      <div class="item">
+        <div class="item-head"><h3>Identidade visual escura e os seis universos cromáticos por vertical</h3><span class="badge keep">KEEP</span></div>
+        <p class="why">Distintiva, coerente, e cumpre exatamente o critério "visualmente memorável sem parecer gimmick" — cada vertical (OFS laranja, Smart City azul, Agro verde, Defesa Civil vermelho, Segurança âmbar, Conectividade neutro) tem identidade própria sem quebrar o sistema.</p>
+      </div>
+      <div class="item">
+        <div class="item-head"><h3>Sistema tipográfico (Inter / JetBrains Mono / Michroma)</h3><span class="badge keep">KEEP</span></div>
+        <p class="why">Pareamento deliberado — display técnico, corpo neutro, mono para dados/labels — já com <code>preconnect</code> e <code>display=swap</code> corretamente configurados. Não precisa de redesenho, só de otimização de entrega (ver Secção 6).</p>
+      </div>
+      <div class="item">
+        <div class="item-head"><h3>Disciplina de rotulagem "Exemplo ilustrativo" / "cenário ilustrativo"</h3><span class="badge keep">KEEP</span></div>
+        <p class="why">As quatro consolas de demonstração (OFS, Traffic Vision, Rios, Phase Alarm) estão todas claramente identificadas como ilustrativas, com nota explícita a dizer que os valores não correspondem a uma operação real. Isto é exatamente o tipo de rigor que reforça credibilidade em vez de a arriscar — e é raro ver isto tão bem feito.</p>
+      </div>
+      <div class="item">
+        <div class="item-head"><h3>Mecânica de scroll-spy, barra de progresso e reveal-on-scroll</h3><span class="badge keep">KEEP</span></div>
+        <p class="why">Implementação eficiente (um único <code>requestAnimationFrame</code> partilhado, throttle correto), com propósito claro (orientação dentro de um documento longo) — não é decoração. Já respeita <code>prefers-reduced-motion</code>.</p>
+      </div>
+      <div class="item">
+        <div class="item-head"><h3><code>lang="pt-PT"</code>, viewport, carregamento de fontes</h3><span class="badge keep">KEEP</span></div>
+        <p class="why">Fundamentos técnicos corretos desde a Fase 1/2 — não há nada a corrigir aqui.</p>
+      </div>
+      <div class="item">
+        <div class="item-head"><h3>Posicionamento e precisão de conteúdo da Fase 3</h3><span class="badge keep">KEEP</span></div>
+        <p class="why">Todas as afirmações já verificadas ou corretamente enquadradas como objetivo/capacidade de design. Esta fase não reabre nenhuma decisão de conteúdo.</p>
+      </div>
+    </section>
+
+    <section class="block" id="elevar">
+      <p class="sec-num">03</p>
+      <h2>O que pode ser elevado (evolutivo, sem decisões pendentes)</h2>
+      <p class="lede">Itens mecânicos — melhoram o padrão profissional sem exigir uma resposta tua, para além da confirmação do plano geral.</p>
+
+      <div class="item">
+        <div class="item-head"><h3>Meta description — comprimento e terminologia</h3><span class="badge evolve">EVOLVE</span></div>
+        <div class="loc">index.html, linha 6</div>
+        <p class="why">Tem 174 caracteres (o Google trunca por volta dos 155–160) e usa "Segurança Elétrica", que já não corresponde ao nome da secção ("Segurança &amp; Alarmes"). Encurtar e alinhar a terminologia, sem alterar nenhuma afirmação de conteúdo já aprovada.</p>
+      </div>
+      <div class="item">
+        <div class="item-head"><h3>Open Graph + Twitter Card</h3><span class="badge evolve">EVOLVE</span></div>
+        <p class="why"><code>og:title</code>, <code>og:description</code>, <code>og:type</code>, <code>og:locale</code> (pt_PT) e as tags Twitter equivalentes, reaproveitando o título e a descrição já existentes. A imagem de partilha (<code>og:image</code>) fica pendente da decisão sobre a marca (Secção 1).</p>
+      </div>
+      <div class="item">
+        <div class="item-head"><h3>Dados estruturados (JSON-LD Organization)</h3><span class="badge evolve">EVOLVE</span></div>
+        <p class="why">Um bloco <code>Organization</code> com nome, descrição e localização (Famalicão, Portugal) já aprovados — ajuda motores de busca a construir um "knowledge panel" e reforça a perceção de uma entidade real e estabelecida. Não inventa nenhum dado — usa apenas o que já está no site.</p>
+      </div>
+      <div class="item">
+        <div class="item-head"><h3>Canonical + meta robots</h3><span class="badge evolve">EVOLVE</span></div>
+        <p class="why"><code>&lt;link rel="canonical"&gt;</code> e <code>&lt;meta name="robots" content="index,follow"&gt;</code> explícitos. O URL final depende do domínio (Secção 7) — pode ser implementado com um placeholder claro e ajustado no dia do lançamento.</p>
+      </div>
+      <div class="item">
+        <div class="item-head"><h3>robots.txt e sitemap.xml (scaffolding)</h3><span class="badge evolve">EVOLVE</span></div>
+        <p class="why">Ficheiros base prontos a ativar quando o domínio for decidido. Sem eles, mesmo um site correto do ponto de vista técnico dá sinais mistos a motores de busca sobre o que indexar.</p>
+      </div>
+      <div class="item">
+        <div class="item-head"><h3>Animação do canvas do hero não pára quando sai do ecrã</h3><span class="badge evolve">EVOLVE</span></div>
+        <div class="loc">script.js — bloco "hero: rede de sensores animada em canvas"</div>
+        <p class="why">O <code>requestAnimationFrame</code> corre indefinidamente mesmo depois de o utilizador ter percorrido o resto do site — consumo de CPU/bateria sem propósito. Adicionar um <code>IntersectionObserver</code> que pausa e retoma o loop conforme a secção de capa entra/sai da vista. Preserva o efeito exatamente como está; só o torna responsável.</p>
+      </div>
+      <div class="item">
+        <div class="item-head"><h3>Entrega de tipos de letra (preload / auto-hospedagem)</h3><span class="badge evolve">EVOLVE</span></div>
+        <p class="why">O Google Fonts exige dois pedidos em série (CSS → ficheiro de fonte). Um <code>&lt;link rel="preload"&gt;</code> para os ficheiros de fonte reais, ou auto-hospedagem dos três tipos de letra, elimina essa espera extra na renderização do texto — relevante porque o título principal usa Michroma, uma fonte de destaque visível no primeiro instante.</p>
+      </div>
+      <div class="item">
+        <div class="item-head"><h3>Compressão da imagem da marca</h3><span class="badge evolve">EVOLVE</span></div>
+        <p class="why">Independentemente da decisão sobre manter ou substituir a arte da marca (Secção 1), o ficheiro atual (104 KB a 620×451px) pode ser reduzido de forma agressiva sem perda visível, já que é usado quase sempre a menos de 32px de altura.</p>
+      </div>
+      <div class="item">
+        <div class="item-head"><h3>theme-color e apple-touch-icon</h3><span class="badge evolve">EVOLVE</span></div>
+        <p class="why">Detalhes pequenos mas visíveis em telemóvel (cor da barra do sistema, ícone ao adicionar à Home Screen) — dependem do favicon final (Secção 1/5).</p>
+      </div>
+    </section>
+
+    <section class="block" id="seo">
+      <p class="sec-num">04</p>
+      <h2>O que é necessário para SEO técnico</h2>
+      <p class="lede">Divide-se em dois planos: correções mecânicas (sem custo de decisão) e uma questão estrutural de fundo que só tu podes decidir.</p>
+
+      <div class="item">
+        <div class="item-head"><h3>A questão estrutural: página única vs. páginas por vertical</h3><span class="badge input">PRECISA DA TUA CONFIRMAÇÃO</span></div>
+        <p class="why">O site inteiro — Empresa, Ecossistema, OFS, Smart City, Agro, Defesa Civil, Segurança, Conectividade, Metodologia, Avaliação — vive numa única página HTML com âncoras internas (<code>#ofs</code>, <code>#agro</code>, etc.). Isto funciona muito bem como narrativa de vendas (é a experiência que já temos e que funciona), mas tem um teto de SEO real: o Google indexa <b>um único URL</b> para todo o conteúdo. Não é possível uma pesquisa por "deteção de incêndios com drones Portugal" posicionar a secção OFS de forma independente da secção Agro — competem pelo mesmo URL.</p>
+        <div class="needinput">
+          <b>Precisa da tua confirmação</b>
+          Mantemos a arquitetura de página única (recomendado para já — preserva a experiência atual, que é uma das forças do site) e otimizamos o que é possível dentro dela, ou queres que eu prepare, como trabalho futuro dedicado, uma evolução para páginas próprias por vertical (ex.: <code>/ofs</code>, <code>/agro</code>) mantendo a página atual como a "home"? Isto seria sempre uma fase à parte — é uma mudança de arquitetura, não um ajuste de SEO.
+          <div class="default">Por defeito, se não houver resposta: mantenho página única nesta fase e sigo apenas com as correções mecânicas abaixo.</div>
+        </div>
+      </div>
+
+      <table>
+        <thead><tr><th>Item mecânico</th><th>Estado</th><th>Ação</th></tr></thead>
+        <tbody>
+          <tr><td><b>Título</b></td><td>35 carateres, dentro do limite</td><td>Manter</td></tr>
+          <tr><td><b>Meta description</b></td><td>174 carateres, acima do recomendado</td><td>Encurtar (Secção 3)</td></tr>
+          <tr><td><b>Hierarquia de cabeçalhos</b></td><td>Um único <code>&lt;h1&gt;</code>, <code>&lt;h2&gt;</code> por secção — correto</td><td>Manter</td></tr>
+          <tr><td><b>Texto alternativo / <code>aria-label</code> em SVG</b></td><td>Corrigido na Fase 2</td><td>Manter</td></tr>
+          <tr><td><b>Dados estruturados</b></td><td>Inexistentes</td><td>Adicionar Organization (Secção 3)</td></tr>
+          <tr><td><b>Canonical / robots</b></td><td>Inexistentes</td><td>Adicionar (Secção 3)</td></tr>
+          <tr><td><b>Sitemap / robots.txt</b></td><td>Inexistentes</td><td>Criar scaffolding (Secção 7)</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="block" id="credibilidade">
+      <p class="sec-num">05</p>
+      <h2>O que é necessário para credibilidade corporativa</h2>
+      <p class="lede">Estes são os itens que mais pesam na perceção "empresa pequena/local" vs. "empresa internacional" — a maioria depende de informação que só tu tens.</p>
+
+      <div class="item">
+        <div class="item-head"><h3>Contacto real (email, telefone, formulário)</h3><span class="badge input">PRECISA DA TUA CONFIRMAÇÃO</span></div>
+        <p class="why">Ver Secção 1 — é o item de maior impacto direto em credibilidade, precisamente porque fica na secção de conversão.</p>
+      </div>
+      <div class="item">
+        <div class="item-head"><h3>Marca / logótipo</h3><span class="badge input">PRECISA DA TUA CONFIRMAÇÃO</span></div>
+        <p class="why">Ver Secção 1 — segundo item de maior impacto, porque aparece em todas as páginas, no cabeçalho e na capa.</p>
+      </div>
+      <div class="item">
+        <div class="item-head"><h3>Pré-visualização de partilha (redes sociais, email, WhatsApp)</h3><span class="badge evolve">EVOLVE</span></div>
+        <p class="why">Ver Secção 3 — mecânico assim que a imagem de partilha estiver definida.</p>
+      </div>
+      <div class="item">
+        <div class="item-head"><h3>Favicon e ícone de aplicação</h3><span class="badge rebuild">REBUILD</span></div>
+        <p class="why">Não existe absolutamente nenhum favicon — o separador do browser mostra o ícone genérico. É um detalhe pequeno tecnicamente, mas visível em <b>todas as visitas, sem exceção</b>, o que o torna um dos sinais mais constantes de "site inacabado". Depende da decisão sobre a marca.</p>
+      </div>
+      <div class="item">
+        <div class="item-head"><h3>Política de privacidade / RGPD</h3><span class="badge input">PRECISA DA TUA CONFIRMAÇÃO</span></div>
+        <p class="why">O formulário de avaliação técnica recolhe nome, email, organização e mensagem — mas não existe qualquer política de privacidade nem aviso de tratamento de dados. Isto foi originalmente previsto para uma fase própria (Contacto/Qualificação de Leads/RGPD) no plano inicial. Não faz parte desta Fase 4, mas sinalizo aqui porque é também um item de credibilidade corporativa e não deve ser esquecido.</p>
+        <div class="needinput">
+          <b>Precisa da tua confirmação</b>
+          Confirmas que a RGPD/política de privacidade fica reservada para essa fase dedicada, e que a Fase 4 trata apenas de SEO/estrutura/credibilidade técnica como pedido?
+          <div class="default">Por defeito, se não houver resposta: assumo que sim e mantenho o âmbito da Fase 4 como está neste documento.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="performance">
+      <p class="sec-num">06</p>
+      <h2>O que é necessário para performance</h2>
+      <p class="lede">O site está, de um modo geral, tecnicamente leve — não há um problema de performance grave, mas há três otimizações concretas.</p>
+
+      <table>
+        <thead><tr><th>Medição</th><th>Valor atual</th><th>Leitura</th></tr></thead>
+        <tbody>
+          <tr><td><b>Nós DOM</b></td><td>1.357</td><td>Elevado para uma única página, mas justificado pela riqueza de ilustração SVG inline (61 SVGs, zero pedidos de rede adicionais)</td></tr>
+          <tr><td><b>HTML (com CSS/JS/logo embutidos)</b></td><td>~276 KB</td><td>Aceitável para um documento único e denso; sem imagens fotográficas a pesar</td></tr>
+          <tr><td><b>CSS</b></td><td>~40 KB (não minificado)</td><td>Espaço para minificação na fase de produção</td></tr>
+          <tr><td><b>JS</b></td><td>~16 KB (não minificado)</td><td>Muito leve; sem bibliotecas externas</td></tr>
+          <tr><td><b>Posição do <code>&lt;script&gt;</code></b></td><td>Fim do <code>&lt;body&gt;</code></td><td>Correto — não bloqueia a renderização</td></tr>
+        </tbody>
+      </table>
+
+      <div class="item">
+        <div class="item-head"><h3>Animação de canvas sem pausa fora do ecrã</h3><span class="badge evolve">EVOLVE</span></div>
+        <p class="why">Já descrito na Secção 3 — é o único item de performance com impacto real (consumo contínuo de CPU).</p>
+      </div>
+      <div class="item">
+        <div class="item-head"><h3>Peso da imagem da marca</h3><span class="badge evolve">EVOLVE</span></div>
+        <p class="why">Já descrito na Secção 1/3.</p>
+      </div>
+      <div class="item">
+        <div class="item-head"><h3>Carregamento de tipos de letra</h3><span class="badge evolve">EVOLVE</span></div>
+        <p class="why">Já descrito na Secção 3.</p>
+      </div>
+    </section>
+
+    <section class="block" id="dominio">
+      <p class="sec-num">07</p>
+      <h2>O que é necessário para uma futura publicação em domínio próprio</h2>
+      <p class="lede">Nada disto bloqueia a fase atual, mas fica registado para não ser esquecido no dia do lançamento.</p>
+
+      <div class="item">
+        <div class="item-head"><h3>Nome de domínio final</h3><span class="badge input">PRECISA DA TUA CONFIRMAÇÃO</span></div>
+        <p class="why">O <code>canonical</code>, as tags Open Graph e o <code>sitemap.xml</code> precisam de um URL absoluto. Posso implementá-los já com um domínio placeholder claramente assinalado (ex.: <code>https://opuscorp.pt</code>) e ajustar num único ponto quando o domínio real estiver decidido.</p>
+        <div class="needinput">
+          <b>Precisa da tua confirmação</b>
+          Já há um domínio reservado ou decidido? Se não, posso avançar com um placeholder e deixar isso documentado como o único ajuste necessário no lançamento.
+          <div class="default">Por defeito, se não houver resposta: uso <code>https://opuscorp.pt</code> como placeholder, claramente assinalado no código.</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-head"><h3>robots.txt + sitemap.xml</h3><span class="badge evolve">EVOLVE</span></div>
+        <p class="why">Ficheiros standalone, prontos para colocar na raiz do domínio no dia do lançamento.</p>
+      </div>
+      <div class="item">
+        <div class="item-head"><h3>Contacto e formulário reais</h3><span class="badge input">PRECISA DA TUA CONFIRMAÇÃO</span></div>
+        <p class="why">Idealmente num endereço do próprio domínio (ex.: <code>contacto@opuscorp.pt</code>) em vez de Gmail — reforça a perceção de que o domínio e a empresa são a mesma coisa.</p>
+      </div>
+    </section>
+
+    <section class="block" id="necessario-vs-cosmetico">
+      <p class="sec-num">08</p>
+      <h2>Mudanças realmente necessárias vs. mudanças apenas cosméticas</h2>
+      <div class="grid2">
+        <div class="item">
+          <h3 style="color:var(--rebuild);font-size:13px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em">Necessárias (bloqueiam a perceção profissional)</h3>
+          <p class="why">Marca/logótipo · contacto real e formulário funcional · favicon · Open Graph/Twitter/JSON-LD/canonical/robots · correção da meta description · pausa da animação do canvas fora do ecrã</p>
+        </div>
+        <div class="item">
+          <h3 style="color:var(--dim);font-size:13px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em">Cosméticas (ajudam, mas não bloqueiam nada)</h3>
+          <p class="why">Auto-hospedagem/preload de tipos de letra · minificação de CSS/JS para produção · dados estruturados mais ricos por vertical (ex.: schema Product) além do Organization base</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="plano">
+      <p class="sec-num">09</p>
+      <h2>Plano de implementação priorizado</h2>
+      <p class="lede">Ordem pensada para que nada dependa de um passo posterior sem necessidade — os itens marcados aguardam a tua resposta antes de poderem avançar.</p>
+      <ol class="plan">
+        <li><b>Decisão sobre a marca (logótipo)</b><span>Manter e otimizar, ou desenhar um novo símbolo vetorial. Bloqueia o favicon e a imagem de partilha (og:image).</span><div class="gate">aguarda a tua resposta</div></li>
+        <li><b>Decisão sobre contacto e formulário</b><span>Email/telefone reais e escolha do serviço de receção de formulários. Bloqueia a correção do bloco de contacto.</span><div class="gate">aguarda a tua resposta</div></li>
+        <li><b>Decisão sobre domínio</b><span>Domínio real ou placeholder assinalado, para canonical/OG/sitemap.</span><div class="gate">aguarda a tua resposta (tem valor por defeito)</div></li>
+        <li><b>Correções mecânicas de SEO</b><span>Meta description, Open Graph/Twitter, JSON-LD Organization, canonical, meta robots — tudo o que não depende de nenhuma decisão acima além do domínio placeholder.</span></li>
+        <li><b>Favicon + imagem de partilha</b><span>Depende do passo 1.</span></li>
+        <li><b>Bloco de contacto real + formulário ligado</b><span>Depende do passo 2.</span></li>
+        <li><b>Performance: pausa do canvas fora do ecrã, compressão da marca, preload de fontes</b><span>Sem dependências — pode avançar em paralelo com o resto.</span></li>
+        <li><b>robots.txt + sitemap.xml</b><span>Scaffolding pronto para o domínio final.</span></li>
+        <li><b>QA final + commit da Fase 4</b><span>Verificação de que nenhuma alteração de texto ou visual foi introduzida fora do que está aqui descrito, e registo exato do que mudou.</span></li>
+      </ol>
+    </section>
+
+  </div>
+</div>
+
+<div class="doc-footer">OPUS Corp. · Fase 4 — SEO, Estrutura e Credibilidade Corporativa · Nenhuma alteração aplicada.</div>

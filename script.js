@@ -143,60 +143,83 @@
     }
   }
 
-  /* ── hero: rede de sensores animada em canvas ─────────────────── */
-  var canvas = document.getElementById('netfx');
-  if (canvas && !reduce){
-    var ctx = canvas.getContext('2d');
-    var wrap = canvas.parentElement;
-    var pts = [], W, H, DPR = Math.min(window.devicePixelRatio || 1, 2);
-
-    function resize(){
-      W = wrap.clientWidth; H = wrap.clientHeight;
-      canvas.width = W * DPR; canvas.height = H * DPR;
-      canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
-      ctx.setTransform(DPR,0,0,DPR,0,0);
-      var n = Math.max(18, Math.min(46, Math.round((W*H)/26000)));
-      pts = [];
-      for (var i=0;i<n;i++){
-        pts.push({
-          x: Math.random()*W, y: Math.random()*H,
-          vx: (Math.random()-0.5)*0.18, vy: (Math.random()-0.5)*0.18,
-          r: 1 + Math.random()*1.6
-        });
-      }
+  /* ── mega-menu: índice de capacidades na navegação ─────────────── */
+  var mega = document.getElementById('mega');
+  var navCapBtn = document.getElementById('navCap');
+  if (mega && navCapBtn){
+    var closeTimer = null;
+    function isDesktopMega(){ return !window.matchMedia('(max-width:860px)').matches; }
+    function openMega(){
+      clearTimeout(closeTimer);
+      mega.classList.add('open');
+      navCapBtn.setAttribute('aria-expanded', 'true');
     }
-    var ro = window.ResizeObserver ? new ResizeObserver(resize) : null;
-    if (ro) ro.observe(wrap); else window.addEventListener('resize', resize);
-    resize();
-
-    var maxDist = 130;
-    function frame(){
-      ctx.clearRect(0,0,W,H);
-      for (var i=0;i<pts.length;i++){
-        var p = pts[i];
-        p.x += p.vx; p.y += p.vy;
-        if (p.x < 0 || p.x > W) p.vx *= -1;
-        if (p.y < 0 || p.y > H) p.vy *= -1;
+    function closeMega(){
+      mega.classList.remove('open');
+      navCapBtn.setAttribute('aria-expanded', 'false');
+    }
+    function scheduleCloseMega(){ closeTimer = setTimeout(closeMega, 160); }
+    navCapBtn.addEventListener('mouseenter', function(){ if (isDesktopMega()) openMega(); });
+    navCapBtn.addEventListener('mouseleave', function(){ if (isDesktopMega()) scheduleCloseMega(); });
+    mega.addEventListener('mouseenter', function(){ clearTimeout(closeTimer); });
+    mega.addEventListener('mouseleave', function(){ if (isDesktopMega()) scheduleCloseMega(); });
+    navCapBtn.addEventListener('focus', function(){ if (isDesktopMega()) openMega(); });
+    navCapBtn.addEventListener('click', function(e){
+      // em ecrãs estreitos o painel está oculto (display:none) — o link
+      // navega normalmente para a secção #capacidades
+      if (!isDesktopMega()) return;
+      // se o painel já está aberto (por hover ou por foco de teclado), um
+      // clique/Enter no próprio link fecha o painel e navega normalmente
+      // para a secção — só o primeiro clique é que abre sem navegar
+      if (mega.classList.contains('open')){ closeMega(); return; }
+      e.preventDefault();
+      openMega();
+    });
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape' && mega.classList.contains('open')){
+        closeMega();
+        navCapBtn.focus();
       }
-      for (var a=0; a<pts.length; a++){
-        for (var b=a+1; b<pts.length; b++){
-          var dx = pts[a].x - pts[b].x, dy = pts[a].y - pts[b].y;
-          var d = Math.sqrt(dx*dx+dy*dy);
-          if (d < maxDist){
-            ctx.strokeStyle = 'rgba(232,118,58,' + (0.14 * (1 - d/maxDist)) + ')';
-            ctx.lineWidth = 1;
-            ctx.beginPath(); ctx.moveTo(pts[a].x,pts[a].y); ctx.lineTo(pts[b].x,pts[b].y); ctx.stroke();
-          }
+    });
+    document.addEventListener('click', function(e){
+      if (mega.classList.contains('open') && !mega.contains(e.target) && !navCapBtn.contains(e.target)){
+        closeMega();
+      }
+    });
+    mega.addEventListener('focusout', function(){
+      setTimeout(function(){
+        if (!mega.contains(document.activeElement) && document.activeElement !== navCapBtn){
+          closeMega();
         }
-      }
-      for (var i2=0;i2<pts.length;i2++){
-        var p2 = pts[i2];
-        ctx.beginPath(); ctx.arc(p2.x,p2.y,p2.r,0,Math.PI*2);
-        ctx.fillStyle = 'rgba(240,146,95,.55)'; ctx.fill();
-      }
-      requestAnimationFrame(frame);
+      }, 0);
+    });
+  }
+
+  /* ── diagramas de mecanismo: construção seletiva ao scroll ──────
+     Só nas figuras marcadas com [data-mech] — a maioria dos diagramas
+     do site é estática por escolha. A animação revela cada nó/seta/
+     ramo do mecanismo pela ordem real do fluxo (data-i), nunca por
+     decoração; respeita sempre "reduce" e a ausência de IO. ────── */
+  var mechEls = document.querySelectorAll('[data-mech]');
+  if (mechEls.length){
+    if (reduce || !('IntersectionObserver' in window)){
+      mechEls.forEach(function(el){ el.classList.add('mech-in'); });
+    } else {
+      var mio = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          if (!en.isIntersecting) return;
+          var el = en.target;
+          var items = el.querySelectorAll('[data-i]');
+          items.forEach(function(it){
+            var i = parseInt(it.getAttribute('data-i'), 10) || 0;
+            it.style.transitionDelay = (i * 110) + 'ms';
+          });
+          el.classList.add('mech-in');
+          mio.unobserve(el);
+        });
+      }, { threshold: 0.35, rootMargin: '0px 0px -10% 0px' });
+      mechEls.forEach(function(el){ mio.observe(el); });
     }
-    requestAnimationFrame(frame);
   }
 
   /* ── decodificação de texto (scramble) nos eyebrows ────────────── */

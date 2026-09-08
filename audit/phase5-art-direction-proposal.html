@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fase 5 — Auditoria de Direção de Arte e Proposta de Redesenho</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500;600&family=Michroma&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: dark;
+  --bg:#05070f; --card:#0a0e18; --card-2:#10141f;
+  --line:rgba(150,180,255,.09); --line-2:rgba(160,190,255,.17);
+  --text:#f1f2f5; --muted:#9a9aa6; --dim:#75757f;
+  --keep:#3ddc97; --evolve:#5b9df9; --redesign:#ecb54a; --remove:#f2664a; --input:#a78bfa;
+  --font:'Inter',-apple-system,sans-serif; --mono:'JetBrains Mono',monospace; --disp:'Michroma',var(--font);
+  --r:10px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased}
+::selection{background:rgba(91,157,249,.3)}
+h1,h2,h3,h4{font-weight:600;letter-spacing:-.01em;margin:0 0 .5em}
+p{margin:0 0 1em;color:var(--muted)}
+a{color:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding:0 32px}
+.mono{font-family:var(--mono)}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.eyebrow::before{content:'';width:18px;height:1px;background:var(--line-2)}
+
+/* ── masthead ─────────────────────────────────────────── */
+.masthead{border-bottom:1px solid var(--line);padding:52px 0 40px;background:radial-gradient(1100px 480px at 20% -10%, rgba(91,157,249,.08), transparent 60%)}
+.masthead .kicker{font-family:var(--mono);font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--evolve);margin-bottom:18px}
+.masthead h1{font-size:clamp(28px,4.2vw,44px);line-height:1.08;max-width:16ch;text-wrap:balance}
+.masthead .sub{font-size:16px;max-width:62ch;margin-top:16px}
+.masthead .meta{display:flex;gap:28px;flex-wrap:wrap;margin-top:30px;font-family:var(--mono);font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:.08em}
+.masthead .meta b{color:var(--text);font-weight:500}
+
+.dash{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-top:34px}
+.dash div{background:var(--card);padding:16px 14px}
+.dash .n{font-family:var(--mono);font-size:26px;font-weight:600;line-height:1}
+.dash .l{font-family:var(--mono);font-size:9.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--dim);margin-top:8px;display:block}
+.dash .keep .n{color:var(--keep)} .dash .evolve .n{color:var(--evolve)} .dash .redesign .n{color:var(--redesign)} .dash .remove .n{color:var(--remove)} .dash .input .n{color:var(--input)}
+@media(max-width:760px){.dash{grid-template-columns:repeat(3,1fr)}}
+
+/* ── layout: sticky toc + content ────────────────────── */
+.body-grid{display:grid;grid-template-columns:230px 1fr;gap:56px;max-width:1180px;margin:0 auto;padding:44px 32px 120px;align-items:start}
+@media(max-width:900px){.body-grid{grid-template-columns:1fr;padding:32px 20px 80px}}
+.toc{position:sticky;top:28px;font-family:var(--mono);font-size:12px}
+@media(max-width:900px){.toc{position:static;margin-bottom:36px;display:flex;flex-wrap:wrap;gap:8px 16px}}
+.toc a{display:block;padding:5px 0;color:var(--dim);text-decoration:none;border-left:2px solid transparent;padding-left:12px;margin-left:-13px;transition:color .15s,border-color .15s}
+.toc a:hover{color:var(--text)}
+.toc a.cur{color:var(--evolve);border-color:var(--evolve)}
+
+section.sec{margin-bottom:76px;scroll-margin-top:24px}
+section.sec > h2{font-size:22px;margin-bottom:6px}
+section.sec > .num{font-family:var(--mono);font-size:11px;color:var(--dim);margin-bottom:6px}
+section.sec > .dek{font-size:15.5px;color:var(--muted);max-width:68ch;margin-bottom:28px}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:760px){.grid2,.grid3{grid-template-columns:1fr}}
+
+.box{border:1px solid var(--line);border-radius:var(--r);background:var(--card);padding:18px 20px}
+.box h4{font-size:13.5px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+.box.good{border-color:rgba(61,220,151,.28);background:linear-gradient(180deg,rgba(61,220,151,.06),transparent)}
+.box.bad{border-color:rgba(242,102,74,.28);background:linear-gradient(180deg,rgba(242,102,74,.06),transparent)}
+.box p:last-child{margin-bottom:0}
+.box p{font-size:13.5px;line-height:1.6}
+
+.badge{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.08em;padding:3px 9px;border-radius:20px;border:1px solid}
+.b-keep{color:var(--keep);border-color:rgba(61,220,151,.35);background:rgba(61,220,151,.08)}
+.b-evolve{color:var(--evolve);border-color:rgba(91,157,249,.35);background:rgba(91,157,249,.08)}
+.b-redesign{color:var(--redesign);border-color:rgba(236,181,74,.35);background:rgba(236,181,74,.08)}
+.b-remove{color:var(--remove);border-color:rgba(242,102,74,.35);background:rgba(242,102,74,.08)}
+.b-input{color:var(--input);border-color:rgba(167,139,250,.35);background:rgba(167,139,250,.08)}
+
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{text-align:left;font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--dim);font-weight:500;padding:9px 12px;border-bottom:1px solid var(--line-2)}
+td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--muted)}
+td:first-child,th:first-child{padding-left:0}
+tr:last-child td{border-bottom:none}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);padding:4px 16px;background:var(--card)}
+
+figure{margin:0;border:1px solid var(--line);border-radius:var(--r);background:var(--card);padding:20px 22px 16px}
+figcaption{font-size:12.5px;color:var(--dim);margin-top:12px;border-top:1px solid var(--line);padding-top:10px}
+svg text{font-family:var(--mono)}
+
+.callout{border:1px dashed rgba(167,139,250,.4);border-radius:var(--r);background:rgba(167,139,250,.045);padding:16px 18px;margin-top:14px}
+.callout .k{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--input);margin-bottom:6px;display:flex;align-items:center;gap:7px}
+.callout p{font-size:13.5px;margin-bottom:6px}
+.callout .default{font-size:12px;color:var(--dim)}
+.callout .default b{color:var(--muted)}
+
+ul.tick{list-style:none;padding:0;margin:0}
+ul.tick li{position:relative;padding-left:20px;margin-bottom:9px;font-size:14px;color:var(--muted)}
+ul.tick li::before{content:'';position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:50%;background:var(--evolve)}
+
+.skillrow{display:grid;grid-template-columns:150px 1fr;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}
+.skillrow:last-child{border-bottom:none}
+.skillrow .name{font-family:var(--mono);font-size:13px;color:var(--text)}
+.skillrow .name small{display:block;color:var(--dim);font-size:10.5px;margin-top:3px}
+.skillrow p{font-size:13.5px;margin:0}
+@media(max-width:640px){.skillrow{grid-template-columns:1fr;gap:4px}}
+
+.matrix-legend{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+
+footer.doc{border-top:1px solid var(--line);padding:26px 32px;font-family:var(--mono);font-size:11px;color:var(--dim);display:flex;justify-content:space-between;max-width:1180px;margin:0 auto}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="kicker">OPUS Corp. · Fase 5 — Pré-implementação · Auditoria, não execução</div>
+    <h1>Auditoria de Direção de Arte e Proposta de Redesenho</h1>
+    <p class="sub">O site atual é bom: tecnicamente sólido, coerente, com identidade forte. Este documento avalia, com critério de "empresa multinacional de engenharia", o que ainda o separa de um patamar world-class — e propõe uma nova direção. Nenhum ficheiro do site foi alterado para produzir este documento.</p>
+    <div class="meta">
+      <span>Base analisada · <b>index.html / styles.css / script.js — commit e117523</b></span>
+      <span>Método · <b>inspeção de código + captura de ecrã de todas as 12 secções + skills de design carregadas</b></span>
+      <span>Estado · <b>aguarda aprovação de direção de arte</b></span>
+    </div>
+    <div class="dash">
+      <div class="keep"><span class="n">6</span><span class="l">Manter</span></div>
+      <div class="evolve"><span class="n">5</span><span class="l">Evoluir</span></div>
+      <div class="redesign"><span class="n">6</span><span class="l">Redesenhar</span></div>
+      <div class="remove"><span class="n">2</span><span class="l">Remover</span></div>
+      <div class="input"><span class="n">2</span><span class="l">Precisa decisão</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="body-grid">
+<nav class="toc">
+  <a href="#skills">00 — Skills disponíveis</a>
+  <a href="#funciona">01 — O que já funciona</a>
+  <a href="#problema">02 — O problema central</a>
+  <a href="#hero">03 — Hero &amp; navegação</a>
+  <a href="#ia">04 — Nova arquitetura de informação</a>
+  <a href="#verticais">05 — As seis áreas &amp; OFS</a>
+  <a href="#diagramas">06 — Linguagem de diagrama e dados</a>
+  <a href="#motion">07 — Linguagem de motion</a>
+  <a href="#sistema-visual">08 — Sistema visual</a>
+  <a href="#mobile">09 — Mobile &amp; interação</a>
+  <a href="#axp">10 — Acessibilidade &amp; performance</a>
+  <a href="#antes-depois">11 — Antes / depois</a>
+  <a href="#matriz">12 — Matriz Manter/Evoluir/Redesenhar/Remover</a>
+  <a href="#proximos">13 — Próximos passos</a>
+</nav>
+
+<main>
+
+<section class="sec" id="skills">
+  <div class="num">00</div>
+  <h2>Skills disponíveis nesta sessão</h2>
+  <p class="dek">Antes de propor qualquer direção de arte, verifiquei — não presumi — o que está de facto acessível. Pedido explícito: não tratar Skills instaladas como checklist, e não afirmar o uso de uma Skill que não existe nesta sessão.</p>
+
+  <div class="box bad" style="margin-bottom:24px">
+    <h4>Resultado da verificação</h4>
+    <p><b>emil-design-eng</b>, e qualquer Skill de motion/animação, UI/UX, tipografia, engenharia de frontend, design responsivo, acessibilidade, performance ou crítica visual/QA — <b>não existem</b> nesta conta. Não é uma questão de estarem "instaladas mas desativadas": pesquisei a listagem de Skills do utilizador e o registo de Skills pesquisável por palavra-chave (UI design, UX design, design system, motion, animação, micro-interações, scroll animation, tipografia, engenharia de frontend, design responsivo, performance web, acessibilidade, crítica de design, "emil design eng") e todas as pesquisas devolveram zero resultados. Se instalou algo com esse nome, não está ligado a esta sessão — peço que me indique o link exato do marketplace/plugin para eu tentar de novo, em vez de eu simular o seu uso.</p>
+  </div>
+
+  <p style="font-size:14px;color:var(--text);margin-bottom:14px">O que está genuinamente disponível — e que usei, de facto, para construir esta própria auditoria:</p>
+  <div class="skillrow">
+    <div class="name">artifact-design<small>fundamentos de design</small></div>
+    <p>Guia sénior de composição, tipografia, hierarquia e — especialmente relevante aqui — como identificar e evitar padrões "genéricos de IA": grelhas de cartões repetidas, gradientes decorativos, tudo centrado, animação sem função. É a base crítica usada nas secções 02, 07 e 08 abaixo.</p>
+  </div>
+  <div class="skillrow">
+    <div class="name">artifact-diagramming<small>metodologia de diagramas</small></div>
+    <p>Regra central: "desenhar o mecanismo, não o nome" — uma seta tem de dizer o que se move e com que cadência; uma comparação tem de desenhar a diferença, não duas caixas paralelas. Usada para avaliar os diagramas atuais (secção 06) e para desenhar os dois diagramas de demonstração incluídos neste documento.</p>
+  </div>
+  <div class="skillrow">
+    <div class="name">dataviz<small>método de visualização de dados</small></div>
+    <p>Procedimento disciplinado — forma pela função do dado, paletas categóricas validadas computacionalmente, nunca eixo duplo, nunca arco-íris, camada de hover por omissão. Usada para avaliar o uso atual de "stat tiles" (secção 06) e para recomendar quando um número deve tornar-se um gráfico real.</p>
+  </div>
+
+  <div class="callout" style="margin-top:22px">
+    <div class="k">◆ Recomendação sobre Skills</div>
+    <p>Não vou instalar nenhuma Skill nova só para preencher a lista — nenhuma das pesquisadas (UI/UX, motion, tipografia, engenharia de frontend, responsivo, acessibilidade, performance, crítica visual) existe no registo pesquisável desta conta, pelo que não há nada concreto e real para recomendar além do que já está ativo. Se souber o nome/link exato de uma Skill que acredita ter instalado, envie-o e eu verifico diretamente.</p>
+  </div>
+</section>
+
+<section class="sec" id="funciona">
+  <div class="num">01</div>
+  <h2>O que já funciona extremamente bem</h2>
+  <p class="dek">Ambição não significa ignorar o que já está no nível certo. Isto preserva-se — nalguns casos, estende-se.</p>
+  <div class="grid2">
+    <div class="box good"><h4>Sistema cromático por vertical</h4><p>Cada uma das seis áreas tem o seu próprio <code>--accent</code>/<code>--accent-2</code>/<code>--accent-deep</code> (azul Smart City, verde Agro, vermelho Defesa Civil, âmbar Segurança, laranja OFS, cinza Conectividade). É uma decisão de sistema, não decoração — a espinha dorsal certa para toda a arquitetura visual.</p></div>
+    <div class="box good"><h4>Par tipográfico Inter + JetBrains Mono</h4><p>Corpo legível, dados/etiquetas em monoespaçada — combinação técnica e credível, sem precisar de mudar.</p></div>
+    <div class="box good"><h4>Motor de scroll (script.js)</h4><p>Um único ticker <code>requestAnimationFrame</code> governa barra de progresso, scroll-spy e paralaxe — engenharia genuinamente boa por baixo do capô, com <code>aria-current</code> e <code>prefers-reduced-motion</code> respeitados.</p></div>
+    <div class="box good"><h4>Enquadramento "dossiê técnico" do OFS</h4><p>"Dossiê 01/OFS", "Ficha · 04/11", badge de produto emblemático — a melhor ideia específica já no site. Está subaproveitada fora do OFS.</p></div>
+    <div class="box good"><h4>Tabela comparativa Ethernet/4G/LoRaWAN</h4><p>Em Conectividade. É o momento mais "engenharia" do site inteiro: uma matriz de decisão real, não um cartão bonito. Deve ser o modelo a generalizar, não a exceção.</p></div>
+    <div class="box good"><h4>Precisão de conteúdo (Fase 3)</h4><p>Zero estatística inventada, fonte e ano citados, linguagem conservadora. Esta é a base de credibilidade sobre a qual todo o resto assenta — intocável.</p></div>
+  </div>
+</section>
+
+<section class="sec" id="problema">
+  <div class="num">02</div>
+  <h2>O problema central</h2>
+  <p class="dek">O site sente-se como um portefólio corporativo de uma página muito bem executado. Não se sente ainda como a sede digital de uma empresa internacional de engenharia. A diferença não está na qualidade de execução — está em três decisões estruturais repetidas.</p>
+
+  <div class="box bad" style="margin-bottom:16px">
+    <h4>1 · O cartão é a resposta a tudo</h4>
+    <p>27 usos de <code>.card</code> e 9 de <code>.stat</code> em 673 linhas de CSS, numa página de 11 secções: os 3 números da Empresa, os 5 cartões de vertical do Índice de Capacidades, os 4 passos + 3 soluções da Smart City, os 4 passos + 2 listas da Metodologia, os 5 nós da Conectividade — a mesma forma (retângulo arredondado, borda, ícone, duas linhas de texto) reaparece 6+ vezes com propósitos diferentes. O olho deixa de distinguir "diagrama de sistema importante" de "cartão de conteúdo genérico", porque estão desenhados de forma idêntica. É exatamente o sintoma "template-like, repetitivo" identificado no pedido.</p>
+  </div>
+  <div class="box bad" style="margin-bottom:16px">
+    <h4>2 · O hero é o hero mais comum que existe</h4>
+    <p>Composição centrada e simétrica — marca → nome → tagline → divisor → CTA único — é o padrão de hero mais replicado em sites corporativos e SaaS do mundo. É bem executado, mas estruturalmente intercambiável com milhares de outros sites. Não fixa uma posição específica da OPUS nem da engenharia.</p>
+  </div>
+  <div class="box bad">
+    <h4>3 · As seis verticais são irmãs sem hierarquia visível</h4>
+    <p>Além do badge "Carro-chefe" no diagrama do Ecossistema, as secções 05–09 usam o mesmo template entre si e quase o mesmo que o OFS (menos o enquadramento de dossiê). A história "plataforma + produto emblemático" que a Fase 4 já start a contar não sobrevive na estrutura real da página.</p>
+  </div>
+</section>
+
+<section class="sec" id="hero">
+  <div class="num">03</div>
+  <h2>Novo conceito de hero &amp; navegação</h2>
+  <p class="dek">Trocar "splash centrado" por uma composição editorial que afirma uma ideia e a ancora imediatamente num mecanismo real — não numa animação ambiente.</p>
+
+  <div class="grid2">
+    <div class="box">
+      <h4>Hero proposto</h4>
+      <p>Duas colunas assimétricas em vez de uma pilha centrada. Coluna esquerda, alinhada à grelha (não centrada): uma frase editorial curta que afirma o que a OPUS observa/decide/atua — reaproveitando "Medir · Alertar · Atuar" como estrutura da frase, não como legenda decorativa — mais uma linha de posicionamento e um único CTA. Coluna direita (ou faixa inferior em mobile): uma "leitura de sistema" mínima — o mesmo diagrama sensor→rede→decisão→ação que a Conectividade já documenta em prosa, com 2–3 factos reais já existentes no site ("6 áreas de aplicação", "Portugal → Europa") apresentados como instrumentação, não como marketing.</p>
+    </div>
+    <div class="box">
+      <h4>Navegação proposta</h4>
+      <p>Manter a barra superior, a barra de progresso e os pontos decorativos da rail — já são bons. Deixar de tratar os 12 destinos como uma lista plana: agrupar em bandas (Identidade · Sistema · Capacidades · Metodologia · Contacto), com as seis verticais aninhadas num painel/mega-menu sob "Capacidades" em vez de seis itens de topo co-iguais. É isto que diz ao visitante "estas seis fazem parte de um sistema", em vez de "aqui estão seis produtos separados".</p>
+    </div>
+  </div>
+
+  <figure style="margin-top:22px">
+    <svg viewBox="0 0 920 260" role="img" aria-label="Diagrama do mecanismo proposto para o hero: sensor liga a placa leitora por RS485 de forma contínua, a placa liga ao servidor por Ethernet, 4G ou LoRaWAN por evento, e o servidor aciona o atuador por regra cruzada." style="width:100%;height:auto;color:var(--muted)">
+      <defs>
+        <marker id="arrH" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0 0L10 5L0 10z" fill="currentColor"/>
+        </marker>
+      </defs>
+      <g font-size="12" fill="currentColor">
+        <rect x="20" y="90" width="150" height="60" rx="8" fill="none" stroke="currentColor" stroke-width="1.3"/>
+        <text x="95" y="115" text-anchor="middle" font-weight="600">Sensor</text>
+        <text x="95" y="134" text-anchor="middle" font-size="10" fill="var(--dim)">campo</text>
+
+        <line x1="170" y1="120" x2="278" y2="120" stroke="currentColor" stroke-width="1.3" marker-end="url(#arrH)"/>
+        <text x="224" y="104" text-anchor="middle" font-size="10.5" fill="var(--dim)">RS485 · contínuo</text>
+
+        <rect x="280" y="90" width="150" height="60" rx="8" fill="none" stroke="currentColor" stroke-width="1.3"/>
+        <text x="355" y="115" text-anchor="middle" font-weight="600">Placa leitora</text>
+        <text x="355" y="134" text-anchor="middle" font-size="10" fill="var(--dim)">lê + empacota</text>
+
+        <line x1="430" y1="120" x2="538" y2="120" stroke="currentColor" stroke-width="1.3" marker-end="url(#arrH)"/>
+        <text x="484" y="104" text-anchor="middle" font-size="10.5" fill="var(--dim)">Ethernet / 4G / LoRaWAN</text>
+        <text x="484" y="138" text-anchor="middle" font-size="10.5" fill="var(--dim)">por evento</text>
+
+        <rect x="540" y="90" width="150" height="60" rx="8" fill="none" stroke="#ff8259" stroke-width="1.6"/>
+        <text x="615" y="115" text-anchor="middle" font-weight="600" fill="#ff8259">Servidor</text>
+        <text x="615" y="134" text-anchor="middle" font-size="10" fill="var(--dim)">aplica regras</text>
+
+        <line x1="690" y1="120" x2="798" y2="120" stroke="currentColor" stroke-width="1.3" marker-end="url(#arrH)"/>
+        <text x="744" y="104" text-anchor="middle" font-size="10.5" fill="var(--dim)">se regra cruzada</text>
+
+        <rect x="800" y="90" width="100" height="60" rx="8" fill="none" stroke="currentColor" stroke-width="1.3"/>
+        <text x="850" y="115" text-anchor="middle" font-weight="600">Atuador</text>
+        <text x="850" y="134" text-anchor="middle" font-size="10" fill="var(--dim)">alerta / relé</text>
+      </g>
+    </svg>
+    <figcaption>Exemplo do tipo de diagrama proposto para o hero (mecanismo real, setas com cadência) — substitui o campo de partículas decorativo. Mesma cadeia que a Conectividade já descreve em prosa; aqui torna-se o visual principal.</figcaption>
+  </figure>
+</section>
+
+<section class="sec" id="ia">
+  <div class="num">04</div>
+  <h2>Nova arquitetura de informação</h2>
+  <p class="dek">Reorganização e repeso do que já existe — sem inventar conteúdo novo.</p>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>Hoje (ordem 00–11)</th><th>Proposto</th><th>O que muda</th></tr>
+      <tr><td>Capa → Empresa → Ecossistema → OFS → Índice de Capacidades → 5 verticais → Conectividade → Metodologia → Avaliação</td>
+          <td><b>Identidade</b> (Capa+Empresa fundidas) → <b>Sistema</b> (mecanismo end-to-end, absorve Ecossistema+Conectividade) → <b>OFS · Flagship</b> → <b>Capacidades</b> (as outras 5, portefólio coerente) → <b>Metodologia</b> → <b>Credibilidade</b> (novo — ver abaixo) → <b>Contacto</b></td>
+          <td>O leitor entende "como funciona" antes de ver qualquer vertical nomeada — hoje só percebe o mecanismo na secção 09, quase no fim.</td></tr>
+    </table>
+  </div>
+  <div class="callout">
+    <div class="k">◆ "Credibilidade" é secção nova — mas sem conteúdo novo</div>
+    <p>Hoje os factos reais (portefólio 2026, estatística de incêndios com fonte ICNF, sede em Famalicão) estão dispersos em stat-tiles espalhados por 3 secções diferentes. Proponho reuni-los numa secção curta e honesta antes do contacto — não para parecer maior, mas para que os factos verdadeiros que já existem tenham um lugar de peso, em vez de se perderem entre cartões.</p>
+    <p class="default">Default se não houver objeção: avançar com esta reordenação na Fase 6 de implementação.</p>
+  </div>
+</section>
+
+<section class="sec" id="verticais">
+  <div class="num">05</div>
+  <h2>As seis áreas &amp; o tratamento de flagship do OFS</h2>
+  <div class="grid2">
+    <div class="box">
+      <h4>Hoje</h4>
+      <p>Cada uma das 5 verticais secundárias repete: eyebrow + h2 + lead + 4 "flow steps" + 3 "cartões de solução". Mesmo quando uma vertical tem um único produto real (Phase Alarm, em Segurança), a estrutura força o mesmo número de blocos — conteúdo esticado para preencher um molde.</p>
+    </div>
+    <div class="box">
+      <h4>Proposto</h4>
+      <p>Uma gramática visual partilhada que varia por <em>tipo</em> de informação, não por cópia-colada: (a) uma frase-problema no acento da vertical; (b) um diagrama técnico específico ao mecanismo real dessa vertical (não uma cena ilustrativa); (c) um bloco de especificações compacto (o padrão <code>.specs</code> já existente é bom — reutilizar). Uma vertical com um produto não é forçada a ter três.</p>
+    </div>
+  </div>
+  <div class="box" style="margin-top:16px">
+    <h4>OFS — extensão do dossiê, não substituição</h4>
+    <p>A metáfora de dossiê/ficha técnica já é a melhor ideia do site. Proposta: dar-lhe mais investimento visual do que às restantes 5 — um diagrama de sistema real e anotado (torre + drone + comunicação + servidor, com setas rotuladas por dado/comando, não uma ilustração de cena) — para que "flagship" seja visível na estrutura, não apenas num badge de texto.</p>
+  </div>
+</section>
+
+<section class="sec" id="diagramas">
+  <div class="num">06</div>
+  <h2>Linguagem de diagrama e visualização de dados</h2>
+  <p class="dek">Padrão a partir de agora: uma seta diz o que se move; uma comparação desenha a diferença.</p>
+  <div class="grid2">
+    <div class="box bad">
+      <h4>Diagrama "Ecossistema" hoje</h4>
+      <p>Um hub central com seis ícones à volta, ligados por linhas tracejadas sem rótulo. É um mapa mental, não um diagrama de sistema — nenhuma seta diz o que flui nem com que frequência.</p>
+    </div>
+    <div class="box good">
+      <h4>Regra a aplicar de agora em diante</h4>
+      <p>Toda a seta ganha um rótulo (dado, comando ou energia, e cadência quando relevante). Toda a comparação (como a de Conectividade) é o modelo — generalizar, não tratar como exceção.</p>
+    </div>
+  </div>
+
+  <figure style="margin-top:18px">
+    <svg viewBox="0 0 920 300" role="img" aria-label="Comparação estrutural: hoje, uma vertical apresenta-se como três cartões idênticos sem hierarquia; proposto, apresenta-se como um diagrama de mecanismo com um rótulo de seta seguido de um bloco de especificações compacto." style="width:100%;height:auto;color:var(--muted)">
+      <g font-size="11.5">
+        <text x="180" y="30" text-anchor="middle" fill="var(--dim)" font-family="var(--mono)" letter-spacing="1">HOJE</text>
+        <rect x="30" y="55" width="130" height="90" rx="8" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".55"/>
+        <rect x="180" y="55" width="130" height="90" rx="8" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".55"/>
+        <rect x="330" y="55" width="130" height="90" rx="8" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".55"/>
+        <text x="95" y="105" text-anchor="middle" fill="currentColor" opacity=".55">Cartão A</text>
+        <text x="245" y="105" text-anchor="middle" fill="currentColor" opacity=".55">Cartão B</text>
+        <text x="395" y="105" text-anchor="middle" fill="currentColor" opacity=".55">Cartão C</text>
+        <text x="245" y="175" text-anchor="middle" fill="var(--dim)" font-size="10.5">três formas iguais, sem relação visível entre si</text>
+
+        <line x1="500" y1="100" x2="500" y2="100" stroke="var(--line-2)"/>
+        <line x1="500" y1="10" x2="500" y2="290" stroke="var(--line-2)" stroke-dasharray="3 5"/>
+
+        <text x="700" y="30" text-anchor="middle" fill="var(--dim)" font-family="var(--mono)" letter-spacing="1">PROPOSTO</text>
+        <rect x="560" y="55" width="90" height="46" rx="7" fill="none" stroke="#5b9df9" stroke-width="1.4"/>
+        <text x="605" y="82" text-anchor="middle" fill="#5b9df9" font-size="10.5">Medição</text>
+        <line x1="650" y1="78" x2="705" y2="78" stroke="currentColor" stroke-width="1.2" marker-end="url(#arrH)"/>
+        <text x="677" y="68" text-anchor="middle" font-size="9.5" fill="var(--dim)">limiar</text>
+        <rect x="707" y="55" width="90" height="46" rx="7" fill="none" stroke="#5b9df9" stroke-width="1.4"/>
+        <text x="752" y="82" text-anchor="middle" fill="#5b9df9" font-size="10.5">Decisão</text>
+        <line x1="797" y1="78" x2="852" y2="78" stroke="currentColor" stroke-width="1.2" marker-end="url(#arrH)"/>
+        <text x="824" y="68" text-anchor="middle" font-size="9.5" fill="var(--dim)">aciona</text>
+        <rect x="854" y="55" width="40" height="46" rx="7" fill="none" stroke="#5b9df9" stroke-width="1.4"/>
+        <text x="874" y="82" text-anchor="middle" fill="#5b9df9" font-size="9">Ação</text>
+
+        <rect x="560" y="130" width="334" height="112" rx="8" fill="none" stroke="currentColor" stroke-width="1.1" opacity=".7"/>
+        <text x="576" y="152" fill="var(--dim)" font-size="10">Especificação</text>
+        <line x1="576" y1="163" x2="878" y2="163" stroke="var(--line)"/>
+        <text x="576" y="182" fill="currentColor" font-size="11">Alcance</text><text x="878" y="182" text-anchor="end" fill="var(--dim)" font-size="11">até 15 km</text>
+        <line x1="576" y1="193" x2="878" y2="193" stroke="var(--line)"/>
+        <text x="576" y="212" fill="currentColor" font-size="11">Consumo</text><text x="878" y="212" text-anchor="end" fill="var(--dim)" font-size="11">muito baixo</text>
+        <text x="727" y="235" text-anchor="middle" fill="var(--dim)" font-size="10">um mecanismo real + dados verificáveis</text>
+      </g>
+    </svg>
+    <figcaption>Diferença estrutural entre o padrão atual (três formas idênticas sem relação) e o proposto (mecanismo com setas rotuladas + bloco de especificação) para cada vertical secundária.</figcaption>
+  </figure>
+
+  <div class="box" style="margin-top:18px">
+    <h4>Stat tiles — quando um número deve virar gráfico</h4>
+    <p>9 ocorrências hoje, todas como número grande + legenda. Um "hero number" isolado (ex.: "6 áreas") está correto assim. Mas onde há comparação implícita ou tendência (ex.: "68,3% da área ardida concentrou-se num único mês") o método de dataviz aplica-se: forma pela função do dado, nunca eixo duplo, paleta categórica validada por script — não um número maior a fingir ser gráfico.</p>
+  </div>
+</section>
+
+<section class="sec" id="motion">
+  <div class="num">07</div>
+  <h2>Linguagem de motion</h2>
+  <p class="dek">Motion deve comunicar engenharia, não decoração. Hoje há um único tipo de movimento (<code>.rv</code> fade+subida) aplicado indiscriminadamente a tudo — parágrafo, diagrama e métrica movem-se da mesma forma, por isso nada no motion parece ter sido desenhado.</p>
+  <div class="grid2">
+    <div class="box bad"><h4>Remover</h4><p>Canvas de partículas do hero (<code>netfx</code>) — corre indefinidamente, sem pausa fora do ecrã, e não representa nada que a OPUS realmente faça (nem dados, nem rede, nem sensores). Decorativo, não diegético.</p></div>
+    <div class="box good"><h4>4 tipos de motion propostos</h4>
+      <p><b>1.</b> Diagramas constroem-se progressivamente ao scroll, na ordem real em que o dado se moveria (não tudo de uma vez) — reaproveita o <code>IntersectionObserver</code> já existente.<br>
+      <b>2.</b> Contadores numéricos resolvem-se apenas onde representam um facto medido real (já parcialmente implementado — manter, não expandir sem critério).<br>
+      <b>3.</b> Hover/focus restrito e discreto em elementos navegáveis/comparáveis — sem brilhos.<br>
+      <b>4.</b> Prosa e cabeçalhos mantêm o fade simples atual — nem tudo precisa de motion.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="sistema-visual">
+  <div class="num">08</div>
+  <h2>Sistema visual: tipografia, grelha, espaçamento</h2>
+  <div class="grid3">
+    <div class="box"><h4>Tipografia</h4><p>Manter Inter + JetBrains Mono — já corretos. Reforçar contraste de escala/peso para um registo mais editorial. Dar ao Michroma (hoje usado 1×, no wordmark) um papel estrutural definido, não um floreio isolado.</p></div>
+    <div class="box"><h4>Grelha</h4><p>Hoje: uma única coluna central (~1200–1600px) para todo o tipo de conteúdo. Proposto: grelha editorial com assimetria disponível para hero/Sistema (partição 7/5 ou 8/4), mantendo medida estreita para prosa.</p></div>
+    <div class="box"><h4>Espaçamento &amp; superfícies</h4><p>Reduzir drasticamente o padrão "cartão para tudo" — reservar borda+preenchimento+radius para o que é genuinamente um objeto separado; usar linhas/tabelas/blocos de especificação para o resto.</p></div>
+  </div>
+</section>
+
+<section class="sec" id="mobile">
+  <div class="num">09</div>
+  <h2>Mobile &amp; interação</h2>
+  <p class="dek">Mobile não é "desktop mais pequeno" — hierarquia e interação próprias.</p>
+  <ul class="tick">
+    <li>A tabela de 5 colunas da Conectividade (Ethernet/4G/LoRaWAN × 6 critérios) não cabe empilhada em 390px sem se tornar ilegível — sinalizado como problema provável já hoje, a confirmar com captura real antes da implementação.</li>
+    <li>Diagramas multi-nó (Sistema, OFS) passam a formato de deslize/passo-a-passo em mobile, em vez de comprimidos verticalmente.</li>
+    <li>As seis verticais colapsam num único painel "Capacidades" na navegação mobile, em vez de 6 itens separados.</li>
+    <li>O hero "leitura de sistema" simplifica para 2–3 factos-chave em mobile, não o diagrama completo.</li>
+  </ul>
+</section>
+
+<section class="sec" id="axp">
+  <div class="num">10</div>
+  <h2>Acessibilidade &amp; performance</h2>
+  <div class="grid2">
+    <div class="box"><h4>Acessibilidade</h4><p>Tudo conquistado na Fase 2 (<code>aria-current</code>, rail nav decorativa via <code>data-target</code>, <code>prefers-reduced-motion</code>, foco visível) mantém-se ou melhora. Novos diagramas seguem o padrão <code>role="img"</code> + <code>aria-label</code> por figura (como os dois exemplos deste documento). Qualquer construção de diagrama ao scroll precisa de estado estático e legível sob <code>prefers-reduced-motion</code>.</p></div>
+    <div class="box"><h4>Performance</h4><p>Menos cópias de <code>.card</code> no DOM é, por si, um ganho (menos CSS, menos área de pintura do brilho radial calculado em 27+9 elementos). Remover o loop de canvas sempre ativo (já sinalizado na Fase 4, ainda por resolver) elimina um custo por frame permanente. Diagramas construídos ao scroll devem reutilizar o único ticker <code>rAF</code> já existente em script.js, não criar um segundo sistema de observers.</p></div>
+  </div>
+</section>
+
+<section class="sec" id="antes-depois">
+  <div class="num">11</div>
+  <h2>Antes / depois — resumo por zona</h2>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>Zona</th><th>Hoje</th><th>Proposto</th></tr>
+      <tr><td>Hero</td><td>Splash centrado e simétrico + partículas ambiente</td><td>Composição editorial assimétrica + diagrama real do mecanismo</td></tr>
+      <tr><td>Navegação</td><td>12 destinos em lista plana</td><td>Bandas agrupadas, 6 verticais aninhadas sob "Capacidades"</td></tr>
+      <tr><td>IA / ordem</td><td>Empresa→Ecossistema→OFS→Índice→5 verticais→Conectividade→Metodologia</td><td>Identidade→Sistema→OFS·Flagship→Capacidades→Metodologia→Credibilidade→Contacto</td></tr>
+      <tr><td>5 verticais secundárias</td><td>Molde fixo: eyebrow+h2+lead+4 passos+3 cartões, sempre</td><td>Gramática variável: frase-problema + diagrama próprio + bloco de especificação, sem preenchimento forçado</td></tr>
+      <tr><td>OFS</td><td>Dossiê + ilustração de cena</td><td>Dossiê + diagrama de sistema anotado, mais investimento visual que as restantes 5</td></tr>
+      <tr><td>Diagrama Ecossistema</td><td>Hub-and-spoke decorativo, sem rótulos</td><td>Substituído por diagrama de mecanismo com setas rotuladas (dado/comando/cadência)</td></tr>
+      <tr><td>Motion</td><td>Um único fade+subida para tudo; partículas sempre ativas</td><td>4 tipos ligados ao tipo de conteúdo; partículas removidas</td></tr>
+      <tr><td>Grelha</td><td>Coluna central única para tudo</td><td>Editorial, com assimetria disponível para hero/Sistema</td></tr>
+    </table>
+  </div>
+</section>
+
+<section class="sec" id="matriz">
+  <div class="num">12</div>
+  <h2>Matriz Manter / Evoluir / Redesenhar / Remover</h2>
+  <div class="matrix-legend">
+    <span class="badge b-keep">● Manter</span><span class="badge b-evolve">● Evoluir</span><span class="badge b-redesign">● Redesenhar</span><span class="badge b-remove">● Remover</span><span class="badge b-input">● Precisa decisão</span>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>Elemento</th><th>Classificação</th><th>Nota</th></tr>
+      <tr><td>Sistema cromático por vertical</td><td><span class="badge b-keep">Manter</span></td><td>Espinha dorsal — estender à nova IA</td></tr>
+      <tr><td>Par Inter + JetBrains Mono</td><td><span class="badge b-keep">Manter</span></td><td>Já correto</td></tr>
+      <tr><td>Motor scroll-spy/progresso (script.js)</td><td><span class="badge b-keep">Manter</span></td><td>Reutilizar para novo motion</td></tr>
+      <tr><td>Enquadramento "dossiê" do OFS</td><td><span class="badge b-keep">Manter</span></td><td>Estender com mais investimento visual</td></tr>
+      <tr><td>Tabela comparativa (Conectividade)</td><td><span class="badge b-keep">Manter</span></td><td>Modelo a generalizar</td></tr>
+      <tr><td>Precisão de conteúdo (Fase 3)</td><td><span class="badge b-keep">Manter</span></td><td>Intocável</td></tr>
+      <tr><td>Reveal-on-scroll (.rv)</td><td><span class="badge b-evolve">Evoluir</span></td><td>Diferenciar por tipo de conteúdo</td></tr>
+      <tr><td>Stat tiles (9 ocorrências)</td><td><span class="badge b-evolve">Evoluir</span></td><td>Reduzir; reservar para factos medidos reais</td></tr>
+      <tr><td>Grid de conteúdo centrado único</td><td><span class="badge b-evolve">Evoluir</span></td><td>Introduzir assimetria editorial</td></tr>
+      <tr><td>Michroma (uso único no wordmark)</td><td><span class="badge b-evolve">Evoluir</span></td><td>Dar-lhe papel estrutural definido</td></tr>
+      <tr><td>Rail nav decorativa</td><td><span class="badge b-evolve">Evoluir</span></td><td>Manter mecanismo; rótulo on-hover</td></tr>
+      <tr><td>Hero (composição centrada)</td><td><span class="badge b-redesign">Redesenhar</span></td><td>Ver secção 03</td></tr>
+      <tr><td>Navegação principal (lista plana)</td><td><span class="badge b-redesign">Redesenhar</span></td><td>Agrupar em bandas</td></tr>
+      <tr><td>Molde das 5 verticais secundárias</td><td><span class="badge b-redesign">Redesenhar</span></td><td>Ver secção 05</td></tr>
+      <tr><td>Diagrama "Ecossistema"</td><td><span class="badge b-redesign">Redesenhar</span></td><td>Substituir por mecanismo rotulado</td></tr>
+      <tr><td>Ordem/agrupamento da IA</td><td><span class="badge b-redesign">Redesenhar</span></td><td>Ver secção 04</td></tr>
+      <tr><td>Estratégia mobile de tabelas/diagramas</td><td><span class="badge b-redesign">Redesenhar</span></td><td>Ver secção 09</td></tr>
+      <tr><td>Canvas de partículas do hero</td><td><span class="badge b-remove">Remover</span></td><td>Decorativo, sem pausa, sem relação com o produto</td></tr>
+      <tr><td>Padrão "cartão para tudo"</td><td><span class="badge b-remove">Remover</span></td><td>Como resposta por omissão — reduzir de forma acentuada</td></tr>
+      <tr><td>Nível de investimento em motion scroll-driven</td><td><span class="badge b-input">Precisa decisão</span></td><td>Mais engenharia de frontend — vale o esforço nesta fase?</td></tr>
+      <tr><td>Mega-menu das 6 verticais</td><td><span class="badge b-input">Precisa decisão</span></td><td>Avançar já ou deixar para fase de navegação dedicada?</td></tr>
+    </table>
+  </div>
+</section>
+
+<section class="sec" id="proximos">
+  <div class="num">13</div>
+  <h2>Próximos passos</h2>
+  <p class="dek">Este documento é auditoria e proposta — nenhum ficheiro do site foi tocado. Antes de qualquer implementação, preciso da sua aprovação (ou correções) sobre:</p>
+  <ul class="tick">
+    <li>A nova arquitetura de informação (secção 04) e a reordenação das secções que ela implica.</li>
+    <li>A direção do novo hero e o abandono do canvas de partículas (secção 03).</li>
+    <li>O nível de redesenho aceite para as 5 verticais secundárias — molde variável em vez de fixo (secção 05).</li>
+    <li>As duas decisões em aberto na matriz: investimento em motion scroll-driven, e timing do mega-menu de navegação.</li>
+  </ul>
+  <div class="callout">
+    <div class="k">◆ Escala do trabalho</div>
+    <p>Esta é uma reestruturação substancial — mais próxima de um redesenho de secções do que de um ajuste. Proponho implementar por zonas (Sistema/hero primeiro, depois verticais, depois motion) com uma revisão visual sua entre cada zona, em vez de um único lançamento monolítico — mantendo o princípio evolutivo já usado nas Fases 1–4: a cada passo, comparação visual antes/depois e possibilidade de recuo.</p>
+    <p class="default">Fico à espera da sua direção antes de tocar em <code>index.html</code>, <code>styles.css</code> ou <code>script.js</code>.</p>
+  </div>
+</section>
+
+</main>
+</div>
+
+<footer class="doc">
+  <span>OPUS Corp. · Fase 5 · Auditoria de Direção de Arte</span>
+  <span>2026</span>
+</footer>
+
+<script>
+(function(){
+  var links = Array.prototype.slice.call(document.querySelectorAll('.toc a'));
+  var secs = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
+  function onScroll(){
+    var probe = window.scrollY + window.innerHeight * 0.25;
+    var active = 0;
+    secs.forEach(function(s,i){ if (s && s.offsetTop <= probe) active = i; });
+    links.forEach(function(a,i){ a.classList.toggle('cur', i===active); });
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script>
+</body>
+</html>

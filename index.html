@@ -25,15 +25,9 @@
     </div>
     <nav id="nav" aria-label="Índice do repertório">
       <a href="#capa">Capa</a>
-      <a href="#empresa">Empresa</a>
-      <a href="#ecossistema">Ecossistema</a>
+      <a href="#sistema">Sistema</a>
       <a href="#ofs">OFS · Incêndios</a>
-      <a href="#capacidades">Índice de Capacidades</a>
-      <a href="#smartcity">Smart City</a>
-      <a href="#agro">Agro &amp; Ambiental</a>
-      <a href="#defesacivil">Defesa Civil</a>
-      <a href="#seguranca">Segurança</a>
-      <a href="#conectividade">Conectividade</a>
+      <a href="#capacidades" id="navCap" aria-haspopup="true" aria-expanded="false" aria-controls="mega">Capacidades<svg class="care" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       <a href="#metodologia">Metodologia</a>
       <a href="#avaliacao">Iniciar Avaliação</a>
     </nav>
@@ -42,19 +36,54 @@
     </button>
   </div>
   <div class="prog" id="prog"></div>
+
+  <div class="mega" id="mega" aria-label="Índice de capacidades">
+    <div class="mega-in">
+      <div class="mega-head">
+        <span class="mega-eyebrow">Índice de capacidades — seis áreas, um só princípio de engenharia</span>
+        <a href="#capacidades" class="mega-all">Ver índice completo <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+      <div class="mega-list">
+        <a href="#ofs" class="mega-row flagship" style="--mc:#f0562a">
+          <span class="mega-n">01</span>
+          <span class="mega-t"><b>OFS · Deteção de Incêndios</b><small>★ Produto emblemático — torres autónomas, drones e IA</small></span>
+          <span class="mega-go">Ver <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </a>
+        <a href="#smartcity" class="mega-row" style="--mc:#5b9df9">
+          <span class="mega-n">02</span>
+          <span class="mega-t"><b>Smart City</b><small>Iluminação, conectividade, videovigilância e contagem por drone</small></span>
+          <span class="mega-go">Ver <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </a>
+        <a href="#agro" class="mega-row" style="--mc:#3ddc97">
+          <span class="mega-n">03</span>
+          <span class="mega-t"><b>Agro &amp; Ambiental</b><small>Água, solo e clima medidos e acionados em tempo real</small></span>
+          <span class="mega-go">Ver <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </a>
+        <a href="#defesacivil" class="mega-row" style="--mc:#f2664a">
+          <span class="mega-n">04</span>
+          <span class="mega-t"><b>Defesa Civil</b><small>Encostas, chuvas, rios e costa — alerta antes do rompimento</small></span>
+          <span class="mega-go">Ver <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </a>
+        <a href="#seguranca" class="mega-row" style="--mc:#ecb54a">
+          <span class="mega-n">05</span>
+          <span class="mega-t"><b>Segurança &amp; Alarmes</b><small>Phase Alarm — rede elétrica trifásica e circuitos essenciais</small></span>
+          <span class="mega-go">Ver <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </a>
+        <a href="#conectividade" class="mega-row" style="--mc:#9aa2b8">
+          <span class="mega-n">06</span>
+          <span class="mega-t"><b>Conectividade</b><small>Ethernet, 4G e LoRaWAN — a camada que liga sensor a servidor</small></span>
+          <span class="mega-go">Ver <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </a>
+      </div>
+    </div>
+  </div>
 </header>
 
 <div class="rail-nav" id="rail" aria-hidden="true">
   <a data-target="#capa" data-label="Capa" tabindex="-1"></a>
-  <a data-target="#empresa" data-label="Empresa" tabindex="-1"></a>
-  <a data-target="#ecossistema" data-label="Ecossistema" tabindex="-1"></a>
+  <a data-target="#sistema" data-label="Sistema" tabindex="-1"></a>
   <a data-target="#ofs" data-label="OFS &middot; Incêndios" tabindex="-1"></a>
-  <a data-target="#capacidades" data-label="Índice de Capacidades" tabindex="-1"></a>
-  <a data-target="#smartcity" data-label="Smart City" tabindex="-1"></a>
-  <a data-target="#agro" data-label="Agro &amp; Ambiental" tabindex="-1"></a>
-  <a data-target="#defesacivil" data-label="Defesa Civil" tabindex="-1"></a>
-  <a data-target="#seguranca" data-label="Segurança" tabindex="-1"></a>
-  <a data-target="#conectividade" data-label="Conectividade" tabindex="-1"></a>
+  <a data-target="#capacidades" data-label="Capacidades" tabindex="-1"></a>
   <a data-target="#metodologia" data-label="Metodologia" tabindex="-1"></a>
   <a data-target="#avaliacao" data-label="Iniciar Avaliação" tabindex="-1"></a>
 </div>
@@ -63,27 +92,72 @@
 
 <!-- ══════════ 01 · CAPA ══════════ -->
 <section class="page hero-wrap" id="capa">
-  <canvas class="netfx" id="netfx"></canvas>
-  <div class="pagehead" style="position:relative;z-index:1">
+  <div class="pagehead">
     <div class="logo-mark">
       <span class="brand-mark" aria-hidden="true" style="height:20px;opacity:.9"></span>
     </div>
     <span class="pill">Repertório de Soluções · 2026</span>
   </div>
 
-  <div class="cover rv" style="position:relative;z-index:1">
-    <span class="brand-mark cover-mark" aria-hidden="true"></span>
-    <h1 class="cover-word">OPUS</h1>
-    <p class="cover-sub">Engenharia Inteligente</p>
-    <div class="cover-rule">
-      <span class="cr-line l"></span>
-      <span class="cr-node"></span>
-      <span class="cr-line r"></span>
+  <div class="opener rv">
+    <div class="opener-copy">
+      <p class="cover-tag std">Medir <span>·</span> Alertar <span>·</span> Atuar</p>
+      <h1 class="opener-h">Engenharia que <span class="g">mede</span> o território,<br>decide sozinha e <span class="o">atua</span> a tempo.</h1>
+      <p class="lead" style="margin-top:18px">A OPUS constrói a cadeia completa — sensor, rede, decisão e ação — para seis frentes de infraestrutura crítica, com a deteção precoce de incêndios florestais (OFS) como o sistema mais ambicioso do portefólio.</p>
+      <div class="opener-actions">
+        <a class="hero-cta" href="#avaliacao">Iniciar avaliação técnica <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="hero-secondary" href="#sistema">Como funciona o sistema</a>
+      </div>
     </div>
-    <p class="cover-tag">Medir <span>·</span> Alertar <span>·</span> Atuar</p>
-    <a class="hero-cta" href="#avaliacao">Iniciar avaliação técnica <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-  </div>
+    <figure class="opener-art panel mech" data-mech="hero">
+      <span class="mech-caption-eyebrow">Leitura de sistema</span>
+      <svg viewBox="0 0 420 300" role="img" aria-label="Diagrama do mecanismo OPUS: um sensor no terreno liga a uma placa leitora por RS485 de forma contínua, a placa transmite ao servidor por Ethernet, 4G ou LoRaWAN por evento, e o servidor aciona um atuador quando uma regra é cruzada." aria-describedby="hero-mech-cap">
+        <defs>
+          <marker id="mArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+            <path d="M0 0L10 5L0 10z" fill="currentColor"/>
+          </marker>
+        </defs>
+        <g class="mech-node" data-i="0">
+          <rect x="14" y="60" width="118" height="58" rx="7" fill="none" stroke="currentColor" stroke-width="1.3"/>
+          <text x="73" y="85" text-anchor="middle" font-family="var(--font-mono)" font-size="11.5" font-weight="600" fill="currentColor">Sensor</text>
+          <text x="73" y="102" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--dim)">campo</text>
+        </g>
+        <path class="mech-arrow" data-i="1" d="M132 89 H206" stroke="currentColor" stroke-width="1.3" marker-end="url(#mArrow)" fill="none"/>
+        <text class="mech-label" data-i="1" x="169" y="76" text-anchor="middle" font-family="var(--font-mono)" font-size="8.5" fill="var(--dim)">RS485 · contínuo</text>
 
+        <g class="mech-node" data-i="2">
+          <rect x="208" y="60" width="130" height="58" rx="7" fill="none" stroke="currentColor" stroke-width="1.3"/>
+          <text x="273" y="85" text-anchor="middle" font-family="var(--font-mono)" font-size="11.5" font-weight="600" fill="currentColor">Placa leitora</text>
+          <text x="273" y="102" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--dim)">lê + empacota</text>
+        </g>
+        <path class="mech-arrow" data-i="3" d="M273 118 V152" stroke="currentColor" stroke-width="1.3" marker-end="url(#mArrow)" fill="none"/>
+        <text class="mech-label" data-i="3" x="336" y="139" text-anchor="end" font-family="var(--font-mono)" font-size="8.5" fill="var(--dim)">Ethernet/4G/LoRaWAN · por evento</text>
+
+        <g class="mech-node accent" data-i="4">
+          <rect x="208" y="154" width="130" height="58" rx="7" fill="none" stroke="var(--accent-2)" stroke-width="1.7"/>
+          <text x="273" y="179" text-anchor="middle" font-family="var(--font-mono)" font-size="11.5" font-weight="600" fill="var(--accent-2)">Servidor</text>
+          <text x="273" y="196" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--dim)">aplica regras</text>
+        </g>
+        <path class="mech-arrow" data-i="5" d="M208 183 H132" stroke="currentColor" stroke-width="1.3" marker-end="url(#mArrow)" fill="none"/>
+        <text class="mech-label" data-i="5" x="169" y="170" text-anchor="middle" font-family="var(--font-mono)" font-size="8.5" fill="var(--dim)">se regra cruzada</text>
+
+        <g class="mech-node" data-i="6">
+          <rect x="14" y="154" width="118" height="58" rx="7" fill="none" stroke="currentColor" stroke-width="1.3"/>
+          <text x="73" y="179" text-anchor="middle" font-family="var(--font-mono)" font-size="11.5" font-weight="600" fill="currentColor">Atuador</text>
+          <text x="73" y="196" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--dim)">alerta / relé</text>
+        </g>
+
+        <g class="mech-node" data-i="7" opacity=".85">
+          <text x="14" y="240" font-family="var(--font-mono)" font-size="9.5" fill="var(--dim)">SEIS ÁREAS</text>
+          <text x="120" y="240" font-family="var(--font-mono)" font-size="9.5" fill="var(--muted)">Smart City · Agro · Defesa Civil</text>
+          <text x="120" y="254" font-family="var(--font-mono)" font-size="9.5" fill="var(--muted)">Segurança · Conectividade</text>
+          <text x="14" y="278" font-family="var(--font-mono)" font-size="9.5" fill="var(--dim)">FLAGSHIP</text>
+          <text x="120" y="278" font-family="var(--font-mono)" font-size="9.5" fill="#ff9179">OFS · Deteção de Incêndios</text>
+        </g>
+      </svg>
+      <figcaption id="hero-mech-cap">O mesmo mecanismo que sustenta as seis áreas do portefólio — a cadência de cada seta muda conforme a área, a estrutura não.</figcaption>
+    </figure>
+  </div>
 
   <div class="pagefoot" style="margin-top:clamp(34px,6vw,56px)">
     <span>Portugal · Global · Futuro</span>
@@ -91,178 +165,116 @@
   </div>
 </section>
 
-<!-- ══════════ 02 · EMPRESA ══════════ -->
-<section class="page" id="empresa">
+<!-- ══════════ 02 · SISTEMA (Empresa + Ecossistema, unificados) ══════════ -->
+<section class="page" id="sistema">
   <div class="pagehead">
     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M6 20V11C6 7.134 8.686 4 12 4C15.314 4 18 7.134 18 11V20" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M6 20V17M18 20V17" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
-    <span class="pill">A Empresa</span>
+    <span class="pill">O Sistema</span>
   </div>
 
-  <div class="rv mb-xl">
+  <div class="rv mb-l">
     <p class="eyebrow">01 — Quem somos</p>
     <h2>Engenharia inteligente e automação, <br>aplicada ao território.</h2>
     <p class="sub">A OPUS integra engenharia, tecnologia e automação em soluções aplicadas à infraestrutura e à gestão operacional. Nascemos em Famalicão, Portugal, a partir de uma convicção simples: os problemas mais caros de um território — incêndios, cheias, tráfego, desperdício de água, falhas de energia — não faltam de vontade de resolver, faltam de dados fiáveis e em tempo real para agir a tempo. É isso que construímos.</p>
   </div>
 
-  <div class="grid g3 mb-l rv">
-    <div class="stat o"><b>2026</b><span>portefólio consolidado de sistemas em produção e prova de campo.</span></div>
-    <div class="stat"><b>6 áreas</b><span>Smart City, Agro, Defesa Civil, Segurança, Deteção de Incêndios e Conectividade.</span></div>
-    <div class="stat g"><b>Portugal → Europa</b><span>sede em Famalicão, com visão de expansão internacional.</span></div>
+  <div class="stat-row rv mb-xl">
+    <div class="sr-item"><b class="o">2026</b><span>portefólio consolidado de sistemas em produção e prova de campo</span></div>
+    <div class="sr-item"><b>6 áreas</b><span>Smart City, Agro, Defesa Civil, Segurança, OFS e Conectividade</span></div>
+    <div class="sr-item"><b class="g">Portugal → Europa</b><span>sede em Famalicão, com visão de expansão internacional</span></div>
   </div>
 
-  <div class="grid g2 mb-l rv">
-    <div class="card pad-lg">
+  <div class="twocol-divide mb-xl rv">
+    <div>
       <p class="eyebrow" style="margin-bottom:10px">O que fazemos</p>
-      <h3 style="margin-bottom:10px">Do sensor à decisão.</h3>
+      <h3 style="font-size:17px;margin-bottom:10px">Do sensor à decisão.</h3>
       <p class="small" style="margin:0">Cada solução OPUS segue o mesmo princípio: um sensor ou uma câmara mede uma condição real no terreno, os dados sobem por uma rede de comunicação até uma plataforma, e a plataforma transforma isso em alerta, relatório ou ação automática — muitas vezes sem esperar por ninguém para decidir. Aplicamos este princípio a seis áreas distintas, com a mesma disciplina de engenharia em todas.</p>
     </div>
-    <div class="card pad-lg">
+    <div>
       <p class="eyebrow" style="margin-bottom:10px">Como trabalhamos</p>
-      <h3 style="margin-bottom:10px">Nenhum projeto sai de catálogo fechado.</h3>
+      <h3 style="font-size:17px;margin-bottom:10px">Nenhum projeto sai de catálogo fechado.</h3>
       <p class="small" style="margin:0">Não vendemos pacotes de fábrica. Cada implementação é configurada para a área a cobrir, o risco do terreno e o orçamento real do cliente — desde o número de sensores até ao protocolo de comunicação. O que é fixo é a arquitetura por trás; o que muda é a escala.</p>
     </div>
   </div>
 
-  <div class="grid g4 mb-l rv">
-    <div class="card">
-      <h3><span class="dot"></span>Inteligência Artificial &amp; IoT</h3>
-      <p class="small" style="margin:0">Sensores autónomos e modelos de deteção que aprendem com o próprio uso em campo.</p>
-    </div>
-    <div class="card">
-      <h3><span class="dot" style="background:var(--blue)"></span>Computer Vision</h3>
-      <p class="small" style="margin:0">Análise de imagem e vídeo em tempo real — de drones a câmaras fixas de rua.</p>
-    </div>
-    <div class="card">
-      <h3><span class="dot" style="background:var(--green)"></span>Automação de sistemas</h3>
-      <p class="small" style="margin:0">Integração entre deteção e atuação: rega, relés, sirenes e alertas acionados sozinhos.</p>
-    </div>
-    <div class="card">
-      <h3><span class="dot" style="background:var(--amber)"></span>Monitorização 24/7</h3>
-      <p class="small" style="margin:0">Plataformas de dados em tempo real, com histórico, estatística e alertas configuráveis.</p>
-    </div>
+  <div class="cap-rail rv mb-xl">
+    <div class="cr-item"><span class="dot"></span><b>Inteligência Artificial &amp; IoT</b><span>Sensores autónomos e modelos de deteção que aprendem com o próprio uso em campo</span></div>
+    <div class="cr-item"><span class="dot" style="background:var(--blue)"></span><b>Computer Vision</b><span>Análise de imagem e vídeo em tempo real — de drones a câmaras fixas de rua</span></div>
+    <div class="cr-item"><span class="dot" style="background:var(--green)"></span><b>Automação de sistemas</b><span>Integração entre deteção e atuação: rega, relés, sirenes e alertas acionados sozinhos</span></div>
+    <div class="cr-item"><span class="dot" style="background:var(--amber)"></span><b>Monitorização 24/7</b><span>Plataformas de dados em tempo real, com histórico, estatística e alertas configuráveis</span></div>
   </div>
+
+  <p class="eyebrow rv" style="margin-bottom:2px">02 — Um só mecanismo, seis territórios de aplicação</p>
+  <h2 class="rv mb-l">A mesma cadeia de engenharia, ramificada em seis ações.</h2>
+
+  <figure class="panel mech rv mb-l" data-mech="sistema" style="overflow:visible">
+    <svg viewBox="0 0 900 300" role="img" aria-label="Diagrama do mecanismo OPUS ramificado: sensor liga a placa leitora, a placa transmite ao servidor, e o servidor aciona seis ações distintas — uma por área do portefólio, com OFS destacado como sistema mais ambicioso." aria-describedby="sistema-mech-cap" style="width:100%;height:auto;color:var(--muted)">
+      <defs>
+        <marker id="mArrow2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker>
+      </defs>
+      <g class="mech-node" data-i="0">
+        <rect x="10" y="120" width="110" height="56" rx="7" fill="none" stroke="currentColor" stroke-width="1.2"/>
+        <text x="65" y="144" text-anchor="middle" font-family="var(--font-mono)" font-size="11" font-weight="600" fill="currentColor">Sensor</text>
+        <text x="65" y="160" text-anchor="middle" font-family="var(--font-mono)" font-size="8.5" fill="var(--dim)">6 territórios</text>
+      </g>
+      <path class="mech-arrow" data-i="1" d="M120 148 H196" stroke="currentColor" stroke-width="1.2" marker-end="url(#mArrow2)" fill="none"/>
+      <text class="mech-label" data-i="1" x="158" y="136" text-anchor="middle" font-family="var(--font-mono)" font-size="8" fill="var(--dim)">RS485</text>
+
+      <g class="mech-node" data-i="2">
+        <rect x="198" y="120" width="110" height="56" rx="7" fill="none" stroke="currentColor" stroke-width="1.2"/>
+        <text x="253" y="144" text-anchor="middle" font-family="var(--font-mono)" font-size="11" font-weight="600" fill="currentColor">Rede</text>
+        <text x="253" y="160" text-anchor="middle" font-family="var(--font-mono)" font-size="8.5" fill="var(--dim)">Eth/4G/LoRa</text>
+      </g>
+      <path class="mech-arrow" data-i="3" d="M308 148 H384" stroke="currentColor" stroke-width="1.2" marker-end="url(#mArrow2)" fill="none"/>
+      <text class="mech-label" data-i="3" x="346" y="136" text-anchor="middle" font-family="var(--font-mono)" font-size="8" fill="var(--dim)">por evento</text>
+
+      <g class="mech-node accent" data-i="4">
+        <rect x="386" y="120" width="110" height="56" rx="7" fill="none" stroke="var(--accent-2)" stroke-width="1.6"/>
+        <text x="441" y="144" text-anchor="middle" font-family="var(--font-mono)" font-size="11" font-weight="600" fill="var(--accent-2)">Servidor</text>
+        <text x="441" y="160" text-anchor="middle" font-family="var(--font-mono)" font-size="8.5" fill="var(--dim)">regras por área</text>
+      </g>
+
+      <g class="mech-branch" data-i="5" stroke="currentColor" stroke-width="1" fill="none" opacity=".85">
+        <path d="M496 148 H540 V38 H616"/>
+        <path d="M496 148 H540 V94 H616"/>
+        <path d="M496 148 H616"/>
+        <path d="M496 148 H540 V202 H616"/>
+        <path d="M496 148 H540 V258 H616"/>
+        <path d="M496 148 H540 V148 H568" stroke="#ff9179"/>
+      </g>
+      <g class="mech-node" data-i="6" font-family="var(--font-mono)" font-size="9.5">
+        <rect x="618" y="24" width="272" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="1" opacity=".8"/>
+        <text x="630" y="42" fill="currentColor">Smart City → aciona iluminação/totem</text>
+        <rect x="618" y="80" width="272" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="1" opacity=".8"/>
+        <text x="630" y="98" fill="currentColor">Agro → aciona rega/válvula</text>
+        <rect x="618" y="136" width="272" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="1" opacity=".8"/>
+        <text x="630" y="154" fill="currentColor">Defesa Civil → aciona sirene/alerta</text>
+        <rect x="618" y="192" width="272" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="1" opacity=".8"/>
+        <text x="630" y="210" fill="currentColor">Segurança → aciona escalonamento</text>
+        <rect x="618" y="248" width="272" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="1" opacity=".8"/>
+        <text x="630" y="266" fill="currentColor">Conectividade → escolhe a via acima</text>
+      </g>
+      <g data-i="7">
+        <rect x="568" y="134" width="52" height="28" rx="6" fill="none" stroke="#ff8259" stroke-width="1.6"/>
+        <text x="594" y="152" text-anchor="middle" font-family="var(--font-mono)" font-size="8.5" font-weight="700" fill="#ff9179">OFS</text>
+      </g>
+    </svg>
+    <figcaption id="sistema-mech-cap">Uma única espinha dorsal de deteção, comunicação e decisão, configurada de forma diferente para cada uma das seis áreas — o OFS é o ramo mais ambicioso do mesmo mecanismo, não um sistema à parte.</figcaption>
+  </figure>
 
   <div class="band rv">
     <span class="tag">Presença</span>
     <p>Sede em <strong>Famalicão, Portugal</strong>, com operação em Portugal e visão de expansão para a Europa. Trabalhamos com municípios, entidades de proteção civil, empresas agroindustriais, operadores de infraestrutura crítica e consultorias de engenharia — sempre com suporte local, do projeto à integração no terreno.</p>
   </div>
 
-  <div class="pagefoot"><span>OPUS · Empresa</span><span>02</span></div>
-</section>
-
-<!-- ══════════ 03 · ECOSSISTEMA ══════════ -->
-<section class="page" id="ecossistema">
-  <div class="pagehead">
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M6 20V11C6 7.134 8.686 4 12 4C15.314 4 18 7.134 18 11V20" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M6 20V17M18 20V17" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
-    <span class="pill">O Ecossistema</span>
-  </div>
-
-  <div class="rv mb-xl">
-    <p class="eyebrow">02 — As seis áreas</p>
-    <h2>Um só princípio de engenharia,<br>seis territórios de aplicação.</h2>
-    <p class="sub">Cada área do nosso portefólio responde a problemas concretos de engenharia, operação e gestão territorial. Juntas, formam o repertório de soluções OPUS — cada uma com a sua própria ficha técnica, mas todas a partilhar a mesma espinha dorsal de deteção, comunicação e decisão.</p>
-  </div>
-
-  <div class="rv mb-xl" style="max-width:520px;margin-left:auto;margin-right:auto">
-    <div class="panel" style="padding:0;overflow:hidden">
-      <svg viewBox="0 0 460 420" width="100%" role="img" aria-label="Rede de sensores OPUS ligada a uma plataforma central, representando as seis áreas do portefólio monitorizadas em tempo real">
-        <defs>
-          <radialGradient id="heroGlow" cx="50%" cy="38%" r="60%">
-            <stop offset="0%" stop-color="#3f8cf5" stop-opacity=".22"/>
-            <stop offset="100%" stop-color="#3f8cf5" stop-opacity="0"/>
-          </radialGradient>
-        </defs>
-        <ellipse cx="230" cy="190" rx="220" ry="200" fill="url(#heroGlow)"/>
-        <g class="net-line" stroke="rgba(255,255,255,.15)" stroke-width="1" fill="none">
-          <path d="M230 190 L90 90"/>
-          <path d="M230 190 L370 90"/>
-          <path d="M230 190 L80 260"/>
-          <path d="M230 190 L370 270"/>
-          <path d="M230 190 L230 340"/>
-          <path d="M230 190 L150 330"/>
-          <path d="M230 190 L320 340"/>
-        </g>
-        <circle class="pulse-ring" cx="230" cy="190" r="30" fill="none" stroke="#3f8cf5" stroke-width="1.4"/>
-        <circle class="pulse-ring" cx="230" cy="190" r="30" fill="none" stroke="#3f8cf5" stroke-width="1.4" style="animation-delay:1.4s"/>
-        <circle cx="230" cy="190" r="30" fill="#0b0b0d" stroke="#3f8cf5" stroke-width="2"/>
-        <text x="230" y="185" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="7" font-weight="600" fill="#7db4ff" letter-spacing=".5">OPUS</text>
-        <text x="230" y="197" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="5.5" fill="#8b8b96" letter-spacing=".5">PLATAFORMA</text>
-
-        <circle cx="90" cy="90" r="19" fill="#0b0b0d" stroke="#5b9df9" stroke-width="1.6"/>
-        <g transform="translate(90,90) scale(.7) translate(-12,-12)" fill="none" stroke="#5b9df9"><path d="M4 21V8l8-5 8 5v13M4 21h16M9 21v-6h6v6M9 11h.01M15 11h.01" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></g>
-
-        <circle cx="370" cy="90" r="19" fill="#0b0b0d" stroke="#3ddc97" stroke-width="1.6"/>
-        <g transform="translate(370,90) scale(.7) translate(-12,-12)" fill="none" stroke="#3ddc97"><path d="M12 22c5-4 8-8.5 8-13a8 8 0 10-16 0c0 4.5 3 9 8 13z" stroke-width="1.9" stroke-linejoin="round"/><circle cx="12" cy="9" r="2.6" stroke-width="1.9"/></g>
-
-        <circle cx="80" cy="260" r="19" fill="#0b0b0d" stroke="#f2664a" stroke-width="1.6"/>
-        <g transform="translate(80,260) scale(.7) translate(-12,-12)" fill="none" stroke="#f2664a"><path d="M12 2 3 6v6c0 5 3.8 8.7 9 10 5.2-1.3 9-5 9-10V6l-9-4z" stroke-width="1.9" stroke-linejoin="round"/><path d="M12 8v5m0 3h.01" stroke-width="2.1" stroke-linecap="round"/></g>
-
-        <circle cx="370" cy="270" r="19" fill="#0b0b0d" stroke="#ecb54a" stroke-width="1.6"/>
-        <g transform="translate(370,270) scale(.7) translate(-12,-12)" fill="none" stroke="#ecb54a"><path d="M13 2 3 14h8l-1 8 11-14h-8l1-6z" stroke-width="1.9" stroke-linejoin="round"/></g>
-
-        <circle cx="230" cy="340" r="20" fill="#0b0b0d" stroke="#f0562a" stroke-width="1.8"/>
-        <g transform="translate(230,340) scale(.75) translate(-12,-12)" fill="none" stroke="#f0562a"><path d="M12 22c4.4 0 8-3.13 8-7.5 0-3.2-1.8-5.6-3.6-8-.3 1.8-1.2 3.2-2.6 4 .5-3.3-.7-6.5-3.3-8.5.6 2.7-.2 5-2.2 6.8C6.8 10.2 6 12 6 14.5 6 18.87 7.6 22 12 22z" stroke-width="1.9" stroke-linejoin="round" stroke-linecap="round"/></g>
-
-        <g fill="#8891a8" opacity=".6"><circle cx="150" cy="330" r="3.5"/><circle cx="320" cy="340" r="3.5"/></g>
-        <g font-family="'JetBrains Mono',monospace" font-size="6.5" fill="#5c5c67" letter-spacing=".3">
-          <text x="90" y="118" text-anchor="middle">SMART CITY</text>
-          <text x="370" y="118" text-anchor="middle">AGRO</text>
-          <text x="80" y="288" text-anchor="middle">DEFESA CIVIL</text>
-          <text x="370" y="298" text-anchor="middle">ALARMES</text>
-          <text x="230" y="371" text-anchor="middle" fill="#ff8259" font-weight="600">OFS · FLAGSHIP</text>
-        </g>
-      </svg>
-    </div>
-  </div>
-
-  <div class="eco rv">
-    <a href="#ofs" class="feat" style="--eco-rgb:232,118,58">
-      <span class="flagship-badge">★ Carro-chefe OPUS</span>
-      <div class="ic"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M12 22c4.4 0 8-3.13 8-7.5 0-3.2-1.8-5.6-3.6-8-.3 1.8-1.2 3.2-2.6 4 .5-3.3-.7-6.5-3.3-8.5.6 2.7-.2 5-2.2 6.8C6.8 10.2 6 12 6 14.5 6 18.87 7.6 22 12 22z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/></svg></div>
-      <h3 class="o">OFS · Deteção de Incêndios</h3>
-      <p>Torres autónomas com drones de deteção térmica e intervenção — o nosso produto emblemático na deteção precoce e resposta a incêndios florestais.</p>
-      <span class="go">Ver soluções <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-    </a>
-    <a href="#smartcity" style="--eco-rgb:91,157,249">
-      <div class="ic"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M4 21V8l8-5 8 5v13M4 21h16M9 21v-6h6v6M9 11h.01M15 11h.01" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <h3 class="b">Smart City &amp; Mobilidade</h3>
-      <p>Poste inteligente, totens de LED e contagem de tráfego por visão computacional a partir de drone.</p>
-      <span class="go">Ver soluções <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-    </a>
-    <a href="#agro" style="--eco-rgb:61,220,151">
-      <div class="ic"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M12 22c5-4 8-8.5 8-13a8 8 0 10-16 0c0 4.5 3 9 8 13z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="9" r="2.6" stroke="currentColor" stroke-width="1.7"/></svg></div>
-      <h3 class="g">Agro &amp; Ambiental</h3>
-      <p>AcquaSense, estações meteorológicas, sensores de solo e irrigação automática para agricultura de precisão.</p>
-      <span class="go">Ver soluções <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-    </a>
-    <a href="#defesacivil" style="--eco-rgb:242,102,74">
-      <div class="ic"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M12 2 3 6v6c0 5 3.8 8.7 9 10 5.2-1.3 9-5 9-10V6l-9-4z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M12 8v5m0 3h.01" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></div>
-      <h3 class="r">Defesa Civil</h3>
-      <p>Encostas, chuvas, rios e ondas monitorizados 24/7 — alerta antecipado de deslizamentos e cheias.</p>
-      <span class="go">Ver soluções <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-    </a>
-    <a href="#seguranca" style="--eco-rgb:236,181,74">
-      <div class="ic"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M13 2 3 14h8l-1 8 11-14h-8l1-6z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg></div>
-      <h3 class="a">Segurança &amp; Alarmes</h3>
-      <p>Phase Alarm: vigilância de rede elétrica trifásica e circuitos essenciais, com alerta multicanal.</p>
-      <span class="go">Ver soluções <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-    </a>
-    <a href="#conectividade" style="--eco-rgb:154,154,166">
-      <div class="ic"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 12.5a11 11 0 0114 0M8.5 16a6 6 0 017 0M12 19.5h.01" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <h3 style="color:#c7c7d1">Conectividade</h3>
-      <p>Ethernet, 4G e LoRaWAN — a camada de transmissão que liga qualquer sensor OPUS ao servidor.</p>
-      <span class="go">Ver soluções <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-    </a>
-  </div>
-
-  <div class="pagefoot"><span>OPUS · Ecossistema</span><span>03</span></div>
+  <div class="pagefoot"><span>OPUS · Sistema</span><span>02</span></div>
 </section>
 
 <!-- ══════════ 04 · OFS — PRODUTO EMBLEMÁTICO ══════════ -->
 <section class="page" id="ofs" style="--accent:#f0562a;--accent-2:#ff8259;--accent-rgb:240,86,42;--accent-deep:#d6431e;--accent-deep-2:#a8300f;background:linear-gradient(180deg,rgba(240,86,42,.07),transparent 46%)">
   <div class="plate rv mb-l">
     <span class="coord tl">Dossiê 01 / OFS</span>
-    <span class="coord tr">Ficha &middot; 04 / 11</span>
+    <span class="coord tr">Ficha &middot; 03 / 10</span>
     <div class="pagehead" style="flex-wrap:wrap;margin-bottom:0">
       <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M12 22c4.4 0 8-3.13 8-7.5 0-3.2-1.8-5.6-3.6-8-.3 1.8-1.2 3.2-2.6 4 .5-3.3-.7-6.5-3.3-8.5.6 2.7-.2 5-2.2 6.8C6.8 10.2 6 12 6 14.5 6 18.87 7.6 22 12 22z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/></svg>
       <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end">
@@ -539,7 +551,7 @@
     <p>Municípios e câmaras, proteção civil e entidades públicas, empresas florestais e agroindustriais, concessões e parques naturais — vigilância permanente e resposta rápida onde a presença humana constante não é viável.</p>
   </div>
 
-  <div class="pagefoot"><span>OPUS · OFS — Produto Emblemático</span><span>04</span></div>
+  <div class="pagefoot"><span>OPUS · OFS — Produto Emblemático</span><span>03</span></div>
 </section>
 
 
@@ -557,39 +569,34 @@
   </div>
 
   <div class="cap-index rv">
-    <a href="#smartcity" style="--ix-c:#5b9df9">
-      <span class="num">05</span><span class="dot"></span>
-      <h3>Smart City</h3>
-      <p>Contagem e classificação de tráfego, iluminação e infraestrutura urbana inteligente.</p>
+    <a href="#smartcity" class="cap-row" style="--ix-c:#5b9df9">
+      <span class="cap-idx"><span class="num">05</span><span class="dot"></span></span>
+      <span class="cap-body"><h3>Smart City</h3><p>Contagem e classificação de tráfego, iluminação e infraestrutura urbana inteligente.</p></span>
       <span class="go">Ver capacidade <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
     </a>
-    <a href="#agro" style="--ix-c:#3ddc97">
-      <span class="num">06</span><span class="dot"></span>
-      <h3>Agro &amp; Ambiental</h3>
-      <p>Água, solo e clima medidos em tempo real para decisões agrícolas e ambientais.</p>
+    <a href="#agro" class="cap-row" style="--ix-c:#3ddc97">
+      <span class="cap-idx"><span class="num">06</span><span class="dot"></span></span>
+      <span class="cap-body"><h3>Agro &amp; Ambiental</h3><p>Água, solo e clima medidos em tempo real para decisões agrícolas e ambientais.</p></span>
       <span class="go">Ver capacidade <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
     </a>
-    <a href="#defesacivil" style="--ix-c:#f2664a">
-      <span class="num">07</span><span class="dot"></span>
-      <h3>Defesa Civil</h3>
-      <p>Encostas, chuvas, rios e costa — deteção e alerta antecipado de desastres naturais.</p>
+    <a href="#defesacivil" class="cap-row" style="--ix-c:#f2664a">
+      <span class="cap-idx"><span class="num">07</span><span class="dot"></span></span>
+      <span class="cap-body"><h3>Defesa Civil</h3><p>Encostas, chuvas, rios e costa — deteção e alerta antecipado de desastres naturais.</p></span>
       <span class="go">Ver capacidade <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
     </a>
-    <a href="#seguranca" style="--ix-c:#ecb54a">
-      <span class="num">08</span><span class="dot"></span>
-      <h3>Segurança &amp; Alarmes</h3>
-      <p>Phase Alarm — monitorização de rede elétrica e circuitos, com escalonamento automático.</p>
+    <a href="#seguranca" class="cap-row" style="--ix-c:#ecb54a">
+      <span class="cap-idx"><span class="num">08</span><span class="dot"></span></span>
+      <span class="cap-body"><h3>Segurança &amp; Alarmes</h3><p>Phase Alarm — monitorização de rede elétrica e circuitos, com escalonamento automático.</p></span>
       <span class="go">Ver capacidade <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
     </a>
-    <a href="#conectividade" style="--ix-c:#9aa2b8">
-      <span class="num">09</span><span class="dot"></span>
-      <h3>Conectividade</h3>
-      <p>A camada de rede — Ethernet, 4G e LoRaWAN — que liga sensor a servidor em todo o portefólio.</p>
+    <a href="#conectividade" class="cap-row" style="--ix-c:#9aa2b8">
+      <span class="cap-idx"><span class="num">09</span><span class="dot"></span></span>
+      <span class="cap-body"><h3>Conectividade</h3><p>A camada de rede — Ethernet, 4G e LoRaWAN — que liga sensor a servidor em todo o portefólio.</p></span>
       <span class="go">Ver capacidade <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
     </a>
   </div>
 
-  <div class="pagefoot"><span>OPUS · Índice de Capacidades</span><span>05</span></div>
+  <div class="pagefoot"><span>OPUS · Índice de Capacidades</span><span>04</span></div>
 </section>
 
 <!-- ══════════ 06 · SMART CITY ══════════ -->
@@ -725,7 +732,7 @@
     <p>Órgãos de trânsito, câmaras municipais, consultorias de engenharia de tráfego e projetos de smart city — de um estudo pontual de via a uma camada permanente de dados de mobilidade para toda a malha da cidade.</p>
   </div>
 
-  <div class="pagefoot"><span>OPUS · Smart City</span><span>06</span></div>
+  <div class="pagefoot"><span>OPUS · Smart City</span><span>05</span></div>
 </section>
 
 <!-- ══════════ 07 · AGRO & AMBIENTAL ══════════ -->
@@ -831,7 +838,7 @@
     <p>Órgãos ambientais, companhias de saneamento, aquicultura e maricultura, indústria e mineração, portos e reservatórios, defesa civil, e agronegócio de precisão — do estudo de um só tanque à gestão de uma bacia inteira.</p>
   </div>
 
-  <div class="pagefoot"><span>OPUS · Agro &amp; Ambiental</span><span>07</span></div>
+  <div class="pagefoot"><span>OPUS · Agro &amp; Ambiental</span><span>06</span></div>
 </section>
 
 <!-- ══════════ 08 · DEFESA CIVIL ══════════ -->
@@ -920,7 +927,7 @@
     <p>Proteção civil, municípios, saneamento, aquicultura, indústria e mineração, portos e reservatórios — qualquer entidade que precise de antecipar um desastre em vez de responder a ele depois de já ter acontecido.</p>
   </div>
 
-  <div class="pagefoot"><span>OPUS · Defesa Civil</span><span>08</span></div>
+  <div class="pagefoot"><span>OPUS · Defesa Civil</span><span>07</span></div>
 </section>
 
 <!-- ══════════ 09 · SEGURANÇA & ALARMES ══════════ -->
@@ -989,7 +996,7 @@
     <p>Hospitais e saúde, indústria e produção, data centers e telecom, câmaras frias e frigoríficos, prédios e serviços essenciais, piscicultura — qualquer operação onde a energia simplesmente não pode faltar sem aviso.</p>
   </div>
 
-  <div class="pagefoot"><span>OPUS · Segurança &amp; Alarmes</span><span>09</span></div>
+  <div class="pagefoot"><span>OPUS · Segurança &amp; Alarmes</span><span>08</span></div>
 </section>
 
 <!-- ══════════ 10 · CONECTIVIDADE ══════════ -->
@@ -1033,7 +1040,7 @@
 
   <p class="small rv mb-l">Na prática, escolhemos a transmissão pelo local: <strong>Ethernet</strong> quando há rede ao lado, <strong>4G</strong> quando o ponto é isolado mas tem sinal, e <strong>LoRaWAN</strong> quando é remoto, disperso e precisa durar anos com bateria — a escolha natural para Defesa Civil e Agro. Quando faz sentido, combinamos mais de uma forma de transmissão para garantir redundância.</p>
 
-  <div class="pagefoot"><span>OPUS · Conectividade</span><span>10</span></div>
+  <div class="pagefoot"><span>OPUS · Conectividade</span><span>09</span></div>
 </section>
 
 <!-- ══════════ 11 · METODOLOGIA ══════════ -->
@@ -1049,23 +1056,23 @@
     <p class="sub">Independentemente da área — cidade, campo, encosta ou quadro elétrico — todos os nossos projetos seguem o mesmo processo. É esta disciplina, e não um catálogo fechado, que garante que cada sistema entregue resolve o problema real do cliente.</p>
   </div>
 
-  <div class="grid g4 mb-l rv">
-    <div class="card">
+  <div class="proc-rail mb-l rv">
+    <div class="proc-item">
       <div class="seq">1</div>
       <h3 class="mt" style="margin-top:12px">Levantamento</h3>
       <p class="small" style="margin:0">Área a cobrir, risco do terreno e objetivo real do cliente — não o que o catálogo tem, mas o que o problema exige.</p>
     </div>
-    <div class="card">
+    <div class="proc-item">
       <div class="seq">2</div>
       <h3 class="mt" style="margin-top:12px">Configuração técnica</h3>
       <p class="small" style="margin:0">Escolha de sensores, protocolo de comunicação e arquitetura de dados conforme critérios do cliente.</p>
     </div>
-    <div class="card">
+    <div class="proc-item">
       <div class="seq">3</div>
       <h3 class="mt" style="margin-top:12px">Integração</h3>
       <p class="small" style="margin:0">Adaptação à infraestrutura existente — poste, torre, quadro elétrico ou lavoura — sem obra desnecessária.</p>
     </div>
-    <div class="card">
+    <div class="proc-item">
       <div class="seq">4</div>
       <h3 class="mt" style="margin-top:12px">Suporte contínuo</h3>
       <p class="small" style="margin:0">Manutenção e evolução do sistema com suporte local, do arranque à operação de longo prazo.</p>
@@ -1092,7 +1099,7 @@
     </div>
   </div>
 
-  <div class="pagefoot"><span>OPUS · Metodologia</span><span>11</span></div>
+  <div class="pagefoot"><span>OPUS · Metodologia</span><span>10</span></div>
 </section>
 
 <!-- ══════════ 12 · INICIAR AVALIAÇÃO TÉCNICA ══════════ -->
