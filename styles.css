@@ -661,14 +661,27 @@ nav a#navCap{display:inline-flex;align-items:center;gap:3px}
 
 /* ── opener: capa assimétrica (cópia + diagrama de mecanismo) ──── */
 .opener{display:grid;grid-template-columns:1.2fr .8fr;gap:clamp(30px,5vw,64px);align-items:center;min-height:clamp(300px,48vh,540px)}
-@media(max-width:860px){.opener{grid-template-columns:1fr;min-height:0}.opener-art{order:-1}}
+/* Fase 6/B: em mobile, o mecanismo já não precede a proposta de valor —
+   segue-a como consequência visual (eyebrow → título → descrição → CTA →
+   mecanismo), a mesma ordem do DOM. Ver .opener-art abaixo para o
+   tratamento mais compacto e enquadrado que o mecanismo recebe aqui. */
+@media(max-width:860px){
+  .opener{grid-template-columns:1fr;min-height:0;gap:clamp(28px,7vw,40px)}
+}
 .cover-tag.std{margin:0 0 20px;justify-content:flex-start}
-.opener-h{font-size:clamp(2.35rem,6vw,4.2rem);font-weight:500;line-height:1.05;letter-spacing:-.034em;margin:0}
+.opener-h{font-size:clamp(2.35rem,6vw,4.2rem);font-weight:440;line-height:1.05;letter-spacing:-.034em;margin:0}
+.opener-h .em{font-weight:700}
 .opener-actions{display:flex;flex-wrap:wrap;align-items:center;gap:24px;margin-top:8px}
 .hero-secondary{font-family:var(--font-mono);font-size:12.5px;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line-2);padding-bottom:2px;transition:color .18s var(--ease-out),border-color .18s var(--ease-out)}
 .hero-secondary:hover{color:var(--text);border-color:var(--accent-2)}
 .opener-art{padding:22px 22px 16px}
 .mech-caption-eyebrow{display:block;font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:14px}
+@media(max-width:860px){
+  /* o mecanismo passa a ler-se como uma peça de apoio compacta, não
+     como uma segunda "capa" do mesmo tamanho — menos respiro interno,
+     largura de leitura limitada, para não competir com o headline. */
+  .opener-art{padding:18px 18px 14px;max-width:480px;margin:0 auto}
+}
 
 /* ── mech: diagramas de mecanismo, com construção seletiva ao scroll ──
    Em ecrãs largos o svg ocupa 100% do contentor. Em mobile, encolher um
@@ -680,8 +693,13 @@ nav a#navCap{display:inline-flex;align-items:center;gap:3px}
 .mech [data-i]{opacity:0;transform:translateY(6px);transition:opacity .5s var(--ease-out),transform .5s var(--ease-out)}
 .mech.mech-in [data-i]{opacity:1;transform:none}
 @media(max-width:760px){
-  figure.mech{overflow-x:auto}
-  figure.mech svg{width:auto;min-width:640px;max-width:none}
+  /* Exceção: o mecanismo do hero (viewBox 420 — muito mais estreito que
+     os diagramas de vertical/OFS, viewBox 900-1000) já cabe com nitidez
+     ao escalar para a largura do ecrã; forçar-lhe a mesma largura mínima
+     de 640px fá-lo-ia transbordar sem necessidade. Mantém-se no
+     comportamento responsivo simples (width:100%) já aprovado na Fase 5. */
+  figure.mech:not([data-mech="hero"]){overflow-x:auto}
+  figure.mech:not([data-mech="hero"]) svg{width:auto;min-width:640px;max-width:none}
 }
 figcaption{margin:14px 0 0;font-family:var(--font-mono);font-size:10.5px;line-height:1.6;color:var(--dim)}
 

@@ -222,32 +222,12 @@
     }
   }
 
-  /* ── decodificação de texto (scramble) nos eyebrows ────────────── */
-  if (!reduce && 'IntersectionObserver' in window){
-    var SCRAMBLE_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#$%/=-·';
-    function scramble(el){
-      var final = el.textContent;
-      var frame = 0, total = 14;
-      (function step(){
-        var reveal = Math.floor((frame / total) * final.length);
-        var out = '';
-        for (var i = 0; i < final.length; i++){
-          out += (i < reveal || final[i] === ' ' || final[i] === '—') ? final[i] : SCRAMBLE_CHARS[(Math.random() * SCRAMBLE_CHARS.length) | 0];
-        }
-        el.textContent = out;
-        frame++;
-        if (frame <= total) requestAnimationFrame(step); else el.textContent = final;
-      })();
-    }
-    var eio = new IntersectionObserver(function(entries){
-      entries.forEach(function(en){
-        if (!en.isIntersecting) return;
-        scramble(en.target);
-        eio.unobserve(en.target);
-      });
-    }, { threshold: 0.6 });
-    document.querySelectorAll('.eyebrow').forEach(function(el){ eio.observe(el); });
-  }
+  /* ── Fase 6/B: o efeito de scramble nos eyebrows foi removido — lia-se
+     como "glitch"/hacker por uma fração de segundo, o oposto do registo
+     de precisão que a marca quer transmitir. Os eyebrows já entram em
+     cena pela mesma revelação opacity+translateY que cobre o bloco em
+     que estão inseridos (.rv, acima) — sem texto a passar por estados
+     ilegíveis em momento algum. Nenhuma substituição é necessária aqui. ── */
 
   /* ── iniciar avaliação técnica: validação e envio acessíveis ───── */
   var assessForm = document.getElementById('assessForm');
