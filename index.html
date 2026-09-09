@@ -374,7 +374,28 @@
 
   <div class="grid g3 mb-l rv">
     <div class="stat r"><b>~136 mil ha</b><span>arderam em Portugal em 2024 (dados ICNF) — o terceiro pior ano da década.</span></div>
-    <div class="stat r"><b data-count="92" data-suffix="%">0%</b><span>da área ardida em 2024 concentrou-se num único mês (setembro).</span></div>
+    <div class="stat r instrumented">
+      <b data-count="92" data-suffix="%">0%</b>
+      <svg class="stat-spark" viewBox="0 0 120 28" aria-hidden="true" focusable="false">
+        <g fill="currentColor" opacity=".55">
+          <rect x="0" y="24.9" width="8" height="3.1"/>
+          <rect x="10" y="25.2" width="8" height="2.8"/>
+          <rect x="20" y="25.2" width="8" height="2.8"/>
+          <rect x="30" y="24.9" width="8" height="3.1"/>
+          <rect x="40" y="24.6" width="8" height="3.4"/>
+          <rect x="50" y="23.8" width="8" height="4.2"/>
+          <rect x="60" y="22.1" width="8" height="5.9"/>
+          <rect x="70" y="19.9" width="8" height="8.1"/>
+        </g>
+        <rect x="80" y="2" width="8" height="26" fill="#f2664a"/>
+        <g fill="currentColor" opacity=".55">
+          <rect x="90" y="23.2" width="8" height="4.8"/>
+          <rect x="100" y="24.9" width="8" height="3.1"/>
+          <rect x="110" y="25.2" width="8" height="2.8"/>
+        </g>
+      </svg>
+      <span>da área ardida em 2024 concentrou-se num único mês (setembro) — ver distribuição mensal abaixo.</span>
+    </div>
     <div class="stat o"><b>Norte do Tejo</b><span>concentra a maioria dos concelhos com mais ocorrências do país.</span></div>
   </div>
   <p class="tiny rv mb-l">Fonte: ICNF — Instituto da Conservação da Natureza e das Florestas, dados relativos a 2024.</p>
@@ -682,6 +703,16 @@
       <div class="cell"><b data-count="128">0</b><span>veíc/h — sentido A</span></div>
       <div class="cell"><b data-count="94">0</b><span>veíc/h — sentido B</span></div>
     </div>
+    <div class="split-meter" role="img" aria-label="Distribuição do fluxo entre sentidos: 58% sentido A, 42% sentido B">
+      <div class="split-meter-track">
+        <span class="split-seg" style="width:57.7%;background:var(--accent-2)"></span>
+        <span class="split-seg" style="width:42.3%;background:var(--line-2)"></span>
+      </div>
+      <div class="split-meter-labels">
+        <span><span class="sw" style="background:var(--accent-2)"></span>Sentido A · 58%</span>
+        <span><span class="sw" style="background:var(--line-2)"></span>Sentido B · 42%</span>
+      </div>
+    </div>
     <div class="tbl-wrap" style="border:0;background:transparent">
       <table style="min-width:0">
         <thead><tr><th>Linha</th><th>Sentido</th><th>Tipo</th><th>Veíc/h</th></tr></thead>
@@ -944,6 +975,23 @@
       <div class="cell"><b style="color:var(--green)">220 V</b><span>Fase R (cenário)</span></div>
       <div class="cell"><b class="a">198 V ▲</b><span>Fase S (cenário)</span></div>
       <div class="cell"><b style="color:var(--green)">221 V</b><span>Fase T (cenário)</span></div>
+    </div>
+    <div class="phase-scale" role="img" aria-label="Escala comparativa das três fases: R em 220 volts, S em 198 volts — visivelmente abaixo das restantes — e T em 221 volts">
+      <div class="phase-scale-row">
+        <span class="ps-label">R</span>
+        <span class="ps-track"><span class="ps-mark" style="left:75%"></span></span>
+        <span class="ps-val" style="color:var(--green)">220 V</span>
+      </div>
+      <div class="phase-scale-row">
+        <span class="ps-label">S</span>
+        <span class="ps-track"><span class="ps-mark warn" style="left:20%"></span></span>
+        <span class="ps-val" style="color:var(--amber)">198 V</span>
+      </div>
+      <div class="phase-scale-row">
+        <span class="ps-label">T</span>
+        <span class="ps-track"><span class="ps-mark" style="left:77.5%"></span></span>
+        <span class="ps-val" style="color:var(--green)">221 V</span>
+      </div>
     </div>
     <div class="alert">⚠ Subtensão simulada na Fase S — formato do alerta enviado pelo Phase Alarm (cenário ilustrativo)</div>
     <p class="foot-note">Painel de demonstração do formato de leitura e alerta — os valores não refletem um quadro elétrico real.</p>
@@ -1215,14 +1263,70 @@
 
   <div class="rule"></div>
 
-  <div class="thanks rv" style="padding-top:0">
-    <div class="logo-mark center" style="justify-content:center;margin-bottom:22px">
-      <span class="brand-mark" aria-hidden="true" style="height:32px"></span>
+  <div class="dossier">
+    <div class="plate">
+      <span class="coord tl">Dossiê · Síntese</span>
+      <span class="coord tr">OPUS Corp. · 2026</span>
+      <span class="coord bl">Sensor → Ação</span>
+      <span class="coord br">Seis áreas · OFS ★</span>
+
+      <div class="mb-l rv" style="padding-top:8px">
+        <p class="eyebrow" style="margin-bottom:10px">12 — Encerramento</p>
+        <h2 style="max-width:24ch">O mesmo mecanismo, aplicado a seis territórios — com o OFS como o seu ramo mais ambicioso.</h2>
+        <p class="sub" style="margin:0">Sensor, rede, decisão e ação: a mesma cadeia de engenharia percorre todo este repertório, configurada de forma diferente em cada área. É este princípio — não um catálogo fechado — que a OPUS entrega em qualquer território.</p>
+      </div>
+
+      <figure class="panel mech rv mb-l" data-mech="dossier">
+        <svg viewBox="0 0 900 165" role="img" aria-label="Diagrama de síntese: sensor liga a rede, a rede liga à decisão, e a decisão aciona a ação — o mesmo mecanismo ramifica-se nas seis áreas do portefólio, com o OFS como o ramo mais ambicioso" aria-describedby="dossier-mech-cap" style="width:100%;height:auto;color:var(--muted)">
+          <defs>
+            <marker id="mArrowDS" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker>
+          </defs>
+          <g class="mech-node" data-i="0"><rect x="10" y="14" width="150" height="56" rx="7" fill="none" stroke="currentColor" stroke-width="1.2"/><text x="85" y="38" text-anchor="middle" font-family="var(--font-mono)" font-size="12" font-weight="600" fill="currentColor">Sensor</text><text x="85" y="55" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--dim)">seis territórios</text></g>
+          <path class="mech-arrow" data-i="1" d="M160 42 H218" stroke="currentColor" stroke-width="1.2" marker-end="url(#mArrowDS)" fill="none"/>
+          <g class="mech-node" data-i="2"><rect x="220" y="14" width="150" height="56" rx="7" fill="none" stroke="currentColor" stroke-width="1.2"/><text x="295" y="38" text-anchor="middle" font-family="var(--font-mono)" font-size="12" font-weight="600" fill="currentColor">Rede</text><text x="295" y="55" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--dim)">Eth · 4G · LoRaWAN</text></g>
+          <path class="mech-arrow" data-i="3" d="M370 42 H428" stroke="currentColor" stroke-width="1.2" marker-end="url(#mArrowDS)" fill="none"/>
+          <g class="mech-node accent" data-i="4"><rect x="430" y="14" width="150" height="56" rx="7" fill="none" stroke="var(--accent-2)" stroke-width="1.7"/><text x="505" y="38" text-anchor="middle" font-family="var(--font-mono)" font-size="12" font-weight="600" fill="var(--accent-2)">Decisão</text><text x="505" y="55" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--dim)">regras por área</text></g>
+          <path class="mech-arrow" data-i="5" d="M580 42 H638" stroke="currentColor" stroke-width="1.2" marker-end="url(#mArrowDS)" fill="none"/>
+          <g class="mech-node" data-i="6"><rect x="640" y="14" width="150" height="56" rx="7" fill="none" stroke="currentColor" stroke-width="1.2"/><text x="715" y="38" text-anchor="middle" font-family="var(--font-mono)" font-size="12" font-weight="600" fill="currentColor">Ação</text><text x="715" y="55" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--dim)">sirene · rega · relé · alerta</text></g>
+          <path data-i="7" d="M715 70 V96" stroke="currentColor" stroke-width="1" fill="none" opacity=".7"/>
+          <g data-i="8">
+            <text x="10" y="122" font-family="var(--font-mono)" font-size="9.5" fill="var(--dim)">SEIS ÁREAS</text>
+            <text x="120" y="122" font-family="var(--font-mono)" font-size="9.5" fill="var(--muted)">Smart City · Agro · Defesa Civil</text>
+            <text x="120" y="136" font-family="var(--font-mono)" font-size="9.5" fill="var(--muted)">Segurança · Conectividade</text>
+            <text x="10" y="158" font-family="var(--font-mono)" font-size="9.5" fill="var(--dim)">FLAGSHIP</text>
+            <text x="120" y="158" font-family="var(--font-mono)" font-size="9.5" fill="#ff9179">OFS · Deteção de Incêndios</text>
+          </g>
+        </svg>
+        <figcaption id="dossier-mech-cap">O mesmo mecanismo apresentado na capa e em cada área técnica — aqui, na sua forma mais resumida, como síntese de todo o repertório.</figcaption>
+      </figure>
+
+      <nav class="dossier-index mb-l rv" aria-label="Índice das seis áreas do portefólio">
+        <a href="#ofs" class="di-chip flagship" style="--dc:#f0562a"><span class="di-n">01</span>OFS · Incêndios <span class="di-star">★</span></a>
+        <a href="#smartcity" class="di-chip" style="--dc:#5b9df9"><span class="di-n">02</span>Smart City</a>
+        <a href="#agro" class="di-chip" style="--dc:#3ddc97"><span class="di-n">03</span>Agro &amp; Ambiental</a>
+        <a href="#defesacivil" class="di-chip" style="--dc:#f2664a"><span class="di-n">04</span>Defesa Civil</a>
+        <a href="#seguranca" class="di-chip" style="--dc:#ecb54a"><span class="di-n">05</span>Segurança</a>
+        <a href="#conectividade" class="di-chip" style="--dc:#9aa2b8"><span class="di-n">06</span>Conectividade</a>
+      </nav>
+
+      <div class="contact mb-l rv">
+        <div><div class="k">Metodologia</div><div class="v">Levantamento → Configuração → Integração → Suporte contínuo</div></div>
+        <div><div class="k">Cobertura</div><div class="v">Famalicão, Portugal · visão de expansão para a Europa</div></div>
+        <div><div class="k">Como começar</div><div class="v"><a href="#avaliacao">Pedir avaliação técnica →</a></div></div>
+      </div>
+
+      <div class="rv">
+        <a class="hero-cta" href="#avaliacao">Iniciar avaliação técnica <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
     </div>
-    <h2 style="font-size:clamp(1.6rem,4vw,2.3rem)">Obrigado.</h2>
-    <p>Tecnologia que constrói o futuro — do projeto à entrega, com suporte local. Este repertório cresce a cada novo território que ajudamos a proteger, medir e ligar.</p>
-    <p class="tiny" style="letter-spacing:.19em;text-transform:uppercase;margin-top:18px">Portugal · Global · Futuro</p>
   </div>
+
+  <div class="rule"></div>
+
+  <div class="logo-mark center rv" style="justify-content:center;margin-bottom:16px">
+    <span class="brand-mark" aria-hidden="true" style="height:26px"></span>
+  </div>
+  <p class="tiny center rv" style="letter-spacing:.19em;text-transform:uppercase;text-align:center;margin-bottom:clamp(20px,4vw,32px)">Portugal · Global · Futuro</p>
 
   <div class="pagefoot"><span>OPUS Corp. · Engenharia Inteligente</span><span>Repertório · 2026</span></div>
 </footer>
