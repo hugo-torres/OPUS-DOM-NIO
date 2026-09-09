@@ -219,9 +219,7 @@ strong{color:var(--text);font-weight:500}
   border-left:2px solid var(--accent);background:rgba(var(--accent-rgb),.05);
   border-radius:0 var(--r) var(--r) 0;padding:16px 18px;
 }
-.note.green{border-left-color:var(--green);background:rgba(61,220,151,.045)}
-.note.blue{border-left-color:var(--blue);background:rgba(91,157,249,.05)}
-.note h4{color:var(--accent)} .note.green h4{color:var(--green)} .note.blue h4{color:var(--blue)}
+.note h3{font-size:13px;font-weight:500;line-height:1.6;letter-spacing:-.005em;margin:0 0 5px;color:var(--accent)}
 .note p{margin:0;font-size:13px}
 
 .band{
@@ -394,8 +392,8 @@ ul.ck.d li::before{background:var(--dim)}
 }
 .disclaimer p{margin:0;font-size:11.5px;line-height:1.6;color:var(--dim)}
 
-.mb-s{margin-bottom:12px} .mb{margin-bottom:20px} .mb-l{margin-bottom:30px} .mb-xl{margin-bottom:clamp(26px,4.6vw,42px)}
-.mt{margin-top:20px} .mt-l{margin-top:30px}
+.mb-l{margin-bottom:30px} .mb-xl{margin-bottom:clamp(26px,4.6vw,42px)}
+.mt{margin-top:20px}
 
 :where(a,button,[tabindex]):focus-visible{
   outline:2px solid var(--accent-2);outline-offset:3px;border-radius:6px;
@@ -533,7 +531,7 @@ ul.ck.d li::before{background:var(--dim)}
 .hero .art{perspective:1200px}
 
 /* ── nav magnética / cta ───────────────────────────────────── */
-nav a, .totop, .eco .go{ will-change:transform }
+nav a, .totop{ will-change:transform }
 
 /* back to top */
 .totop{
@@ -703,7 +701,7 @@ figcaption{margin:14px 0 0;font-family:var(--font-mono);font-size:10.5px;line-he
 .comp-idx .num{font-family:var(--font-mono);font-size:10.5px;color:var(--dim)}
 .comp-idx .dot{width:8px;height:8px;border-radius:50%}
 .comp-body{flex:1;min-width:0}
-.comp-body h4{margin:0 0 5px;font-size:13.8px;font-weight:600;color:var(--text);letter-spacing:-.005em}
+.comp-body h3{margin:0 0 5px;font-size:13.8px;font-weight:600;line-height:1.6;color:var(--text);letter-spacing:-.005em}
 .comp-body p{margin:0;font-size:12.6px;color:var(--muted);line-height:1.58;max-width:62ch}
 .comp-spec{flex:0 0 auto;font-family:var(--font-mono);font-size:10.5px;color:var(--dim);text-align:right;line-height:1.6;padding-top:2px;max-width:150px}
 @media(max-width:680px){
