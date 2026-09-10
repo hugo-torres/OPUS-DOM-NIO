@@ -21,6 +21,7 @@
 
   /* ── progress bar + scroll-spy + parallax (um único ticker) ──── */
   var prog = document.getElementById('prog');
+  var totopBtn = document.getElementById('totop');
   // #nav e #rail apontam para os mesmos 12 destinos, pela mesma ordem — o
   // índice "ativo" é calculado uma única vez a partir de #nav (a lista
   // canónica) e depois aplicado às duas listas, para não haver dois
@@ -45,11 +46,10 @@
       else a.removeAttribute('aria-current');
     });
     railLinks.forEach(function(a, i){ a.classList.toggle('on', i === active); });
-    var totop = document.getElementById('totop');
-    if (totop){
+    if (totopBtn){
       var showTop = h.scrollTop > h.clientHeight * 0.6;
-      totop.classList.toggle('show', showTop);
-      totop.tabIndex = showTop ? 0 : -1;
+      totopBtn.classList.toggle('show', showTop);
+      totopBtn.tabIndex = showTop ? 0 : -1;
     }
     if (parallaxEls.length){
       parallaxEls.forEach(function(el){
@@ -103,7 +103,6 @@
   }
 
   /* ── back to top ───────────────────────────────────────────── */
-  var totopBtn = document.getElementById('totop');
   if (totopBtn){
     totopBtn.addEventListener('click', function(){
       window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
