@@ -1,0 +1,32 @@
+# OPUS Corp. — Cloudflare Pages: exclusão de ficheiros do publish (Fase 10)
+#
+# O Cloudflare Pages publica, por omissão, TODO o conteúdo do diretório de
+# output configurado no projeto (aqui: a raiz do repositório). Este ficheiro
+# usa a sintaxe do .gitignore para impedir que material de outras fases do
+# projeto — que está no repositório apenas como histórico/documentação — seja
+# publicado no site em produção (www.opuscorp.pt).
+#
+# Referência: https://developers.cloudflare.com/pages/configuration/build-configuration/#ignoring-files-with-assetsignore
+#
+# Nada disto altera o que já está no .gitignore (que controla o que entra no
+# repositório) — este ficheiro controla apenas o que sai do repositório para
+# o site publicado.
+
+# Protótipos e builds antigos de outras fases (pré-Fase 6 / pré-redesign) —
+# desatualizados, não referenciados pelo site, não devem ir para produção.
+artifact.html
+dist/
+build/
+redesign-concept.html
+
+# Backups locais de HTML criados durante o processo de edição.
+index.backup-*.html
+
+# Material de auditoria e propostas internas (Fases 3-6) — histórico do
+# projeto, não faz parte do site público.
+audit/
+
+# Documentação técnica interna do próprio processo de lançamento — para uso
+# da equipa, não para publicação pública.
+LAUNCH-GUIDE.md
+PRODUCTION-CHECKLIST.md

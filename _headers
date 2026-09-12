@@ -1,0 +1,47 @@
+# OPUS Corp. — Cloudflare Pages: headers de produção (Fase 10)
+# Referência: https://developers.cloudflare.com/pages/configuration/headers/
+#
+# HSTS NÃO está incluído aqui de propósito — ver LAUNCH-GUIDE.md secção 10 e
+# o relatório da Fase 10: só deve ser ativado depois de confirmar HTTPS
+# estável em produção, através do painel Cloudflare (SSL/TLS → Edge
+# Certificates → HSTS), não por este ficheiro.
+#
+# Content-Security-Policy está em modo Report-Only (não bloqueia nada ainda)
+# até confirmarmos, com o site já em produção, que nenhuma origem legítima é
+# bloqueada por engano. Passar a aplicar (Content-Security-Policy, sem
+# "-Report-Only") é uma alteração de configuração feita depois do lançamento,
+# não neste ficheiro agora.
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+  Content-Security-Policy-Report-Only: default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; script-src 'self'; connect-src 'self' https://formspree.io; form-action 'self' https://formspree.io; frame-ancestors 'self'; base-uri 'self';
+
+# HTML: sem cache longo, para que correções futuras cheguem de imediato.
+/index.html
+  Cache-Control: no-cache
+
+# CSS/JS/manifest: o deploy atual sobrescreve os ficheiros com o mesmo nome
+# (sem hash de conteúdo no nome), por isso usa-se um max-age conservador de
+# 1 dia em vez de "immutable" — coerente com o já documentado em
+# PRODUCTION-CHECKLIST.md e LAUNCH-GUIDE.md secção 6.
+/styles.css
+  Cache-Control: public, max-age=86400
+
+/script.js
+  Cache-Control: public, max-age=86400
+
+/site.webmanifest
+  Cache-Control: public, max-age=86400
+
+/robots.txt
+  Cache-Control: public, max-age=86400
+
+/sitemap.xml
+  Cache-Control: public, max-age=86400
+
+# Assets de imagem/ícones — mudam raramente; mesmo raciocínio de cache
+# conservador acima.
+/assets/*
+  Cache-Control: public, max-age=86400
